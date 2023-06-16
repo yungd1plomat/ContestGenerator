@@ -38,6 +38,8 @@ services:
     build:
       context: .
       dockerfile: ContestGenerator/Dockerfile
+    networks:
+      - caddy
     depends_on:
       - mysql
       - caddy
