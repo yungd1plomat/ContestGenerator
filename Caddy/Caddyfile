@@ -1,0 +1,5 @@
+contestgenerator.site {
+  reverse_proxy contestgenerator:5000 {
+	header_up Host {upstream_hostport}
+  }
+}
