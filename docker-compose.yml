@@ -7,6 +7,8 @@ services:
       - mysqldb:/var/lib/mysql
     ports:
       - 3308:3308
+    networks:
+      - dbnetwork
     environment:
       MYSQL_RANDOM_ROOT_PASSWORD: 1
       MYSQL_DATABASE: contestgenerator
@@ -40,6 +42,7 @@ services:
       dockerfile: ContestGenerator/Dockerfile
     networks:
       - caddy
+      - dbnetwork
     depends_on:
       - mysql
       - caddy
@@ -50,6 +53,7 @@ services:
 networks:
   caddy:
     external: true
+  dbnetwork:
     
 volumes:
   mysqldb:
