@@ -1,4 +1,6 @@
-﻿using ContestGenerator.Data;
+﻿using ContestGenerator.Abstractions;
+using ContestGenerator.Data;
+using ContestGenerator.Impls;
 using Microsoft.AspNetCore.HttpOverrides;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
@@ -21,7 +23,7 @@ namespace ContestGenerator
             services.AddDbContext<ApplicationDbContext>(options =>
                 options.UseMySql(connectionString, new MySqlServerVersion(new Version(8, 0, 27))));
             services.AddDatabaseDeveloperPageExceptionFilter();
-
+            services.AddScoped<ICaddyApi, CaddyApi>();
             services.Configure<SecurityStampValidatorOptions>(options =>
             {
                 // Enables immediate logout, after updating the user's security stamp.

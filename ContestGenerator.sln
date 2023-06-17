@@ -7,6 +7,11 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ContestGenerator", "Contest
 EndProject
 Project("{E53339B2-1760-4266-BCC7-CA923CBCF16C}") = "docker-compose", "docker-compose.dcproj", "{7B0C1F8E-5C23-4192-B765-3F48680F25C3}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Caddy", "Caddy", "{14C88E28-76D4-4512-B9CD-0F8F2E35CC8C}"
+	ProjectSection(SolutionItems) = preProject
+		Caddy\Caddyfile = Caddy\Caddyfile
+	EndProjectSection
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU

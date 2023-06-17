@@ -32,6 +32,7 @@ services:
 
   contestgenerator:
     image: yungd1plomat/contestgenerator
+    container_name: contestgenerator
     environment:
       - CONNECTION_STRING=Server=mysql;Port=3308;Database=contestgenerator;Uid=dbuser;Pwd=dbuserpassword;
       - ASPNETCORE_ENVIRONMENT=Development

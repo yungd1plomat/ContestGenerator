@@ -1,5 +1,6 @@
-contestgenerator.site {
-  reverse_proxy contestgenerator:5000 {
-	header_up Host {upstream_hostport}
-  }
+{
+  admin       :2019
+}
+:80 {
+  reverse_proxy contestgenerator:5000
 }
