@@ -1,0 +1,91 @@
+@import url('https://fonts.googleapis.com/css?family=Poppins');
+* {
+    box-sizing: border-box;
+    padding: 0;
+    margin: 0;
+}
+
+html {
+    font-size: 10px;
+}
+
+body {
+    background: url(../images/bg.png) no-repeat top center, linear-gradient(#070A0C, #18153A);
+    font-family: 'Poppins', sans-serif;
+    height: 100vh;
+    color: #fff;
+}
+
+.auth {
+    background: linear-gradient(180deg, rgba(38, 34, 80, 0.61) 0%, #1B1942 46.88%, #17163B 100%);
+    box-shadow: 0px 50px 100px rgba(13, 10, 44, 0.58);
+    display: inline-block;
+    padding: 2rem;
+    border-radius: 0.5rem;
+    position: absolute;
+    top: 50%;
+    right: 50%;
+    transform: translate(50%, -50%);
+    min-width: 30rem;
+    max-width: 34rem;
+}
+
+.auth h1 {
+    font-size: 2.5rem;
+    text-align: center;
+    padding: 0 0 2rem 0;
+    border-bottom: 0.1rem solid silver;
+}
+
+.auth form {
+    margin: 1rem;
+}
+
+.auth input {
+    width: 100%;
+    margin-top: 2rem;
+    padding: 0 0.5rem;
+    height: 4rem;
+    font-size: 1.4rem;
+    border: none;
+    background: none;
+    outline: none;
+    border-bottom: 1.5px solid rgb(163, 163, 163);
+    color: #fff;
+}
+
+.auth input::placeholder {
+    color: rgb(163, 163, 163);
+}
+
+.auth input:hover {
+    border-bottom: 1.5px solid #0086da;
+}
+
+.auth form p {
+    font-size: 1.3rem;
+    padding: 3rem 0.5rem 0rem 0.5rem;
+    color: rgb(163, 163, 163);
+}
+
+.auth form p:hover {
+    color: rgb(80, 80, 80);
+    cursor: pointer;
+}
+
+.auth button[type="submit"] {
+    display: block;
+    margin: 2rem auto;
+    font-size: 1.6rem;
+    padding: 0.9rem 2.2rem;
+    border-radius: 1.7rem;
+    border: none;
+    width: 90%;
+    background-color: #0086da;
+    color: #ffffff;
+    font-weight: 500;
+}
+
+.auth button[type="submit"]:hover {
+    cursor: pointer;
+}

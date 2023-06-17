@@ -1,0 +1,30 @@
+﻿@using ContestGenerator.Models
+@model LoginViewModel
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="~/css/login.css">
+    <title>Авторизация</title>
+</head>
+
+<body>
+    <div class="auth">
+        <h1>Login</h1>
+        <form asp-action="Login" asp-validation-summary="All" asp-controller="Users" asp-antiforgery="true" method="post">
+            <input type="text" name="username" id="username" placeholder="Username" required>
+            <input type="password" name="password" id="password" placeholder="Password" required>
+            <p id="forgotPass">Forgot Password?</p>
+            @Html.AntiForgeryToken()
+            <button type="submit">Login</button>
+            <div class="text-danger">
+                @Html.ValidationSummary(false)
+            </div>
+        </form>
+    </div>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script src="~/css/login.js"></script>
+</body>
+
+</html>
