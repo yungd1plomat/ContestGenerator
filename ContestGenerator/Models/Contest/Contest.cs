@@ -51,16 +51,21 @@
         /// <summary>
         /// Информация о шагах для подготовки и отправки работы
         /// </summary>
-        public IEnumerable<Step> Steps { get; set; }
+        public IEnumerable<Step>? Steps { get; set; }
+
+        /// <summary>
+        /// Необходимые поля для формы
+        /// </summary>
+        public IEnumerable<FormField> FormFields { get; set; }
 
         /// <summary>
         /// Информация в помощь участнику
         /// </summary>
-        public IEnumerable<Help> Helps { get; set; }
+        public IEnumerable<Help>? Helps { get; set; }
 
         /// <summary>
         /// Партнеры конкурса
         /// </summary>
-        public IEnumerable<Partner> Partners { get; set; }
+        public IEnumerable<Partner>? Partners { get; set; }
     }
 }
