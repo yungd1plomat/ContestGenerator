@@ -1,0 +1,42 @@
+﻿
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700,900&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/tw-elements/dist/css/tw-elements.min.css" />
+    <title>Contest Generator - Index</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+
+
+<body>
+    <!--Main Navigation-->
+    @await Html.PartialAsync("_Sidebar")
+    <!--Main Navigation-->
+    <!--Main layout-->
+    <main class="antialiased bg-zinc-800 h-full flex justify-center">
+        <div class="container px-6 flex h-full mx-auto pt-[58px] md:ml-60">
+            <div class="m-auto text-center">
+                <h1 class="mt-4 text-4xl font-extrabold leading-none tracking-tight text-white sm:text-5xl sm:leading-[3.5rem]">
+                    Welcome to Contest Generator
+                </h1>
+                <p class="mt-6 text-base leading-7 text-slate-200">This is the control panel for all Contest Generator platform contests.</p>
+                <div class="mt-10 flex gap-4 justify-center mb-40">
+                    <a href="https://github.com/yungd1plomat/ContestGenerator"
+                       class="inline-flex justify-center rounded-lg text-sm font-semibold py-3 px-4 bg-slate-900 text-white hover:bg-slate-700"
+                       target="_blank">
+                        <span class="inline-flex items-center">
+                            <span>Sources</span>
+                            <svg viewBox="0 0 20 20" class="ml-1.5 h-5 w-5 fill-slate-400" fill-rule="evenodd" clip-rule="evenodd">
+                                <path d="M7 3.25H3.25v13.5h13.5V13h-1.5v2.25H4.75V4.75H7v-1.5Zm9.75 0H10v1.5h4.19l-5.72 5.72 1.06 1.06 5.72-5.72V10h1.5V3.25Z">
+                                </path>
+                            </svg>
+                        </span>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </main>
+    <!--Main layout-->
+    <script src="https://cdn.jsdelivr.net/npm/tw-elements/dist/js/tw-elements.umd.min.js"></script>
+</body>
