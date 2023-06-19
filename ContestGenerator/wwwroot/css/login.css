@@ -16,6 +16,10 @@ body {
     color: #fff;
 }
 
+.text-danger {
+    color: red;
+}
+
 .auth {
     background: linear-gradient(180deg, rgba(38, 34, 80, 0.61) 0%, #1B1942 46.88%, #17163B 100%);
     box-shadow: 0px 50px 100px rgba(13, 10, 44, 0.58);

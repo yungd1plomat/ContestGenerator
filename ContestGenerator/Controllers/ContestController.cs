@@ -4,7 +4,7 @@ using Microsoft.AspNetCore.Mvc;
 namespace ContestGenerator.Controllers
 {
     [Route("[controller]")]
-    [AllowAnonymous]
+    [Authorize]
     public class ContestController : Controller
     {
         public ContestController() 
