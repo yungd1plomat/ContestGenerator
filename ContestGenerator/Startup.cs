@@ -29,9 +29,14 @@ namespace ContestGenerator
                 // Enables immediate logout, after updating the user's security stamp.
                 options.ValidationInterval = TimeSpan.Zero;
             });
-
             services.AddDefaultIdentity<IdentityUser>(options => options.SignIn.RequireConfirmedAccount = false)
                 .AddEntityFrameworkStores<ApplicationDbContext>();
+            services.ConfigureApplicationCookie(options =>
+            {
+                options.Cookie.HttpOnly = true;
+                options.LoginPath = "/users/login";
+                options.AccessDeniedPath = "/";
+            });
             services.AddControllersWithViews();
         }
 
