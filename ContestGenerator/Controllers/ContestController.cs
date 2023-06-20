@@ -2,6 +2,7 @@
 using ContestGenerator.Models.Contest;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 
 namespace ContestGenerator.Controllers
 {
@@ -16,6 +17,15 @@ namespace ContestGenerator.Controllers
             _context = dbContext;
         }
 
+        [HttpGet("{contestName}")]
+        public async Task<IActionResult> Contest(string contestName)
+        {
+            var contest = await _context.Contests.FirstOrDefaultAsync(x => x.Name == contestName);
+            if (contest is null)
+                return NotFound(contestName);
+            return View(contest);
+        }
+
         [HttpGet("create")]
         public IActionResult Create()
         {
@@ -27,9 +37,9 @@ namespace ContestGenerator.Controllers
         {
             if (!ModelState.IsValid)
                 return View();
-            if (_context.Contests.Any(x => x.ShortName == contest.ShortName))
+            if (_context.Contests.Any(x => x.Name == contest.Name))
             {
-                ModelState.AddModelError(string.Empty, $"Конкурс с названием {contest.ShortName} уже существует");
+                ModelState.AddModelError(string.Empty, $"Конкурс с названием {contest.Name} уже существует");
                 return View();
             }
             await _context.AddAsync(contest);

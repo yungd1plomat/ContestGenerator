@@ -36,6 +36,11 @@ namespace ContestGenerator.Models.Contest
         public string FullName { get; set; }
 
         /// <summary>
+        /// Описание конкурса
+        /// </summary>
+        public string Description { get; set; }
+
+        /// <summary>
         /// Правила конкурса
         /// </summary>
         public string? Rules { get; set; }
