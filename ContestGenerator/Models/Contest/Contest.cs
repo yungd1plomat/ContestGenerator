@@ -18,6 +18,11 @@
         public string LogoUrl { get; set; }
 
         /// <summary>
+        /// Ссылка на главную фотку на странице
+        /// </summary>
+        public string MainPhotoUrl { get; set; }
+
+        /// <summary>
         /// Короткое название которое отображается рядом с лого
         /// </summary>
         public string ShortName { get; set; }

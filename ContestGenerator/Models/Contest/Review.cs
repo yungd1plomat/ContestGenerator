@@ -10,7 +10,7 @@
         /// <summary>
         /// Ссылка на аватар пользователя
         /// </summary>
-        public string? Url { get; set; }
+        public string Url { get; set; }
 
         /// <summary>
         /// Имя пользователя
