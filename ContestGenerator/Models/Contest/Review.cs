@@ -5,7 +5,7 @@
     /// </summary>
     public class Review
     {
-        public int Id { get; set; }
+        public int? Id { get; set; }
 
         /// <summary>
         /// Ссылка на аватар пользователя

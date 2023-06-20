@@ -5,7 +5,7 @@
     /// </summary>
     public class FormField
     {
-        public int Id { get; set; }
+        public int? Id { get; set; }
 
         /// <summary>
         /// Название поля
@@ -16,6 +16,6 @@
         /// Предустановленные значения для поля
         /// Выведет Select с указанными опциями
         /// </summary>
-        public IEnumerable<string> Predefined { get; set; }
+        public IEnumerable<string>? Predefined { get; set; }
     }
 }

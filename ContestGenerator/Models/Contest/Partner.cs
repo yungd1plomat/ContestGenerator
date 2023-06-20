@@ -5,7 +5,7 @@
     /// </summary>
     public class Partner
     {
-        public int Id { get; set; }
+        public int? Id { get; set; }
 
         /// <summary>
         /// Название организации

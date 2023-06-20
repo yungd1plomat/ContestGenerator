@@ -7,7 +7,7 @@
     /// </summary>
     public class Step
     {
-        public int Id { get; set; }
+        public int? Id { get; set; }
 
         /// <summary>
         /// Название шага

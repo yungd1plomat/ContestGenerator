@@ -12,6 +12,7 @@ namespace ContestGenerator.Controllers
 
         }
 
+
         [HttpGet("test")]
         public IActionResult Index()
         {

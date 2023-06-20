@@ -7,7 +7,7 @@
     /// </summary>
     public class Help
     {
-        public int Id { get; set; }
+        public int? Id { get; set; }
 
         /// <summary>
         /// Название раздела

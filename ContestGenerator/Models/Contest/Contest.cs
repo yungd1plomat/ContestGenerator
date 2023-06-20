@@ -5,7 +5,7 @@
     /// </summary>
     public class Contest
     {
-        public int Id { get; set; }
+        public int? Id { get; set; }
 
         /// <summary>
         /// Английское название для идентификации
