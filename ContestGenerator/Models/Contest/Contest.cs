@@ -1,10 +1,13 @@
-﻿namespace ContestGenerator.Models.Contest
+﻿using System.ComponentModel.DataAnnotations;
+
+namespace ContestGenerator.Models.Contest
 {
     /// <summary>
     /// Абстрактное представление любого конкурса
     /// </summary>
     public class Contest
     {
+        [Key]
         public int? Id { get; set; }
 
         /// <summary>
@@ -50,7 +53,7 @@
         /// <summary>
         /// Ссылки на фотки
         /// </summary>
-        public IEnumerable<string>? PhotoUrls { get; set; }
+        public IEnumerable<PhotoUrl>? PhotoUrls { get; set; }
 
 
         /// <summary>

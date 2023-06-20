@@ -1,10 +1,13 @@
-﻿namespace ContestGenerator.Models.Contest
+﻿using System.ComponentModel.DataAnnotations;
+
+namespace ContestGenerator.Models.Contest
 {
     /// <summary>
     /// Информация о партнерах конкурса
     /// </summary>
     public class Partner
     {
+        [Key]
         public int? Id { get; set; }
 
         /// <summary>

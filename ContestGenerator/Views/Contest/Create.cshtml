@@ -1,0 +1,265 @@
+﻿<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700,900&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/tw-elements/dist/css/tw-elements.min.css" />
+    <title>Contest Generator - Create contest</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+
+<body>
+    <!--Main Navigation-->
+    @await Html.PartialAsync("_Sidebar")
+    <!--Main Navigation-->
+    <!--Main layout-->
+    <main class="flex justify-center overflow-auto"
+          style="background: no-repeat top center, linear-gradient(#070A0C, #18153A);">
+        <div class="container flex flex-col h-full pt-[60px] md:ml-60">
+            <form class="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4 flex-1"
+                  method="post">
+                <div class="text-red-700 px-4 py-3 rounded relative" role="alert">
+                    @Html.ValidationSummary(false)
+                </div>
+                <h2 class="mb-4 text-2xl font-semibold">Создание конкурса</h2>
+                <div class="flex flex-wrap -mx-3 mb-6">
+                    <div class="w-full md:w-1/3 px-3 mb-6 md:mb-0">
+                        <label class="block text-gray-700 text-sm font-bold mb-2">
+                            Название (только англ. символы)
+                        </label>
+                        <input name="Name"
+                               class="shadow-sm appearance-none border rounded w-full py-3 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                               type="text" placeholder="MZVCP_1234" required />
+                    </div>
+                    <div class="w-full md:w-1/3 px-3 mb-6 md:mb-0">
+                        <label class="block text-gray-700 text-sm font-bold mb-2">
+                            Ссылка на лого
+                        </label>
+                        <input name="LogoUrl"
+                               class="shadow-sm appearance-none border rounded w-full py-3 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                               type="text" placeholder="https://i.imgur.com/Om5UTl6.png" required />
+                    </div>
+                    <div class="w-full md:w-1/3 px-3 mb-6 md:mb-0">
+                        <label class="block text-gray-700 text-sm font-bold mb-2">
+                            Короткое название (рядом с лого)
+                        </label>
+                        <input name="ShortName"
+                               class="shadow-sm appearance-none border rounded w-full py-3 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                               type="text" placeholder="МЗВЦП" required />
+                    </div>
+                </div>
+
+                <div class="flex flex-wrap px-3 -mx-3 mb-6">
+                    <label class="block text-gray-700 text-sm font-bold mb-2">
+                        Полное название конкурса
+                    </label>
+                    <input name="FullName"
+                           class="shadow-sm appearance-none border rounded w-full py-3 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                           type="text" placeholder="Моя земля в цифровой проекции" required />
+                </div>
+
+                <div class="flex flex-wrap px-3 -mx-3 mb-6">
+                    <label class="block text-gray-700 text-sm font-bold mb-2">
+                        Ссылка на главное фото на странице
+                    </label>
+                    <input name="MainPhotoUrl"
+                           class="shadow-sm appearance-none border rounded w-full py-3 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                           type="text" placeholder="https://cdn-icons-png.flaticon.com/512/3177/3177440.png" required />
+                </div>
+
+                <div class="flex flex-wrap px-3 -mx-3 mb-6 items-center">
+                    <h1 class="text-lg font-semibold flex">Правила</h1>
+                    <button class="flex items-center justify-center" onclick="addRules()" type="button">
+                        <span class="mx-1 [&amp;>svg]:h-5 [&amp;>svg]:w-5 [&amp;>svg]:text-gray-400 dark:[&amp;>svg]:text-gray-900">
+                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
+                                 stroke="currentColor" class="h-5 w-5">
+                                <path stroke-linecap="round" stroke-linejoin="round" d="M12 4.5v15m7.5-7.5h-15"></path>
+                            </svg>
+                        </span>
+                    </button>
+                    <button class="flex items-center justify-center" onclick="removeRules()" type="button">
+                        <span class="mx-1 [&amp;>svg]:h-5 [&amp;>svg]:w-5 [&amp;>svg]:text-gray-400 dark:[&amp;>svg]:text-gray-900">
+                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
+                                 stroke="currentColor" class="h-5 w-5">
+                                <line fill="none" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" x1="4" x2="20" y1="12"
+                                      y2="12"></line>
+                            </svg>
+                        </span>
+                    </button>
+                </div>
+                <div class="flex flex-wrap px-3 -mx-3 mb-6 items-center rulesContent">
+                </div>
+
+                <div class="flex flex-wrap px-3 -mx-3 mb-6 items-center">
+                    <h1 class="text-lg font-semibold flex">История</h1>
+                    <button class="flex items-center justify-center" onclick="addHistory()" type="button">
+                        <span class="mx-1 [&amp;>svg]:h-5 [&amp;>svg]:w-5 [&amp;>svg]:text-gray-400 dark:[&amp;>svg]:text-gray-900">
+                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
+                                 stroke="currentColor" class="h-5 w-5">
+                                <path stroke-linecap="round" stroke-linejoin="round" d="M12 4.5v15m7.5-7.5h-15"></path>
+                            </svg>
+                        </span>
+                    </button>
+                    <button class="flex items-center justify-center" onclick="removeHistory()" type="button">
+                        <span class="mx-1 [&amp;>svg]:h-5 [&amp;>svg]:w-5 [&amp;>svg]:text-gray-400 dark:[&amp;>svg]:text-gray-900">
+                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
+                                 stroke="currentColor" class="h-5 w-5">
+                                <line fill="none" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" x1="4" x2="20" y1="12"
+                                      y2="12"></line>
+                            </svg>
+                        </span>
+                    </button>
+                </div>
+                <div class="flex flex-wrap px-3 -mx-3 mb-6 items-center historyContent">
+                </div>
+
+                <div class="flex flex-wrap px-3 -mx-3 mb-6 items-center">
+                    <h1 class="text-lg font-semibold flex">Отзывы</h1>
+                    <button class="flex items-center justify-center" onclick="addReview()" type="button">
+                        <span class="mx-1 [&amp;>svg]:h-5 [&amp;>svg]:w-5 [&amp;>svg]:text-gray-400 dark:[&amp;>svg]:text-gray-900">
+                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
+                                 stroke="currentColor" class="h-5 w-5">
+                                <path stroke-linecap="round" stroke-linejoin="round" d="M12 4.5v15m7.5-7.5h-15"></path>
+                            </svg>
+                        </span>
+                    </button>
+                    <button class="flex items-center justify-center" onclick="removeReview()" type="button">
+                        <span class="mx-1 [&amp;>svg]:h-5 [&amp;>svg]:w-5 [&amp;>svg]:text-gray-400 dark:[&amp;>svg]:text-gray-900">
+                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
+                                 stroke="currentColor" class="h-5 w-5">
+                                <line fill="none" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" x1="4" x2="20" y1="12"
+                                      y2="12"></line>
+                            </svg>
+                        </span>
+                    </button>
+                </div>
+                <div class="reviewsContent">
+                </div>
+
+                <div class="flex flex-wrap px-3 -mx-3 mb-6 items-center">
+                    <h1 class="text-lg font-semibold flex">Фото</h1>
+                    <button class="flex items-center justify-center" onclick="addPhoto()" type="button">
+                        <span class="mx-1 [&amp;>svg]:h-5 [&amp;>svg]:w-5 [&amp;>svg]:text-gray-400 dark:[&amp;>svg]:text-gray-900">
+                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
+                                 stroke="currentColor" class="h-5 w-5">
+                                <path stroke-linecap="round" stroke-linejoin="round" d="M12 4.5v15m7.5-7.5h-15"></path>
+                            </svg>
+                        </span>
+                    </button>
+                    <button class="flex items-center justify-center" onclick="removePhoto()" type="button">
+                        <span class="mx-1 [&amp;>svg]:h-5 [&amp;>svg]:w-5 [&amp;>svg]:text-gray-400 dark:[&amp;>svg]:text-gray-900">
+                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
+                                 stroke="currentColor" class="h-5 w-5">
+                                <line fill="none" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" x1="4" x2="20" y1="12"
+                                      y2="12"></line>
+                            </svg>
+                        </span>
+                    </button>
+                </div>
+                <div class="photoContent">
+                </div>
+
+                <div class="flex flex-wrap px-3 -mx-3 mb-6 items-center">
+                    <h1 class="text-lg font-semibold flex">Шаги для подготовки</h1>
+                    <button class="flex items-center justify-center" onclick="addStep()" type="button">
+                        <span class="mx-1 [&amp;>svg]:h-5 [&amp;>svg]:w-5 [&amp;>svg]:text-gray-400 dark:[&amp;>svg]:text-gray-900">
+                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
+                                 stroke="currentColor" class="h-5 w-5">
+                                <path stroke-linecap="round" stroke-linejoin="round" d="M12 4.5v15m7.5-7.5h-15"></path>
+                            </svg>
+                        </span>
+                    </button>
+                    <button class="flex items-center justify-center" onclick="removeStep()" type="button">
+                        <span class="mx-1 [&amp;>svg]:h-5 [&amp;>svg]:w-5 [&amp;>svg]:text-gray-400 dark:[&amp;>svg]:text-gray-900">
+                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
+                                 stroke="currentColor" class="h-5 w-5">
+                                <line fill="none" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" x1="4" x2="20" y1="12"
+                                      y2="12"></line>
+                            </svg>
+                        </span>
+                    </button>
+                </div>
+                <div class="stepsContent">
+                </div>
+
+                <div class="flex flex-wrap px-3 -mx-3 mb-6 items-center">
+                    <h1 class="text-lg font-semibold flex">Поля формы для ответа</h1>
+                    <button class="flex items-center justify-center" onclick="addField()" type="button">
+                        <span class="mx-1 [&amp;>svg]:h-5 [&amp;>svg]:w-5 [&amp;>svg]:text-gray-400 dark:[&amp;>svg]:text-gray-900">
+                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
+                                 stroke="currentColor" class="h-5 w-5">
+                                <path stroke-linecap="round" stroke-linejoin="round" d="M12 4.5v15m7.5-7.5h-15"></path>
+                            </svg>
+                        </span>
+                    </button>
+                    <button class="flex items-center justify-center" onclick="removeField()" type="button">
+                        <span class="mx-1 [&amp;>svg]:h-5 [&amp;>svg]:w-5 [&amp;>svg]:text-gray-400 dark:[&amp;>svg]:text-gray-900">
+                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
+                                 stroke="currentColor" class="h-5 w-5">
+                                <line fill="none" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" x1="4" x2="20" y1="12"
+                                      y2="12"></line>
+                            </svg>
+                        </span>
+                    </button>
+                </div>
+                <div class="formFields">
+                </div>
+
+                <div class="flex flex-wrap px-3 -mx-3 mb-6 items-center">
+                    <h1 class="text-lg font-semibold flex">В помощь участнику</h1>
+                    <button class="flex items-center justify-center" onclick="addHelp()" type="button">
+                        <span class="mx-1 [&amp;>svg]:h-5 [&amp;>svg]:w-5 [&amp;>svg]:text-gray-400 dark:[&amp;>svg]:text-gray-900">
+                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
+                                 stroke="currentColor" class="h-5 w-5">
+                                <path stroke-linecap="round" stroke-linejoin="round" d="M12 4.5v15m7.5-7.5h-15"></path>
+                            </svg>
+                        </span>
+                    </button>
+                    <button class="flex items-center justify-center" onclick="removeHelp()" type="button">
+                        <span class="mx-1 [&amp;>svg]:h-5 [&amp;>svg]:w-5 [&amp;>svg]:text-gray-400 dark:[&amp;>svg]:text-gray-900">
+                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
+                                 stroke="currentColor" class="h-5 w-5">
+                                <line fill="none" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" x1="4" x2="20" y1="12"
+                                      y2="12"></line>
+                            </svg>
+                        </span>
+                    </button>
+                </div>
+                <div class="helpsContent">
+                </div>
+
+                <div class="flex flex-wrap px-3 -mx-3 mb-6 items-center">
+                    <h1 class="text-lg font-semibold flex">Партнеры</h1>
+                    <button class="flex items-center justify-center" onclick="addPartner()" type="button">
+                        <span class="mx-1 [&amp;>svg]:h-5 [&amp;>svg]:w-5 [&amp;>svg]:text-gray-400 dark:[&amp;>svg]:text-gray-900">
+                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
+                                 stroke="currentColor" class="h-5 w-5">
+                                <path stroke-linecap="round" stroke-linejoin="round" d="M12 4.5v15m7.5-7.5h-15"></path>
+                            </svg>
+                        </span>
+                    </button>
+                    <button class="flex items-center justify-center" onclick="removePartner()" type="button">
+                        <span class="mx-1 [&amp;>svg]:h-5 [&amp;>svg]:w-5 [&amp;>svg]:text-gray-400 dark:[&amp;>svg]:text-gray-900">
+                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
+                                 stroke="currentColor" class="h-5 w-5">
+                                <line fill="none" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" x1="4" x2="20" y1="12"
+                                      y2="12"></line>
+                            </svg>
+                        </span>
+                    </button>
+                </div>
+                <div class="partnersContent">
+                </div>
+
+                <button class="bg-blue-500 w-full hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
+                        type="submit">
+                    Создать
+                </button>
+            </form>
+        </div>
+    </main>
+    <!--Main layout-->
+    <script src="https://cdn.jsdelivr.net/npm/tw-elements/dist/js/tw-elements.umd.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.7.0.min.js"
+            integrity="sha256-2Pmvv0kuTBOenSvLm6bvfBSSHrUJ+3A7x6P5Ebd07/g=" crossorigin="anonymous"></script>
+    <script src="~/js/create.js"></script>
+</body>

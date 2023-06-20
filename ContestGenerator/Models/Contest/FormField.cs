@@ -1,10 +1,13 @@
-﻿namespace ContestGenerator.Models.Contest
+﻿using System.ComponentModel.DataAnnotations;
+
+namespace ContestGenerator.Models.Contest
 {
     /// <summary>
     /// Содержит информацию о поле формы
     /// </summary>
     public class FormField
     {
+        [Key]
         public int? Id { get; set; }
 
         /// <summary>
@@ -16,6 +19,6 @@
         /// Предустановленные значения для поля
         /// Выведет Select с указанными опциями
         /// </summary>
-        public IEnumerable<string>? Predefined { get; set; }
+        public IEnumerable<Predefined>? Predefined { get; set; }
     }
 }

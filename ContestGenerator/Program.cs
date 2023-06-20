@@ -19,7 +19,7 @@ namespace ContestGenerator
                 try
                 {
                     var db = services.GetRequiredService<ApplicationDbContext>();
-                    //await db.Database.MigrateAsync();
+                    await db.Database.EnsureCreatedAsync();
 
                     var userManager = services.GetRequiredService<UserManager<IdentityUser>>();
                     await DataInitializer.SeedData(db, userManager);

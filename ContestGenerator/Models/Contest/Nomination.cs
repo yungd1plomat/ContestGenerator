@@ -1,10 +1,13 @@
-﻿namespace ContestGenerator.Models.Contest
+﻿using System.ComponentModel.DataAnnotations;
+
+namespace ContestGenerator.Models.Contest
 {
     /// <summary>
     /// Класс предоставляющий информацию о существующих номинациях
     /// </summary>
     public class Nomination
     {
+        [Key]
         public int? Id { get; set; }
 
         /// <summary>

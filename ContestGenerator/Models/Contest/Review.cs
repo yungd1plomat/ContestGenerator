@@ -1,10 +1,12 @@
-﻿namespace ContestGenerator.Models.Contest
+﻿using System.ComponentModel.DataAnnotations;
+namespace ContestGenerator.Models.Contest
 {
     /// <summary>
     /// Класс содержащий информацию об отзывах
     /// </summary>
     public class Review
     {
+        [Key]
         public int? Id { get; set; }
 
         /// <summary>

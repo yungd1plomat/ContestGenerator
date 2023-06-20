@@ -1,4 +1,6 @@
-﻿namespace ContestGenerator.Models.Contest
+﻿using System.ComponentModel.DataAnnotations;
+
+namespace ContestGenerator.Models.Contest
 {
     /// <summary>
     /// Класс предоставляет инфорацию о разделе
@@ -7,6 +9,7 @@
     /// </summary>
     public class Help
     {
+        [Key]
         public int? Id { get; set; }
 
         /// <summary>
