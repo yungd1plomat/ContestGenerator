@@ -224,7 +224,7 @@ $(document).ready(function () {
         let predefIndex = +$(this).attr('predefinedIndex');
         const fields = $(this).parent().parent().children().last();
         const input = `
-            <input name="FormFields[${fieldIndex}].Predefined[${predefIndex}]" class="mb-2 shadow-sm appearance-none border rounded w-full py-3 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" type="text" placeholder="Уфа" required>
+            <input name="FormFields[${fieldIndex}].Predefined[${predefIndex}].Value" class="mb-2 shadow-sm appearance-none border rounded w-full py-3 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" type="text" placeholder="Уфа" required>
         `;
         fields.append(input);
         predefIndex++;

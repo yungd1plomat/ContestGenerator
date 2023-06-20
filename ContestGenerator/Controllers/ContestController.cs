@@ -25,6 +25,7 @@ namespace ContestGenerator.Controllers
                                                  .Include(x => x.FormFields)
                                                  .Include(x => x.Helps)
                                                  .Include(x => x.Nominations)
+                                                 .Include(x => x.PhotoUrls)
                                                  .Include(x => x.Reviews).FirstOrDefaultAsync(x => x.Name == contestName);
         
             if (contest is null)
