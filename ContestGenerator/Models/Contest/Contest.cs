@@ -60,6 +60,10 @@ namespace ContestGenerator.Models.Contest
         /// </summary>
         public IEnumerable<PhotoUrl>? PhotoUrls { get; set; }
 
+        /// <summary>
+        /// Номинации
+        /// </summary>
+        public IEnumerable<Nomination>? Nominations { get; set; }
 
         /// <summary>
         /// Информация о шагах для подготовки и отправки работы

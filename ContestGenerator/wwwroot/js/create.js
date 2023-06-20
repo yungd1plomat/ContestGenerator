@@ -4,6 +4,7 @@ var stepIndex = 0;
 var fieldIndex = 0;
 var helpIndex = 0;
 var partnerIndex = 0;
+var nominationIndex = 0;
 
 function addRules() {
     const existingTextarea = $('.rulesContent textarea[name="Rules"]');
@@ -90,7 +91,7 @@ function removeReview() {
 function addPhoto() {
     const html = `
       <div class="photoItem flex flex-wrap px-3 -mx-3 mb-6">
-        <input name="PhotoUrls[${photoIndex}].Url"
+        <input name="PhotoUrls[${photoIndex}]"
           class="shadow-sm appearance-none border rounded w-full py-3 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
           type="text" placeholder="https://i.imgur.com/wNZKQLY.jpeg" required/>
       </div>
@@ -137,6 +138,36 @@ function removeStep() {
     if (lastStepItem.length > 0) {
         lastStepItem.remove();
         stepIndex--;
+    }
+}
+
+function addNomination() {
+    const html = `
+    <div class="nominationItem flex flex-wrap -mx-3 mb-6">
+        <div class="w-full md:w-1/2 px-3 mb-6 md:mb-0">
+            <label class="block text-gray-700 text-sm font-bold mb-2">
+                Название номинации
+            </label>
+            <input name="Nominations[${nominationIndex}].Name" class="shadow-sm appearance-none border rounded w-full py-3 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" type="text" placeholder="Лучший певец" required="">
+        </div>
+        <div class="w-full md:w-1/2 px-3 mb-6 md:mb-0">
+            <label class="block text-gray-700 text-sm font-bold mb-2">
+                Описание
+            </label>
+            <textarea class="h-32 shadow-sm appearance-none border rounded w-full py-3 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" placeholder="Спой лучше всех и победи!!" name="Nominations[${nominationIndex}].Description" required=""></textarea>
+        </div>
+    </div>
+    `;
+
+    $('.nominationsContent').append(html);
+    nominationIndex++;
+}
+
+function removeNomination() {
+    const lastStepItem = $('.nominationItem:last');
+    if (lastStepItem.length > 0) {
+        lastStepItem.remove();
+        nominationIndex--;
     }
 }
 
@@ -193,7 +224,7 @@ $(document).ready(function () {
         let predefIndex = +$(this).attr('predefinedIndex');
         const fields = $(this).parent().parent().children().last();
         const input = `
-            <input name="FormFields[${fieldIndex}].Predefined[${predefIndex}].Value" class="mb-2 shadow-sm appearance-none border rounded w-full py-3 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" type="text" placeholder="Уфа" required>
+            <input name="FormFields[${fieldIndex}].Predefined[${predefIndex}]" class="mb-2 shadow-sm appearance-none border rounded w-full py-3 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" type="text" placeholder="Уфа" required>
         `;
         fields.append(input);
         predefIndex++;
@@ -283,3 +314,4 @@ function removePartner() {
         partnerIndex--;
     }
 }
+
