@@ -23,6 +23,7 @@ namespace ContestGenerator.Controllers
             var contest = await _context.Contests.Include(x => x.Partners)
                                                  .Include(x => x.Steps)
                                                  .Include(x => x.FormFields)
+                                                 .ThenInclude(x => x.Predefined)
                                                  .Include(x => x.Helps)
                                                  .Include(x => x.Nominations)
                                                  .Include(x => x.PhotoUrls)
