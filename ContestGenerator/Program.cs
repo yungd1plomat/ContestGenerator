@@ -20,7 +20,6 @@ namespace ContestGenerator
                 {
                     var db = services.GetRequiredService<ApplicationDbContext>();
                     // Не забыть убрать на проде
-                    await db.Database.EnsureDeletedAsync();
                     await db.Database.EnsureCreatedAsync();
 
                     var userManager = services.GetRequiredService<UserManager<IdentityUser>>();

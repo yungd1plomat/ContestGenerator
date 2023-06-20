@@ -20,7 +20,13 @@ namespace ContestGenerator.Controllers
         [HttpGet("{contestName}")]
         public async Task<IActionResult> Contest(string contestName)
         {
-            var contest = await _context.Contests.FirstOrDefaultAsync(x => x.Name == contestName);
+            var contest = await _context.Contests.Include(x => x.Partners)
+                                                 .Include(x => x.Steps)
+                                                 .Include(x => x.FormFields)
+                                                 .Include(x => x.Helps)
+                                                 .Include(x => x.Nominations)
+                                                 .Include(x => x.Reviews).FirstOrDefaultAsync(x => x.Name == contestName);
+        
             if (contest is null)
                 return NotFound(contestName);
             return View(contest);
