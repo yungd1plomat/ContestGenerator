@@ -91,7 +91,7 @@ function removeReview() {
 function addPhoto() {
     const html = `
       <div class="photoItem flex flex-wrap px-3 -mx-3 mb-6">
-        <input name="PhotoUrls[${photoIndex}.Url"
+        <input name="PhotoUrls[${photoIndex}].Url"
           class="shadow-sm appearance-none border rounded w-full py-3 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
           type="text" placeholder="https://i.imgur.com/wNZKQLY.jpeg" required/>
       </div>
