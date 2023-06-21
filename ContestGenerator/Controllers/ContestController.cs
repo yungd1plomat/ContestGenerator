@@ -58,7 +58,14 @@ namespace ContestGenerator.Controllers
         [HttpGet("delete/{contestName}")]
         public async Task<IActionResult> Delete(string contestName)
         {
-            var contest = _context.Contests.FirstOrDefault(x => x.Name == contestName);
+            var contest = _context.Contests.Include(x => x.Partners)
+                                                 .Include(x => x.Steps)
+                                                 .Include(x => x.FormFields)
+                                                 .ThenInclude(x => x.Predefined)
+                                                 .Include(x => x.Helps)
+                                                 .Include(x => x.Nominations)
+                                                 .Include(x => x.PhotoUrls)
+                                                 .Include(x => x.Reviews).FirstOrDefault(x => x.Name == contestName);
             if (contest is null)
                 return BadRequest($"Конкурс {contest} не найден");
             _context.Contests.Remove(contest);
