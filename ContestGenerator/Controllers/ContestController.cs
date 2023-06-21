@@ -46,11 +46,24 @@ namespace ContestGenerator.Controllers
             var chunked = _context.Contests.ToList().Chunk(14).ToList();
             if (page > chunked.Count - 1 && chunked.Any())
                 return RedirectToAction("List", "Contest");
-
+            var contestInfos = new List<ContestInfo>();
+            if (chunked.Any())
+            {
+                foreach (var contest in chunked[page])
+                {
+                    var info = new ContestInfo()
+                    {
+                        Contest = contest,
+                    };
+                    info.ResponseCount = _context.Responses.Count(x => x.Contest == contest);
+                    info.AnswersCount = 0;
+                    contestInfos.Add(info);
+                }
+            }
             return View(new ContestsViewmodel()
             {
                 Page = page,
-                Contests = chunked.Any() ? chunked[page] : Array.Empty<Contest>(),
+                Contests = contestInfos,
             });
         }
 
