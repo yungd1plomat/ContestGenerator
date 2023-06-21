@@ -1,0 +1,90 @@
+﻿<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700,900&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/tw-elements/dist/css/tw-elements.min.css" />
+    <title>Contest Generator - Create contest</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+
+<body class="bg-[#18153A]">
+    <!--Main Navigation-->
+    @await Html.PartialAsync("_Sidebar")
+    <!--Main Navigation-->
+    <!--Main layout-->
+    <main class="flex justify-start h-full pt-[60px] flex-col gap-1 md:flex-row md:ml-60"
+          style="background: no-repeat top center, linear-gradient(#070A0C, #18153A);">
+        <div class="md:w-1/3 px-4 mb-3">
+            <form class="bg-neutral-800 text-white shadow-md rounded px-8 pt-6 pb-8 mb-4"
+                  method="post"
+                  action="/domain/add">
+                <div class="text-red-700 px-4 py-3 rounded relative" role="alert">
+                    @Html.ValidationSummary(false)
+                </div>
+                <h2 class="mb-4 text-2xl font-semibold">Добавление домена</h2>
+                <div class="flex flex-wrap px-3 -mx-3 mb-6">
+                    <label class="block text-sm font-bold mb-2">
+                        Конкурс
+                    </label>
+                    <select class="bg-gray-200 appearance-none border-2 border-gray-200 rounded w-full py-2 px-4 text-gray-700 leading-tight focus:bg-white cursor-pointer"
+                            name="Contest">
+                        @foreach (var contest in Model.Contests)
+                        {
+                            <option value="@contest.Name">@contest.Name</option>
+                        }
+                    </select required>
+                </div>
+
+                <div class="flex flex-wrap px-3 -mx-3 mb-6">
+                    <label class="block text-sm font-bold mb-2">
+                        Имя домена
+                    </label>
+                    <input name="Domain"
+                           class="shadow-sm appearance-none border rounded w-full py-3 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                           type="text" placeholder="examplecontest.com" required />
+                </div>
+
+                <button class="bg-blue-500 w-full hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
+                        type="submit">
+                    Добавить
+                </button>
+            </form>
+        </div>
+        <div class="md:w-2/3 bg-neutral-800 shadow-md rounded mx-3 mb-3">
+            <table class="min-w-full px-3 text-center text-sm font-normal">
+                <thead class="border-b font-medium dark:border-neutral-500">
+                    <tr>
+                        <th scope="col" class="px-6 py-4 text-white font-semibold">Домен</th>
+                        <th scope="col" class="px-6 py-4 text-white font-semibold">Конкурс</th>
+                        <th scope="col" class="px-6 py-4 text-white font-semibold">Действие</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var domain in Model.Domains)
+                    {
+                        <tr class="border-b dark:border-neutral-500 text-white">
+                            <td class="whitespace-nowrap px-6 py-4 text-blue-700"><a target="_blank" href="https://@domain.DomainName">@domain.DomainName</a></td>
+                            <td class="whitespace-nowrap px-6 py-4">@domain.Contest.Name</td>
+                            <td class="whitespace-nowrap px-6 py-4 text-blue-700"><a href="/domain/delete/@domain.DomainName">Delete</a></td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+            <div class="flex fixed bottom-0 right-0 mb-4 mr-4">
+                @if (Model.Page != 0)
+                {
+                    <a href="/domain/list?page=@(Model.Page - 1)"
+                       class="inline-flex items-center px-4 py-2 text-sm font-medium text-gray-500 bg-white border border-gray-300 rounded-lg hover:bg-gray-100 hover:text-gray-700 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white">
+                        Previous
+                    </a>
+                }
+                <a href="/domain/list?page=@(Model.Page + 1)"
+                   class="inline-flex items-center px-4 py-2 ml-3 text-sm font-medium text-gray-500 bg-white border border-gray-300 rounded-lg hover:bg-gray-100 hover:text-gray-700 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white">
+                    Next
+                </a>
+            </div>
+        </div>
+    </main>
+    <!--Main layout-->
+    <script src="https://cdn.jsdelivr.net/npm/tw-elements/dist/js/tw-elements.umd.min.js"></script>
+</body>
