@@ -4,6 +4,6 @@
     {
         public int Page { get; set; }
 
-        public IEnumerable<ContestInfo> Contests { get; set; }
+        public IEnumerable<ContestInfoViewmodel> Contests { get; set; }
     }
 }

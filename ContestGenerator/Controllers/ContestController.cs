@@ -46,12 +46,12 @@ namespace ContestGenerator.Controllers
             var chunked = _context.Contests.ToList().Chunk(14).ToList();
             if (page > chunked.Count - 1 && chunked.Any())
                 return RedirectToAction("List", "Contest");
-            var contestInfos = new List<ContestInfo>();
+            var contestInfos = new List<ContestInfoViewmodel>();
             if (chunked.Any())
             {
                 foreach (var contest in chunked[page])
                 {
-                    var info = new ContestInfo()
+                    var info = new ContestInfoViewmodel()
                     {
                         Contest = contest,
                     };
@@ -135,6 +135,20 @@ namespace ContestGenerator.Controllers
             await _context.Responses.AddAsync(response);
             await _context.SaveChangesAsync();
             return RedirectToAction("Contest", new { contestName = contestName });
+        }
+
+        [HttpGet("{contestName}/responses")]
+        public async Task<IActionResult> Responses(string contestName, int page = 0)
+        {
+            var responses = _context.Responses.Where(x => x.Contest.Name == contestName).ToList();
+            var chunked = _context.Responses.Include(x => x.Contest).ToList().Chunk(14).ToList();
+            if (page > chunked.Count - 1 && chunked.Any())
+                return RedirectToAction("Responses", "Contest");
+            return View("Responses", new ResponsesViewmodel()
+            {
+                Page = page,
+                Responses = chunked.Any() ? chunked[page] : Array.Empty<Response>(),
+            });
         }
     }
 }

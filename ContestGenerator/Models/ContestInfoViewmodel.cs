@@ -1,6 +1,6 @@
 ﻿namespace ContestGenerator.Models
 {
-    public class ContestInfo
+    public class ContestInfoViewmodel
     {
         public Contest.Contest Contest { get; set; }
 
