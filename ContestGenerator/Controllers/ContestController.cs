@@ -90,5 +90,38 @@ namespace ContestGenerator.Controllers
                 return NotFound(contestName);
             return View(contest);
         }
+
+        [HttpGet("{contestName}/send")]
+        [AllowAnonymous]
+        public async Task<IActionResult> GetForm(string contestName)
+        {
+            return RedirectToAction("Contest", new { contestName = contestName });
+        }
+
+        [HttpPost("{contestName}/send")]
+        [AllowAnonymous]
+        public async Task<IActionResult> GetForm(string contestName, IFormCollection form)
+        {
+            var contest = await _context.Contests.FirstOrDefaultAsync(x => x.Name == contestName);
+            if (contest is null)
+                return NotFound(contestName);
+            var response = new Response()
+            {
+                Contest = contest,
+                Responses = new List<FormResponse>(),
+            };
+            foreach (var item in form)
+            {
+                var formResponse = new FormResponse()
+                {
+                    Name = item.Key,
+                    Value = item.Value.FirstOrDefault(),
+                };
+                response.Responses.Add(formResponse);
+            }
+            await _context.Responses.AddAsync(response);
+            await _context.SaveChangesAsync();
+            return RedirectToAction("Contest", new { contestName = contestName });
+        }
     }
 }

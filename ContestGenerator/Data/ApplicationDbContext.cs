@@ -11,6 +11,8 @@ namespace ContestGenerator.Data
 
         public DbSet<Domain> Domains { get; set; }
 
+        public DbSet<Response> Responses { get; set; }
+
         public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options)
             : base(options)
         {
