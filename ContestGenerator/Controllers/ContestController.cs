@@ -144,8 +144,7 @@ namespace ContestGenerator.Controllers
         [HttpGet("{contestName}/responses")]
         public async Task<IActionResult> Responses(string contestName, int page = 0)
         {
-            var responses = _context.Responses.Where(x => x.Contest.Name == contestName).ToList();
-            var chunked = _context.Responses.Include(x => x.Contest).ToList().Chunk(14).ToList();
+            var chunked= _context.Responses.Include(x => x.Contest).Where(x => x.Contest.Name == contestName).ToList().Chunk(14).ToList();
             if (page > chunked.Count - 1 && chunked.Any())
                 return RedirectToAction("Responses", "Contest");
             return View("Responses", new ResponsesViewmodel()
