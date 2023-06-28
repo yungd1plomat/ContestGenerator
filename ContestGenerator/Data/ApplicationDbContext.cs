@@ -16,7 +16,7 @@ namespace ContestGenerator.Data
         public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options)
             : base(options)
         {
-            
+            Database.EnsureCreated();
         }
     }
 }

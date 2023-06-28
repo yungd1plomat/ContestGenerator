@@ -80,6 +80,10 @@ namespace ContestGenerator.Controllers
                                                  .Include(x => x.Reviews).FirstOrDefault(x => x.Name == contestName);
             if (contest is null)
                 return BadRequest($"Конкурс {contest} не найден");
+            var responses = _context.Responses.Where(x => x.Contest == contest);
+            if (responses.Any())
+                _context.Responses.RemoveRange(responses);
+            await _context.SaveChangesAsync();
             _context.Contests.Remove(contest);
             await _context.SaveChangesAsync();
             return RedirectToAction("List");
