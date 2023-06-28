@@ -71,19 +71,18 @@ namespace ContestGenerator.Controllers
         public async Task<IActionResult> Delete(string contestName)
         {
             var contest = _context.Contests.Include(x => x.Partners)
-                                                 .Include(x => x.Steps)
-                                                 .Include(x => x.FormFields)
-                                                 .ThenInclude(x => x.Predefined)
-                                                 .Include(x => x.Helps)
-                                                 .Include(x => x.Nominations)
-                                                 .Include(x => x.PhotoUrls)
-                                                 .Include(x => x.Reviews).FirstOrDefault(x => x.Name == contestName);
+                                           .Include(x => x.Steps)
+                                           .Include(x => x.FormFields)
+                                           .ThenInclude(x => x.Predefined)
+                                           .Include(x => x.Helps)
+                                           .Include(x => x.Nominations)
+                                           .Include(x => x.PhotoUrls)
+                                           .Include(x => x.Reviews).FirstOrDefault(x => x.Name == contestName);
             if (contest is null)
                 return BadRequest($"Конкурс {contest} не найден");
-            var responses = _context.Responses.Where(x => x.Contest == contest);
+            var responses = _context.Responses.Include(x => x.Responses).Where(x => x.Contest == contest);
             if (responses.Any())
                 _context.Responses.RemoveRange(responses);
-            await _context.SaveChangesAsync();
             _context.Contests.Remove(contest);
             await _context.SaveChangesAsync();
             return RedirectToAction("List");
