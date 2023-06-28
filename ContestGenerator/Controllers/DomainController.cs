@@ -6,6 +6,7 @@ using ContestGenerator.Models.Domain;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using System.Text.Json.Nodes;
 
 namespace ContestGenerator.Controllers
 {
@@ -96,6 +97,12 @@ namespace ContestGenerator.Controllers
             var domain = _context.Domains.FirstOrDefault(x => x.DomainName == domainName);
             if (domain is null)
                 return BadRequest($"Домен {domain} не найден");
+
+            var config = await _caddyApi.GetConfig();
+            var routes = config["apps"]["http"]["servers"]["srv0"]["routes"] as JsonArray;
+            var index = routes.ToList().FindIndex(x => x["match"][0]["host"][0].ToString() == domainName);
+            await _caddyApi.DeleteRoute(index);
+
             _context.Domains.Remove(domain);
             await _context.SaveChangesAsync();
             return RedirectToAction("List");
