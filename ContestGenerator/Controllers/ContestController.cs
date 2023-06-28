@@ -56,7 +56,7 @@ namespace ContestGenerator.Controllers
                         Contest = contest,
                     };
                     info.ResponseCount = _context.Responses.Count(x => x.Contest == contest);
-                    info.AnswersCount = 0;
+                    info.AnswersCount = _context.Questions.Count(x => x.Contest == contest);
                     contestInfos.Add(info);
                 }
             }
@@ -83,6 +83,9 @@ namespace ContestGenerator.Controllers
             var responses = _context.Responses.Include(x => x.Responses).Where(x => x.Contest == contest);
             if (responses.Any())
                 _context.Responses.RemoveRange(responses);
+            var questions = _context.Questions.Where(x => x.Contest == contest);
+            if (questions.Any())
+                _context.Questions.RemoveRange(questions);
             _context.Contests.Remove(contest);
             await _context.SaveChangesAsync();
             return RedirectToAction("List");
@@ -140,6 +143,26 @@ namespace ContestGenerator.Controllers
             return RedirectToAction("Contest", new { contestName = contestName });
         }
 
+        [HttpGet("{contestName}/question")]
+        [AllowAnonymous]
+        public async Task<IActionResult> GetQuestion(string contestName)
+        {
+            return RedirectToAction("Contest", new { contestName = contestName });
+        }
+
+        [HttpPost("{contestName}/question")]
+        [AllowAnonymous]
+        public async Task<IActionResult> GetQuestion(string contestName, Question question)
+        {
+            var contest = await _context.Contests.FirstOrDefaultAsync(x => x.Name == contestName);
+            if (contest is null)
+                return NotFound(contestName);
+            question.Contest = contest;
+            await _context.Questions.AddAsync(question);
+            await _context.SaveChangesAsync();
+            return RedirectToAction("Contest", new { contestName = contestName });
+        }
+
         [HttpGet("{contestName}/responses")]
         public async Task<IActionResult> Responses(string contestName, int page = 0)
         {
@@ -150,6 +173,19 @@ namespace ContestGenerator.Controllers
             {
                 Page = page,
                 Responses = chunked.Any() ? chunked[page] : Array.Empty<Response>(),
+            });
+        }
+
+        [HttpGet("{contestName}/questions")]
+        public async Task<IActionResult> Questions(string contestName, int page = 0)
+        {
+            var chunked = _context.Questions.Include(x => x.Contest).Where(x => x.Contest.Name == contestName).ToList().Chunk(14).ToList();
+            if (page > chunked.Count - 1 && chunked.Any())
+                return RedirectToAction("Questions", "Contest");
+            return View("Questions", new QuestionsViewmodel()
+            {
+                Page = page,
+                Questions = chunked.Any() ? chunked[page] : Array.Empty<Question>(),
             });
         }
     }

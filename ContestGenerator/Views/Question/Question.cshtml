@@ -1,0 +1,38 @@
+﻿@using ContestGenerator.Models.Contest;
+
+@model Question
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700,900&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/tw-elements/dist/css/tw-elements.min.css" />
+    <title>Вопрос @Model.Id</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+
+
+<body>
+    <main class="flex justify-center overflow-auto h-full"
+          style="background: no-repeat top center, linear-gradient(#070A0C, #18153A);">
+        <div class="container flex flex-col h-full">
+            <div class="bg-white shadow-md rounded px-8 pt-6 pb-8 my-4 flex-1">
+                <h2 class="mb-4 text-2xl font-semibold">Вопрос @Model.Id</h2>
+                <div class="flex flex-wrap px-3 -mx-3 mb-2 text-left break-all">
+                    <label class="block text-gray-700 text-lg font-bold mr-2">Email:</label>
+                    <label class="block text-gray-700 text-lg font-normal">@Model.Email</label>
+                </div>
+                <div class="flex flex-wrap px-3 -mx-3 mb-2 text-left break-all">
+                    <label class="block text-gray-700 text-lg font-bold mr-2">Имя:</label>
+                    <label class="block text-gray-700 text-lg font-normal">@Model.Name</label>
+                </div>
+                <div class="flex flex-wrap px-3 -mx-3 mb-2 text-left break-all">
+                    <label class="block text-gray-700 text-lg font-bold mr-2">Текст вопроса:</label>
+                    <label class="block text-gray-700 text-lg font-normal">@Model.Description</label>
+                </div>
+            </div>
+        </div>
+    </main>
+    <!--Main layout-->
+    <script src="https://cdn.jsdelivr.net/npm/tw-elements/dist/js/tw-elements.umd.min.js"></script>
+</body>
