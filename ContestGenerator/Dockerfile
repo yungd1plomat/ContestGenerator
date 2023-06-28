@@ -18,8 +18,4 @@ RUN dotnet publish "ContestGenerator.csproj" -c Release -o /app/publish /p:UseAp
 FROM base AS final
 WORKDIR /app
 COPY --from=publish /app/publish .
-
-# Не забыть убрать
-RUN apt-get update && apt-get install -y \ curl
-
 ENTRYPOINT ["dotnet", "ContestGenerator.dll"]
