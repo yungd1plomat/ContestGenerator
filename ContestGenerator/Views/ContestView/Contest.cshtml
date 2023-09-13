@@ -1,0 +1,372 @@
+﻿@using ContestGenerator.Models.Contest
+@model Contest
+
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700,900&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/tw-elements/dist/css/tw-elements.min.css" />
+    <title>@Model.FullName</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+
+<body>
+    <!-- Вкладки -->
+    <header class="text-gray-700 body-font border-b border-gray-200">
+        <div class="container mx-auto flex flex-wrap p-5 flex-col md:flex-row items-center">
+            <p class="flex flex-col flex-wrap md:flex-row title-font font-medium items-center text-gray-900 mb-4 md:mb-0">
+                <img class="w-20" src="@Model.LogoUrl">
+                <span class="ml-3 text-xl">@Model.ShortName</span>
+            </p>
+            <nav class="md:ml-auto flex flex-col flex-wrap md:flex-row items-center text-base justify-center">
+                @if (Model.Reviews is not null && Model.Reviews.Any())
+                {
+                    <a href="#about" class="mx-5 mb-2 md:mb-0 hover:text-gray-900 headerItem">О конкурсе</a>
+                }
+                @if (Model.Steps is not null && Model.Steps.Any())
+                {
+                    <a href="#howto" class="mx-5 mb-2 md:mb-0 hover:text-gray-900 headerItem">Как подготовить работу</a>
+                }
+                <a href="#send" class="mx-5 mb-2 md:mb-0 hover:text-gray-900 headerItem">Подать работу</a>
+                @if (Model.Helps is not null && Model.Helps.Any())
+                {
+                    <a href="#info" class="mx-5 mb-2 md:mb-0 hover:text-gray-900 headerItem">В помощь участнику</a>
+                }
+                <a href="#help" class="mx-5 mb-2 md:mb-0 hover:text-gray-900 headerItem">Обратная связь</a>
+            </nav>
+        </div>
+    </header>
+
+    <!-- Стартовая страница -->
+    <section class="text-gray-700 body-font">
+        <div class="container mx-auto flex px-5 py-24 md:flex-row flex-col items-center">
+            <div class="lg:flex-grow md:w-1/2 lg:pr-24 md:pr-16 flex flex-col md:items-start md:text-left mb-16 md:mb-0 items-center text-center">
+                <h1 class="title-font sm:text-4xl text-3xl mb-4 font-medium text-gray-900">
+                    @Model.FullName
+                </h1>
+                <p class="mb-8 leading-relaxed">
+                    @Model.Description
+                </p>
+                <div class="flex justify-center">
+                    <button class="inline-flex text-white bg-indigo-500 border-0 py-2 px-6 focus:outline-none hover:bg-indigo-600 rounded text-lg">
+                        Правила
+                    </button>
+                    <button data-te-toggle="modal" data-te-target="#exampleModalCenteredScrollable" data-te-ripple-init
+                            data-te-ripple-color="light"
+                            class="ml-4 inline-flex text-gray-700 bg-gray-200 border-0 py-2 px-6 focus:outline-none hover:bg-gray-300 rounded text-lg">
+                        История
+                    </button>
+                </div>
+            </div>
+            <div class="lg:max-w-lg lg:w-full md:w-1/2 w-5/6">
+                <img class="object-cover object-center rounded" alt="hero"
+                     src="@Model.MainPhotoUrl">
+            </div>
+        </div>
+    </section>
+
+    @if (Model.Reviews is not null &&
+         Model.Reviews.Any())
+    {
+        <!-- Отзывы -->
+        <section class="text-gray-700 body-font border-t border-gray-200" id="about">
+            <div class="container px-5 py-20 mx-auto">
+                <div class="flex flex-col text-center w-full mb-20">
+                    <h1 class="sm:text-3xl text-2xl font-medium title-font text-gray-900">Отзывы</h1>
+                </div>
+                <div class="flex flex-wrap -m-4">
+                    @foreach (var review in Model.Reviews)
+                    {
+                        <div class="p-4 md:w-1/3">
+                            <div class="flex rounded-lg h-full bg-gray-100 p-8 flex-col">
+                                <div class="flex items-center mb-3">
+                                    <div class="w-8 h-8 mr-3 inline-flex items-center justify-center flex-shrink-0 rounded-full overflow-hidden">
+                                        <img class="w-8 h-8" src="@review.Url">
+                                    </div>
+                                    <h2 class="text-gray-900 text-lg title-font font-medium">@review.Name</h2>
+                                </div>
+                                <div class="flex-grow">
+                                    <p class="leading-relaxed text-base">@review.Description</p>
+                                </div>
+                            </div>
+                        </div>
+                    }
+                </div>
+            </div>
+        </section>
+    }
+
+    @if (Model.PhotoUrls is not null && Model.Nominations is not null &&
+         Model.PhotoUrls.Any() && Model.Nominations.Any())
+    {
+        <!-- Номинации и фото --->
+        <section class="text-gray-700 body-font border-t border-gray-200">
+            <div class="container px-5 py-10 mx-auto flex flex-wrap">
+                <div class="flex flex-col text-center w-full mb-14">
+                    <h1 class="sm:text-3xl text-2xl font-medium title-font text-gray-900">Номинации</h1>
+                </div>
+                <!-- Фото -->
+                <div class="lg:w-1/2 w-full mb-10 lg:mb-0 rounded-lg overflow-hidden">
+                    <div id="carouselExampleControls" class="relative h-full" data-te-carousel-init data-te-carousel-slide>
+                        <!--Carousel items-->
+                        <div class="relative h-full w-full overflow-hidden after:clear-both after:block after:content-['']">
+                            <!--First item-->
+                            <div class="relative h-full float-left -mr-[100%] w-full transition-transform duration-[600ms] ease-in-out motion-reduce:transition-none"
+                                 data-te-carousel-item data-te-carousel-active>
+                                <img src="@Model.PhotoUrls.First().Url"
+                                     class="block w-full h-full object-cover" />
+                            </div>
+                            @foreach (var photo in Model.PhotoUrls.Skip(1))
+                            {
+                                <!--Second item-->
+                                <div class="relative h-full float-left -mr-[100%] hidden w-full transition-transform duration-[600ms] ease-in-out motion-reduce:transition-none"
+                                     data-te-carousel-item>
+                                    <img src="@photo.Url"
+                                         class="block w-full h-full object-cover" />
+                                </div>
+                            }
+                        </div>
+
+                        <!--Carousel controls - prev item-->
+                        <button class="absolute bottom-0 left-0 top-0 z-[1] flex w-[15%] items-center justify-center border-0 bg-none p-0 text-center text-white opacity-50 transition-opacity duration-150 ease-[cubic-bezier(0.25,0.1,0.25,1.0)] hover:text-white hover:no-underline hover:opacity-90 hover:outline-none focus:text-white focus:no-underline focus:opacity-90 focus:outline-none motion-reduce:transition-none"
+                                type="button" data-te-target="#carouselExampleControls" data-te-slide="prev">
+                            <span class="inline-block h-8 w-8">
+                                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
+                                     stroke="currentColor" class="h-6 w-6">
+                                    <path stroke-linecap="round" stroke-linejoin="round" d="M15.75 19.5L8.25 12l7.5-7.5" />
+                                </svg>
+                            </span>
+                            <span class="!absolute !-m-px !h-px !w-px !overflow-hidden !whitespace-nowrap !border-0 !p-0 ![clip:rect(0,0,0,0)]">Previous</span>
+                        </button>
+                        <!--Carousel controls - next item-->
+                        <button class="absolute bottom-0 right-0 top-0 z-[1] flex w-[15%] items-center justify-center border-0 bg-none p-0 text-center text-white opacity-50 transition-opacity duration-150 ease-[cubic-bezier(0.25,0.1,0.25,1.0)] hover:text-white hover:no-underline hover:opacity-90 hover:outline-none focus:text-white focus:no-underline focus:opacity-90 focus:outline-none motion-reduce:transition-none"
+                                type="button" data-te-target="#carouselExampleControls" data-te-slide="next">
+                            <span class="inline-block h-8 w-8">
+                                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
+                                     stroke="currentColor" class="h-6 w-6">
+                                    <path stroke-linecap="round" stroke-linejoin="round" d="M8.25 4.5l7.5 7.5-7.5 7.5" />
+                                </svg>
+                            </span>
+                            <span class="!absolute !-m-px !h-px !w-px !overflow-hidden !whitespace-nowrap !border-0 !p-0 ![clip:rect(0,0,0,0)]">Next</span>
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Номинации -->
+                <div class="flex flex-row flex-wrap lg:py-6 -mb-10 lg:w-1/2 lg:pl-12 lg:text-left text-center">
+                    @foreach (var nomination in Model.Nominations)
+                    {
+                        <div class="flex md:w-1/2 flex-col mb-10 lg:items-start items-center">
+                            <div class="w-12 h-12 inline-flex items-center justify-center rounded-full bg-indigo-100 text-indigo-500 mb-5">
+                                <svg fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"
+                                     stroke-width="2" class="w-6 h-6" viewBox="0 0 24 24">
+                                    <path d="M4 15s1-1 4-1 5 2 8 2 4-1 4-1V3s-1 1-4 1-5-2-8-2-4 1-4 1zM4 22v-7"></path>
+                                </svg>
+                            </div>
+                            <div class="flex-grow mr-5">
+                                <h2 class="text-gray-900 text-lg title-font font-medium mb-3">
+                                    @nomination.Name
+                                </h2>
+                                <p class="leading-relaxed text-base">
+                                    @nomination.Description
+                                </p>
+                            </div>
+                        </div>
+                    }
+                </div>
+            </div>
+        </section>
+    }
+
+    @if (Model.Steps is not null &&
+         Model.Steps.Any())
+    {
+        <!-- Как подготовить работу -->
+        <section class="text-gray-700 body-font border-t border-gray-200" id="howto">
+            <div class="container px-5 py-24 mx-auto">
+                <div class="flex flex-wrap w-full mb-20 flex-col items-center text-center">
+                    <h1 class="sm:text-3xl text-2xl font-medium title-font mb-2 text-gray-900">Как подготовить работу</h1>
+                    <p class="lg:w-1/2 w-full leading-relaxed text-base">
+                        Как правильно подготовить и подать работу для
+                        гарантированного участия в конкурсе
+                    </p>
+                </div>
+                <div class="flex flex-wrap -m-4">
+                    @foreach (var step in Model.Steps)
+                    {
+                        <div class="xl:w-1/3 md:w-1/2 p-4">
+                            <div class="h-full border border-gray-300 p-6 rounded-lg">
+                                <div class="w-10 h-10 inline-flex items-center justify-center rounded-full bg-indigo-100 text-indigo-500 mb-4">
+                                    <svg fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"
+                                         stroke-width="2" class="w-6 h-6" viewBox="0 0 24 24">
+                                        <path d="M22 12h-4l-3 9L9 3l-3 9H2"></path>
+                                    </svg>
+                                </div>
+                                <h2 class="text-lg text-gray-900 font-medium title-font mb-2">@step.Name</h2>
+                                <p class="leading-relaxed text-base whitespace-pre-line">@step.Description</p>
+                            </div>
+                        </div>
+                    }
+                </div>
+            </div>
+        </section>
+    }
+
+    <!-- Подать работу -->
+    <section class="text-gray-700 body-font border-t border-gray-200" id="send">
+        <div class="container px-5 py-24 mx-auto">
+            <div class="flex flex-wrap w-full mb-20 flex-col items-center text-center">
+                <h1 class="sm:text-3xl text-2xl font-medium title-font mb-2 text-gray-900">Подать работу</h1>
+            </div>
+            <div class="flex flex-wrap -m-4 justify-center">
+                <form class="border border-gray-300 p-10 rounded-lg"
+                      action="/ContestView/send"
+                      method="post">
+                    @foreach (var formField in Model.FormFields)
+                    {
+                        <div class="md:flex md:items-center mb-6">
+                            <div class="md:w-5/12">
+                                <label class="block text-gray-500 font-bold md:text-right mb-1 md:mb-0 pr-4">@formField.Name</label>
+                            </div>
+                            <div class="md:w-7/12">
+                                @if (formField.Predefined is null ||
+                                     !formField.Predefined.Any())
+                                {
+                                    <input class="bg-gray-200 appearance-none border-2 border-gray-200 rounded w-full py-2 px-4 text-gray-700 leading-tight focus:outline-none focus:bg-white focus:border-indigo-500"
+                                           type="text"
+                                           name="@formField.Name">
+                                }
+                                else
+                                {
+                                    <select name="@formField.Name"
+                                            class="bg-gray-200 appearance-none border-2 border-gray-200 rounded w-full py-2 px-4 text-gray-700 leading-tight focus:outline-none focus:bg-white focus:border-indigo-500 cursor-pointer">
+                                        @foreach (var predefined in formField.Predefined)
+                                        {
+                                            <option value="@predefined.Value">@predefined.Value</option>
+                                        }
+                                    </select>
+                                }
+                            </div>
+                        </div>
+                    }
+                    <div class="md:flex md:items-center">
+                        <div class="md:w-1/3"></div>
+                        <div class="md:w-2/3">
+                            <button class="text-white bg-indigo-500 border-0 py-2 px-6 focus:outline-none hover:bg-indigo-600 rounded text-lg"
+                                    type="submit">
+                                Отправить
+                            </button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </section>
+
+    @if (Model.Helps is not null &&
+         Model.Helps.Any())
+    {
+        <!-- В помощь участнику -->
+        <section class="text-gray-700 body-font border-t border-gray-200" id="info">
+            <div class="container px-5 py-24 mx-auto">
+                <div class="flex flex-wrap w-full mb-20 flex-col items-center text-center">
+                    <h1 class="sm:text-3xl text-2xl font-medium title-font mb-2 text-gray-900">В помощь участнику</h1>
+                </div>
+                <div class="flex flex-wrap -m-4">
+                    @foreach (var help in Model.Helps)
+                    {
+                        <div class="w-full md:w-1/2 p-4">
+                            <div class="h-full border border-gray-300 p-6 rounded-lg">
+                                <div class="w-10 h-10 inline-flex items-center justify-center rounded-full bg-indigo-100 text-indigo-500 mb-4">
+                                    <svg fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"
+                                         stroke-width="2" class="w-6 h-6" viewBox="0 0 24 24">
+                                        <path d="M12 20a8 8 0 1 0 0-16 8 8 0 0 0 0 16zm0 2C6.477 22 2 17.523 2 12S6.477 2 12 2s10 4.477 10 10-4.477 10-10 10zm0-8a2 2 0 1 0 0-4 2 2 0 0 0 0 4zm0 2a4 4 0 1 1 0-8 4 4 0 0 1 0 8z">
+                                        </path>
+                                    </svg>
+                                </div>
+                                <h2 class="text-2xl text-gray-900 font-medium title-font mb-2">@help.Name</h2>
+                                <p class="leading-relaxed text-base whitespace-pre-line text-lg">@help.Description</p>
+                            </div>
+                        </div>
+                    }
+                </div>
+            </div>
+        </section>
+    }
+
+    @if (Model.Partners is not null &&
+         Model.Partners.Any())
+    {
+        <!-- Партнеры -->
+        <section class="text-gray-700 body-font border-t border-gray-200">
+            <div class="container px-5 py-24 mx-auto">
+                <div class="flex flex-col text-center w-full mb-20">
+                    <h1 class="sm:text-3xl text-2xl font-medium title-font mb-4 text-gray-900">Наши партнеры</h1>
+                </div>
+                <div class="flex flex-wrap -m-2">
+                    @foreach (var partner in Model.Partners)
+                    {
+                        <div class="p-2 lg:w-1/3 md:w-1/2 w-full">
+                            <div class="h-full flex items-center border-gray-200 border p-4 rounded-lg">
+                                <img alt="team"
+                                     class="w-16 h-16 bg-gray-100 object-cover object-center flex-shrink-0 rounded-full mr-4"
+                                     src="@partner.PhotoUrl">
+                                <div class="flex-grow">
+                                    <h2 class="text-gray-900 title-font font-medium">
+                                        <a class="text-blue-600"
+                                           href="@partner.Url">@partner.Name</a>
+                                    </h2>
+                                </div>
+                            </div>
+                        </div>
+                    }
+                </div>
+            </div>
+        </section>
+    }
+
+    <!-- Задать вопрос -->
+    <section class="text-gray-700 body-font relative" id="help">
+        <div class="absolute inset-0 bg-gray-300">
+            <iframe width="100%" height="100%" frameborder="0" marginheight="0" marginwidth="0" title="map"
+                    scrolling="no"
+                    src="https://maps.google.com/maps?width=100%&amp;height=600&amp;hl=en&amp;q=Ufa&amp;ie=UTF8&amp;t=&amp;z=14&amp;iwloc=B&amp;output=embed"
+                    style="filter: grayscale(1) contrast(1.2) opacity(0.4);"></iframe>
+        </div>
+        <div class="container px-5 py-24 mx-auto flex">
+            <form class="lg:w-1/3 md:w-1/2 bg-white rounded-lg p-8 flex flex-col md:ml-auto w-full mt-10 md:mt-0 relative z-10"
+                  method="POST" action="/ContestView/question">
+                <h2 class="text-gray-900 text-lg mb-1 font-medium title-font">Задать вопрос</h2>
+                <p class="leading-relaxed mb-5 text-gray-600">Задайте интересующий вас вопрос организаторам</p>
+                <input class="bg-white rounded border border-gray-400 focus:outline-none focus:border-indigo-500 text-base px-4 py-2 mb-4"
+                       placeholder="Email" type="email" name="Email" required>
+                <input class="bg-white rounded border border-gray-400 focus:outline-none focus:border-indigo-500 text-base px-4 py-2 mb-4"
+                       placeholder="Name" type="text" name="Name" required>
+                <textarea class="bg-white rounded border border-gray-400 focus:outline-none h-32 focus:border-indigo-500 text-base px-4 py-2 mb-4 resize-none"
+                          placeholder="Message" name="Description" required></textarea>
+                <button class="text-white bg-indigo-500 border-0 py-2 px-6 focus:outline-none hover:bg-indigo-600 rounded text-lg"
+                        type="submit">
+                    Отправить
+                </button>
+            </form>
+        </div>
+    </section>
+
+    <footer class="text-gray-700 body-font">
+        <div class="bg-gray-200">
+            <div class="container mx-auto py-4 px-5 flex flex-wrap flex-col sm:flex-row">
+                <p class="text-gray-500 text-sm text-center sm:text-left">
+                    © 2023 Contest Generator —
+                    <a href="https://github.com/yungd1plomat" class="text-gray-600 ml-1" target="_blank"
+                       rel="noopener noreferrer">@@yungd1plomat</a>
+                </p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/tw-elements/dist/js/tw-elements.umd.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.7.0.min.js"
+    integrity="sha256-2Pmvv0kuTBOenSvLm6bvfBSSHrUJ+3A7x6P5Ebd07/g=" crossorigin="anonymous"></script>
+    <script src="~/js/contest.js"></script>
+</body>
