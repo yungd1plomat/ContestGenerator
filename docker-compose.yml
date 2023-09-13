@@ -36,7 +36,7 @@ services:
     environment:
       - CONNECTION_STRING=Server=mysql;Port=3308;Database=contestgenerator;Uid=dbuser;Pwd=dbuserpassword;
       - ASPNETCORE_ENVIRONMENT=Development
-      - ASPNETCORE_URLS=http://+:5000
+      - ASPNETCORE_URLS=http://+:5000;
     build:
       context: .
       dockerfile: ContestGenerator/Dockerfile

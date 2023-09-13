@@ -3,6 +3,9 @@
   auto_https off
 }
 
-:80 {
-  reverse_proxy contestgenerator:5000
+mydomain.com {
+  reverse_proxy {
+    to contestgenerator:5000
+    header_up -X-Forwarded-Host
+  }
 }

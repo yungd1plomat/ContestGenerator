@@ -1,4 +1,6 @@
-﻿namespace ContestGenerator.Models.Contest
+﻿using System.ComponentModel.DataAnnotations;
+
+namespace ContestGenerator.Models.Contest
 {
     /// <summary>
     /// Класс содержащий все ответы
@@ -6,6 +8,7 @@
     /// </summary>
     public class Response
     {
+        [Key]
         public int Id { get; set; }
 
         /// <summary>

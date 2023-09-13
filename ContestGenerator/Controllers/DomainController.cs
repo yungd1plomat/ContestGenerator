@@ -87,7 +87,7 @@ namespace ContestGenerator.Controllers
             };
             await _context.Domains.AddAsync(domain);
             await _context.SaveChangesAsync();
-            await _caddyApi.AddNewRoute(vm.Domain, vm.Contest);
+            await _caddyApi.AddNewRoute(vm.Domain);
             return RedirectToAction("List");
         }
 

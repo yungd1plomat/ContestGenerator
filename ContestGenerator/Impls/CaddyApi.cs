@@ -7,7 +7,7 @@ namespace ContestGenerator.Impls
 {
     public class CaddyApi : ICaddyApi, IDisposable
     {
-        const string payload = "{\"handle\":[{\"handler\":\"subroute\",\"routes\":[{\"handle\":[{\"handler\":\"reverse_proxy\",\"upstreams\":[{\"dial\":\"contestgenerator:5000/contest/examplecontest\"}]}]}]}],\"match\":[{\"host\":[\"examplehost\"]}],\"terminal\":true}";
+        const string payload = "{\"handle\":[{\"handler\":\"subroute\",\"routes\":[{\"handle\":[{\"handler\":\"reverse_proxy\",\"upstreams\":[{\"dial\":\"contestgenerator:5000\"}]}]}]}],\"match\":[{\"host\":[\"examplehost\"]}],\"terminal\":true}";
         
         private readonly HttpClient _httpClient;
 
@@ -19,10 +19,9 @@ namespace ContestGenerator.Impls
             _httpClient = new HttpClient();
         }
 
-        public async Task AddNewRoute(string domain, string contestName)
+        public async Task AddNewRoute(string domain)
         {
-            var jsonPayload = payload.Replace("examplehost", domain)
-                                     .Replace("examplecontest", contestName);
+            var jsonPayload = payload.Replace("examplehost", domain);
             using (HttpRequestMessage req = new HttpRequestMessage(HttpMethod.Post, $"http://caddy:2019/config/apps/http/servers/srv0/routes"))
             {
                 req.Content = new StringContent(jsonPayload, Encoding.UTF8, "application/json");
@@ -30,7 +29,7 @@ namespace ContestGenerator.Impls
                 var content = await resp.Content.ReadAsStringAsync();
                 if (!resp.IsSuccessStatusCode)
                     throw new HttpRequestException(content);
-                _logger.LogInformation($"Added new route for {domain} to {contestName}");
+                _logger.LogInformation($"Added new route for {domain}");
             }
         }
 
