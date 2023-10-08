@@ -214,12 +214,12 @@
     {
         <!-- Номинации и фото --->
         <section class="text-gray-700 body-font border-t border-gray-200">
-            <div class="container px-5 py-10 mx-auto flex flex-wrap">
-                <div class="flex flex-col text-center w-full mb-14">
+            <div class="container md:px-5 py-10 mx-auto flex flex-wrap">
+                <div class="flex flex-col text-center w-full mb-4">
                     <h1 class="sm:text-3xl text-2xl font-medium title-font text-gray-900">Номинации</h1>
                 </div>
                 <!-- Фото -->
-                <div class="lg:w-1/2 w-full mb-10 lg:mb-0 rounded-lg overflow-hidden">
+                <div class="lg:w-1/2 self-center w-full mb-10 lg:mb-0 rounded-lg overflow-hidden">
                     <div id="carouselExampleControls" 
                          class="relative h-full" 
                          data-te-carousel-init 
@@ -245,7 +245,7 @@
                             <div class="relative h-full float-left -mr-[100%] w-full transition-transform duration-[600ms] ease-in-out motion-reduce:transition-none"
                                  data-te-carousel-item data-te-carousel-active>
                                 <img src="@Model.PhotoUrls.First().Url"
-                                     class="block w-full h-full object-cover" />
+                                     class="block w-full h-screen py-10 object-cover" />
                             </div>
                             @foreach (var photo in Model.PhotoUrls.Skip(1))
                             {
@@ -253,7 +253,7 @@
                                 <div class="relative h-full float-left -mr-[100%] hidden w-full transition-transform duration-[600ms] ease-in-out motion-reduce:transition-none"
                                      data-te-carousel-item>
                                     <img src="@photo.Url"
-                                         class="block w-full h-full object-cover" />
+                                         class="block w-full h-screen py-10 object-cover" />
                                 </div>
                             }
                         </div>
@@ -284,7 +284,7 @@
                 </div>
 
                 <!-- Номинации -->
-                <div class="flex flex-row flex-wrap lg:py-6 -mb-10 lg:w-1/2 lg:pl-12 lg:text-left text-center">
+                <div class="flex flex-row flex-wrap w-full lg:py-16 -mb-10 lg:w-1/2 lg:pl-12 lg:text-left text-center">
                     @foreach (var nomination in Model.Nominations)
                     {
                         <div class="flex w-full md:w-1/2 flex-col mb-10 lg:items-start items-center">
@@ -294,7 +294,7 @@
                                     <path d="M4 15s1-1 4-1 5 2 8 2 4-1 4-1V3s-1 1-4 1-5-2-8-2-4 1-4 1zM4 22v-7"></path>
                                 </svg>
                             </div>
-                            <div class="flex-grow mr-5">
+                            <div class="flex-grow md:mr-5">
                                 <h2 class="text-gray-900 text-lg title-font font-medium mb-3">
                                     @nomination.Name
                                 </h2>
