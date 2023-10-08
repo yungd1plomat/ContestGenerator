@@ -20,6 +20,11 @@ namespace ContestGenerator.Models.Contest
         /// <summary>
         /// Описание шага
         /// </summary>
-        public string Description { get; set; }
+        public string? Description { get; set; }
+
+        /// <summary>
+        /// Ссылка на видео
+        /// </summary> 
+        public string? VideoUrl { get; set; }
     }
 }

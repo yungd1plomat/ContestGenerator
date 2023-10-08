@@ -316,7 +316,20 @@
                                     </svg>
                                 </div>
                                 <h2 class="text-lg text-gray-900 font-medium title-font mb-2">@step.Name</h2>
-                                <p class="leading-relaxed text-base whitespace-pre-line break-all">@step.Description</p>
+                                @if (!string.IsNullOrEmpty(step.Description))
+                                {
+                                    <p class="leading-relaxed text-base whitespace-pre-line break-all">@step.Description</p>
+                                }
+                                @if (!string.IsNullOrEmpty(step.VideoUrl))
+                                {
+                                    <iframe frameborder="0" 
+                                            allow="clipboard-write; autoplay" 
+                                            webkitallowfullscreen 
+                                            mozallowfullscreen 
+                                            allowfullscreen 
+                                            src="@step.VideoUrl" 
+                                            class="w-full h-[250px] mt-7"></iframe>
+                                }
                             </div>
                         </div>
                     }

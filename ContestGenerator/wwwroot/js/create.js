@@ -117,12 +117,18 @@ function addStep() {
             Название шага
           </label>
           <input name="Steps[${stepIndex}].Name"
-            class="shadow-sm appearance-none border rounded w-full py-3 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+            class="shadow-sm appearance-none border rounded w-full py-3 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline mb-2"
             type="text" placeholder="Выбери тему" required>
+          <label class="block text-gray-700 text-sm font-bold mb-2">
+            * Ссылка на видео
+          </label>
+          <input name="Steps[${stepIndex}].VideoUrl"
+            class="shadow-sm appearance-none border rounded w-full py-3 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline mb-2"
+            type="text" placeholder="https://rutube.ru/play/embed/c6cc4d620b1d4338901770a44b3e82f4">
         </div>
         <div class="w-full md:w-1/2 px-3 mb-6 md:mb-0">
           <label class="block text-gray-700 text-sm font-bold mb-2">
-            Текст шага
+            * Описание
           </label>
           <textarea class="h-32 shadow-sm appearance-none border rounded w-full py-3 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" placeholder="Соберись с мыслями" name="Steps[${stepIndex}].Description" required></textarea>
         </div>
@@ -283,7 +289,7 @@ function addPartner() {
             </label>
             <input name="Partners[${partnerIndex}].Name"
                 class="shadow-sm appearance-none border rounded w-full py-3 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-                type="text" placeholder="Газпром" />
+                type="text" placeholder="Газпром" required/>
             </div>
             <div class="w-full md:w-1/3 px-3 mb-6 md:mb-0">
             <label class="block text-gray-700 text-sm font-bold mb-2">
@@ -291,7 +297,7 @@ function addPartner() {
             </label>
             <input name="Partners[${partnerIndex}].Url"
                 class="shadow-sm appearance-none border rounded w-full py-3 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-                type="text" placeholder="https://www.gazprom.ru/" />
+                type="text" placeholder="https://www.gazprom.ru/" required/>
             </div>
             <div class="w-full md:w-1/3 px-3 mb-6 md:mb-0">
             <label class="block text-gray-700 text-sm font-bold mb-2">
@@ -299,7 +305,7 @@ function addPartner() {
             </label>
             <input name="Partners[${partnerIndex}].PhotoUrl"
                 class="shadow-sm appearance-none border rounded w-full py-3 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-                type="text" placeholder="https://cdn-icons-png.flaticon.com/512/3177/3177440.png" />
+                type="text" placeholder="https://cdn-icons-png.flaticon.com/512/3177/3177440.png" required/>
         </div>
     </div>
     `;
