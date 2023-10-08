@@ -5,7 +5,7 @@ var fieldIndex = 0;
 var helpIndex = 0;
 var partnerIndex = 0;
 var nominationIndex = 0;
-
+var newsIndex = 0;
 function addRules() {
     const existingTextarea = $('.rulesContent textarea[name="Rules"]');
     if (existingTextarea.length === 0) {
@@ -85,6 +85,56 @@ function removeReview() {
     if (lastReviewItem.length > 0) {
         lastReviewItem.remove();
         reviewIndex--;
+    }
+}
+
+function addNews() {
+    const html = `  
+    <div class="newsItem flex flex-wrap -mx-3 mb-6">
+        <div class="w-full md:w-1/2 px-3 mb-6 md:mb-0">
+          <div class="mb-1">
+            <label class="block text-gray-700 text-sm font-bold mb-2">
+              Название
+            </label>
+            <input name="News[${newsIndex}].Name"
+              class="shadow-sm appearance-none border rounded w-full py-3 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+              type="text" placeholder="Была создана новая платформа для проведения олимпиад" required="">
+          </div>
+          <div class="mb-1">
+            <label class="block text-gray-700 text-sm font-bold mb-2">
+              Фото
+            </label>
+            <input name="News[${newsIndex}].PhotoLink"
+              class="shadow-sm appearance-none border rounded w-full py-3 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+              type="text" placeholder="https://cdn-icons-png.flaticon.com/512/3177/3177440.png" required="">
+          </div>
+          <div class="mb-1">
+            <label class="block text-gray-700 text-sm font-bold mb-2">
+              Ссылка
+            </label>
+            <input name="News[${newsIndex}].Link"
+              class="shadow-sm appearance-none border rounded w-full py-3 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+              type="text" placeholder="https://bspu.ru/news/1" required="">
+          </div>
+        </div>
+        <div class="w-full md:w-1/2 h-full px-3 mb-6 md:mb-0">
+          <label class="block text-gray-700 text-sm font-bold mb-2">
+            Описание
+          </label>
+          <textarea placeholder="На днях была создана и протестирована новая платформа для проведения олимпиад" name="News[${newsIndex}].Description" required=""
+            class="h-52 shadow-sm appearance-none border rounded w-full py-3 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"></textarea>
+        </div>
+    </div>`;
+
+    $('.newsContent').append(html);
+    newsIndex++;
+}
+
+function removeNews() {
+    const lastNewsItem = $('.newsItem:last');
+    if (lastNewsItem.length > 0) {
+        lastNewsItem.remove();
+        newsIndex--;
     }
 }
 

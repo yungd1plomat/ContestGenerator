@@ -77,6 +77,7 @@ namespace ContestGenerator.Controllers
                                            .Include(x => x.Helps)
                                            .Include(x => x.Nominations)
                                            .Include(x => x.PhotoUrls)
+                                           .Include(x => x.News)
                                            .Include(x => x.Reviews).FirstOrDefault(x => x.Name == contestName);
             if (contest is null)
                 return BadRequest($"Конкурс {contest} не найден");

@@ -30,7 +30,8 @@ namespace ContestGenerator.Controllers
                                                .Include(x => x.Contest.Helps)
                                                .Include(x => x.Contest.Nominations)
                                                .Include(x => x.Contest.PhotoUrls)
-                                               .Include(x => x.Contest.Reviews).FirstOrDefaultAsync(/*x => x.DomainName == domainName*/);
+                                               .Include(x => x.Contest.News)
+                                               .Include(x => x.Contest.Reviews).FirstOrDefaultAsync(x => x.DomainName == domainName);
             if (domain is null)
                 return NotFound(domainName);
             return View(domain.Contest);
@@ -41,7 +42,7 @@ namespace ContestGenerator.Controllers
         {
             _logger.LogInformation($"Received form from {domainName} with {form}");
             var domain = await _context.Domains.Include(x => x.Contest)
-                                               .FirstOrDefaultAsync(/*x => x.DomainName == domainName*/);
+                                               .FirstOrDefaultAsync(x => x.DomainName == domainName);
             if (domain is null)
                 return NotFound(domainName);
             var response = new Response()
