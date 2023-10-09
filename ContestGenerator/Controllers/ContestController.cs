@@ -11,6 +11,8 @@ namespace ContestGenerator.Controllers
     [Authorize]
     public class ContestController : Controller
     {
+        const int chunkSize = 14;
+
         private readonly ApplicationDbContext _context;
 
         public ContestController(ApplicationDbContext dbContext) 
@@ -43,7 +45,7 @@ namespace ContestGenerator.Controllers
         [HttpGet("list")]
         public async Task<IActionResult> List(int page = 0)
         {
-            var chunked = _context.Contests.ToList().Chunk(14).ToList();
+            var chunked = _context.Contests.ToList().Chunk(chunkSize).ToList();
             if (page > chunked.Count - 1 && chunked.Any())
                 return RedirectToAction("List", "Contest");
             var contestInfos = new List<ContestInfoViewmodel>();
