@@ -14,6 +14,8 @@ namespace ContestGenerator.Controllers
     [Authorize]
     public class DomainController : Controller
     {
+        const int chunkSize = 14;
+
         private readonly ApplicationDbContext _context;
 
         private readonly ICaddyApi _caddyApi;
@@ -37,7 +39,7 @@ namespace ContestGenerator.Controllers
                 }
             }
             var contests = await _context.Contests.ToListAsync();
-            var domains = _context.Domains.ToList().Chunk(14).ToList();
+            var domains = _context.Domains.ToList().Chunk(chunkSize).ToList();
             if (page > domains.Count - 1 && domains.Any())
                 return RedirectToAction("List", "Domain");
             return View(new DomainsViewmodel()
