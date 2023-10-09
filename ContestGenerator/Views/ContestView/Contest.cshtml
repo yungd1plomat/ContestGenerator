@@ -478,6 +478,34 @@
         </section>
     }
 
+    @if (Model.Files is not null &&
+         Model.Files.Any())
+    {
+        <!-- Прикрепленные файлы -->
+        <section class="text-gray-700 body-font border-t border-gray-200">
+            <div class="container flex flex-wrap px-5 py-24 mx-auto justify-center">
+                <div class="flex flex-wrap w-full mb-10 flex-col items-center text-center">
+                    <h1 class="sm:text-3xl text-2xl font-medium title-font mb-2 text-gray-900">Прикрепленные файлы</h1>
+                </div>
+                <div class="flex justify-center flex-wrap p-5 w-full align-center mb-6 mx-5 rounded-lg bg-white shadow-[0_2px_15px_-3px_rgba(0,0,0,0.07),0_10px_20px_-2px_rgba(0,0,0,0.04)]">
+                    @foreach (var file in Model.Files)
+                    {
+                        <div class="flex rounded-md border border-gray-200 m-2 md:w-1/4">
+                            <div class="flex items-center ml-5 mr-2 my-5 min-w-fit">
+                                <img src="https://cdn-icons-png.flaticon.com/512/2965/2965335.png" class="h-10 w-10">
+                            </div>
+                            <div class="flex items-center mr-5 my-5">
+                                <a href="@file.Path" class="text-blue-800 break-normal">
+                                    @file.Name
+                                </a>
+                            </div>
+                        </div>
+                    }
+                </div>
+            </div>
+        </section>
+    }
+
     @if (Model.Partners is not null &&
          Model.Partners.Any())
     {

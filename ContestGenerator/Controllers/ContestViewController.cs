@@ -31,6 +31,7 @@ namespace ContestGenerator.Controllers
                                                .Include(x => x.Contest.Nominations)
                                                .Include(x => x.Contest.PhotoUrls)
                                                .Include(x => x.Contest.News)
+                                               .Include(x => x.Contest.Files)
                                                .Include(x => x.Contest.Reviews).FirstOrDefaultAsync(x => x.DomainName == domainName);
             if (domain is null)
                 return NotFound(domainName);

@@ -1,4 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using Microsoft.AspNetCore.Mvc.ModelBinding;
+using System.ComponentModel.DataAnnotations;
 
 namespace ContestGenerator.Models.File
 {
@@ -9,16 +10,21 @@ namespace ContestGenerator.Models.File
     public class FileModel
     {
         [Key]
-        public int Id { get; set; }
+        public int? Id { get; set; }
 
         /// <summary>
         /// Название файла
         /// </summary>
-        public string Name { get; set; }
+        public string? Name { get; set; }
 
         /// <summary>
         /// Путь файла
         /// </summary>
-        public string Path { get; set; }
+        public string? Path { get; set; }
+
+        /// <summary>
+        /// Связь многие ко многим, один файл может относиться к разным олимпиадам
+        /// </summary>
+        public IEnumerable<Contest.Contest>? Contests { get; set; }
     }
 }
