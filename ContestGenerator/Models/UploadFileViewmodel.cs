@@ -1,4 +1,6 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using ContestGenerator.Helpers;
+using SignHere.Database;
+using System.ComponentModel.DataAnnotations;
 
 namespace ContestGenerator.Models
 {
@@ -6,6 +8,7 @@ namespace ContestGenerator.Models
     {
         [Required]
         [Display(Name = "Файл")]
+        [AllowedExtensions]
         public IFormFile File { get; set; }
 
         [Required]
