@@ -83,7 +83,7 @@ namespace ContestGenerator.Models.Contest
         /// <summary>
         /// Новости
         /// </summary>
-        public IEnumerable<News> News { get; set; }
+        public IEnumerable<News>? News { get; set; }
 
         /// <summary>
         /// Партнеры конкурса
