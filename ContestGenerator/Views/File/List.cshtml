@@ -1,0 +1,87 @@
+﻿@using ContestGenerator.Models;
+@model FileListViewmodel
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700,900&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/tw-elements/dist/css/tw-elements.min.css" />
+    <title>Contest Generator - Files</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+
+<body class="bg-[#18153A]">
+    <!--Main Navigation-->
+    @await Html.PartialAsync("_Sidebar")
+    <!--Main Navigation-->
+    <!--Main layout-->
+    <main class="flex justify-start h-full pt-[60px] flex-col gap-1 md:flex-row md:ml-60"
+          style="background: no-repeat top center, linear-gradient(#070A0C, #18153A);">
+        <div class="md:w-1/3 px-4 mb-3">
+            <form class="bg-neutral-800 text-white shadow-md rounded px-8 pt-6 pb-8 mb-4"
+                  method="post"
+                  enctype="multipart/form-data"
+                  action="/file/upload">
+                <div class="text-red-700 px-4 py-3 rounded relative" role="alert">
+                    @Html.ValidationSummary(false)
+                </div>
+                <h2 class="mb-4 text-2xl font-semibold">Добавление домена</h2>
+                <div class="flex flex-wrap px-3 -mx-3 mb-6">
+                    <label class="block text-sm font-bold mb-2">Файл</label>
+                    <input class="relative m-0 block w-full min-w-0 flex-auto rounded border border-solid border-neutral-300 bg-clip-padding px-3 py-[0.32rem] text-base font-normal text-neutral-700 transition duration-300 ease-in-out file:-mx-3 file:-my-[0.32rem] file:overflow-hidden file:rounded-none file:border-0 file:border-solid file:border-inherit file:bg-neutral-100 file:px-3 file:py-[0.32rem] file:text-neutral-700 file:transition file:duration-150 file:ease-in-out file:[border-inline-end-width:1px] file:[margin-inline-end:0.75rem] hover:file:bg-neutral-200 focus:border-primary focus:text-neutral-700 focus:shadow-te-primary focus:outline-none dark:border-neutral-600 dark:text-neutral-200 dark:file:bg-neutral-700 dark:file:text-neutral-100 dark:focus:border-primary"
+                           type="File"
+                           name="File"
+                           id="formFile" />
+                </div>
+
+                <div class="flex flex-wrap px-3 -mx-3 mb-6">
+                    <label class="block text-sm font-bold mb-2">
+                        Название
+                    </label>
+                    <input name="Name"
+                           class="shadow-sm appearance-none border rounded w-full py-3 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                           type="text" placeholder="Положение о конкурсе 09.2023" required />
+                </div>
+
+                <button class="bg-blue-500 w-full hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
+                        type="submit">
+                    Загрузить
+                </button>
+            </form>
+        </div>
+        <div class="md:w-2/3 bg-neutral-800 shadow-md rounded mx-3 mb-3">
+            <table class="min-w-full px-3 text-center text-sm font-normal">
+                <thead class="border-b font-medium dark:border-neutral-500">
+                    <tr>
+                        <th scope="col" class="px-6 py-4 text-white font-semibold">Название</th>
+                        <th scope="col" class="px-6 py-4 text-white font-semibold">Действие</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var file in Model.Files)
+                    {
+                        <tr class="border-b dark:border-neutral-500 text-white">
+                            <td class="whitespace-nowrap px-6 py-4 text-blue-700"><a target="_blank" href="/@file.Path">@file.Name</a></td>
+                            <td class="whitespace-nowrap px-6 py-4 text-blue-700"><a href="/file/delete/@file.Id">Delete</a></td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+            <div class="flex fixed bottom-0 right-0 mb-4 mr-4">
+                @if (Model.Page != 0)
+                {
+                    <a href="/domain/list?page=@(Model.Page - 1)"
+                       class="inline-flex items-center px-4 py-2 text-sm font-medium text-gray-500 bg-white border border-gray-300 rounded-lg hover:bg-gray-100 hover:text-gray-700 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white">
+                        Previous
+                    </a>
+                }
+                <a href="/domain/list?page=@(Model.Page + 1)"
+                   class="inline-flex items-center px-4 py-2 ml-3 text-sm font-medium text-gray-500 bg-white border border-gray-300 rounded-lg hover:bg-gray-100 hover:text-gray-700 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white">
+                    Next
+                </a>
+            </div>
+        </div>
+    </main>
+    <!--Main layout-->
+    <script src="https://cdn.jsdelivr.net/npm/tw-elements/dist/js/tw-elements.umd.min.js"></script>
+</body>
