@@ -15,11 +15,42 @@ namespace ContestGenerator.Controllers
 
         private readonly ApplicationDbContext _context;
 
-        public ContestController(ApplicationDbContext dbContext) 
+        public ContestController(ApplicationDbContext dbContext)
         {
             _context = dbContext;
         }
 
+        [HttpPost("edit/{id}")]
+        public async Task<IActionResult> Edit(int id, [FromForm] Contest contest)
+        {
+            _context.Contests.Update(contest);
+            await _context.SaveChangesAsync();
+            return RedirectToAction("Edit");
+        }
+
+        [HttpGet("edit/{id}")]
+        public async Task<IActionResult> Edit(int id)
+        {
+            var contest = await _context.Contests.Include(x => x.Partners)
+                                                 .Include(x => x.Steps)
+                                                 .Include(x => x.FormFields)
+                                                 .ThenInclude(x => x.Predefined)
+                                                 .Include(x => x.Helps)
+                                                 .Include(x => x.Nominations)
+                                                 .Include(x => x.PhotoUrls)
+                                                 .Include(x => x.News)
+                                                 .Include(x => x.Files)
+                                                 .Include(x => x.Reviews).FirstOrDefaultAsync(x => x.Id == id);
+            if (contest is null)
+                return RedirectToAction("List");
+            var files = await _context.Files.ToListAsync();
+            var editVm = new EditViewmodel()
+            {
+                Contest = contest,
+                Files = files,
+            };
+            return View(editVm);
+        }
 
         [HttpGet("create")]
         public async Task<IActionResult> Create()
@@ -29,7 +60,7 @@ namespace ContestGenerator.Controllers
         }
 
         [HttpPost("create")]
-        public async Task<IActionResult> Create([FromForm] Contest contest) 
+        public async Task<IActionResult> Create([FromForm] Contest contest)
         {
             if (!ModelState.IsValid)
                 return View(await _context.Files.ToListAsync());
@@ -38,8 +69,11 @@ namespace ContestGenerator.Controllers
                 ModelState.AddModelError(string.Empty, $"Конкурс с названием {contest.Name} уже существует");
                 return View(await _context.Files.ToListAsync());
             }
-            var fileIds = contest.Files.Select(x => x.Id).ToList();
-            contest.Files = _context.Files.Where(x => fileIds.Contains(x.Id)).ToList();
+            if (contest.Files != null)
+            {
+                var fileIds = contest.Files.Select(x => x.Id).ToList();
+                contest.Files = _context.Files.Where(x => fileIds.Contains(x.Id)).ToList();
+            }
             await _context.AddAsync(contest);
             await _context.SaveChangesAsync();
             return View(await _context.Files.ToListAsync());
@@ -100,7 +134,7 @@ namespace ContestGenerator.Controllers
         [HttpGet("{contestName}/responses")]
         public async Task<IActionResult> Responses(string contestName, int page = 0)
         {
-            var chunked= _context.Responses.Include(x => x.Contest).Where(x => x.Contest.Name == contestName).ToList().Chunk(14).ToList();
+            var chunked = _context.Responses.Include(x => x.Contest).Where(x => x.Contest.Name == contestName).ToList().Chunk(14).ToList();
             if (page > chunked.Count - 1 && chunked.Any())
                 return RedirectToAction("Responses", "Contest");
             return View("Responses", new ResponsesViewmodel()
