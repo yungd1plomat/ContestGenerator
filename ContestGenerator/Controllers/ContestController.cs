@@ -11,6 +11,8 @@ namespace ContestGenerator.Controllers
     [Authorize]
     public class ContestController : Controller
     {
+        const int chunkSize = 14;
+
         private readonly ApplicationDbContext _context;
 
         public ContestController(ApplicationDbContext dbContext) 
@@ -20,30 +22,33 @@ namespace ContestGenerator.Controllers
 
 
         [HttpGet("create")]
-        public IActionResult Create()
+        public async Task<IActionResult> Create()
         {
-            return View();
+            var files = await _context.Files.ToListAsync();
+            return View(files);
         }
 
         [HttpPost("create")]
         public async Task<IActionResult> Create([FromForm] Contest contest) 
         {
             if (!ModelState.IsValid)
-                return View();
+                return View(await _context.Files.ToListAsync());
             if (_context.Contests.Any(x => x.Name == contest.Name))
             {
                 ModelState.AddModelError(string.Empty, $"Конкурс с названием {contest.Name} уже существует");
-                return View();
+                return View(await _context.Files.ToListAsync());
             }
+            var fileIds = contest.Files.Select(x => x.Id).ToList();
+            contest.Files = _context.Files.Where(x => fileIds.Contains(x.Id)).ToList();
             await _context.AddAsync(contest);
             await _context.SaveChangesAsync();
-            return View();
+            return View(await _context.Files.ToListAsync());
         }
 
         [HttpGet("list")]
         public async Task<IActionResult> List(int page = 0)
         {
-            var chunked = _context.Contests.ToList().Chunk(14).ToList();
+            var chunked = _context.Contests.ToList().Chunk(chunkSize).ToList();
             if (page > chunked.Count - 1 && chunked.Any())
                 return RedirectToAction("List", "Contest");
             var contestInfos = new List<ContestInfoViewmodel>();
@@ -77,6 +82,7 @@ namespace ContestGenerator.Controllers
                                            .Include(x => x.Helps)
                                            .Include(x => x.Nominations)
                                            .Include(x => x.PhotoUrls)
+                                           .Include(x => x.News)
                                            .Include(x => x.Reviews).FirstOrDefault(x => x.Name == contestName);
             if (contest is null)
                 return BadRequest($"Конкурс {contest} не найден");

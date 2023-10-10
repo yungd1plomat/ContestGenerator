@@ -1,4 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using ContestGenerator.Models.File;
+using System.ComponentModel.DataAnnotations;
 
 namespace ContestGenerator.Models.Contest
 {
@@ -81,8 +82,18 @@ namespace ContestGenerator.Models.Contest
         public IEnumerable<Help>? Helps { get; set; }
 
         /// <summary>
+        /// Новости
+        /// </summary>
+        public IEnumerable<News>? News { get; set; }
+
+        /// <summary>
         /// Партнеры конкурса
         /// </summary>
         public IEnumerable<Partner>? Partners { get; set; }
+
+        /// <summary>
+        /// Прикрепленные файлы
+        /// </summary>
+        public IEnumerable<FileModel>? Files { get; set; }
     }
 }

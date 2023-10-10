@@ -1,4 +1,5 @@
-﻿using ContestGenerator.Data;
+﻿using ContestGenerator.Abstractions;
+using ContestGenerator.Data;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -9,11 +10,16 @@ namespace ContestGenerator.Controllers
     [Authorize]
     public class ResponseController : Controller
     {
+        const int localTimeOffset = 7;
+
         private readonly ApplicationDbContext _context;
 
-        public ResponseController(ApplicationDbContext dbContext)
+        private readonly IExcelRepo _excelRepo;
+
+        public ResponseController(ApplicationDbContext dbContext, IExcelRepo excelRepo)
         {
             _context = dbContext;
+            _excelRepo = excelRepo;
         }
 
         [HttpGet("{id}")]
@@ -34,6 +40,20 @@ namespace ContestGenerator.Controllers
             _context.Responses.Remove(response);
             await _context.SaveChangesAsync();
             return Redirect(HttpContext.Request.Headers.Referer.FirstOrDefault());
+        }
+
+        [HttpGet("download/{contestName}")]
+        public async Task<IActionResult> Download(string contestName)
+        {
+            var date = DateTimeOffset.UtcNow.AddHours(localTimeOffset);
+            var filename = $"[{date.ToString("dd.MM.yy_HH-mm")}]{contestName}_responses.xlsx";
+            var responses = _context.Responses.Include(x => x.Responses)
+                .Include(x => x.Contest)
+                .Where(x => x.Contest.Name == contestName).ToList();
+            if (!responses.Any())
+                return RedirectToAction("List", "Contest");
+            var sheet = await _excelRepo.Generate(responses);
+            return File(sheet, "application/vnd.ms-excel", filename);
         }
     }
 }

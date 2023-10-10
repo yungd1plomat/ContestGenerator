@@ -24,6 +24,7 @@ namespace ContestGenerator
                 options.UseMySql(connectionString, new MySqlServerVersion(new Version(8, 0, 27)), opt => opt.EnableRetryOnFailure(5)));
             services.AddDatabaseDeveloperPageExceptionFilter();
             services.AddScoped<ICaddyApi, CaddyApi>();
+            services.AddScoped<IExcelRepo, ExcelRepo>();
             services.Configure<SecurityStampValidatorOptions>(options =>
             {
                 // Enables immediate logout, after updating the user's security stamp.

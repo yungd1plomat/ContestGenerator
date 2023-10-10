@@ -1,11 +1,4 @@
-﻿var reviewIndex = 0;
-var photoIndex = 0;
-var stepIndex = 0;
-var fieldIndex = 0;
-var helpIndex = 0;
-var partnerIndex = 0;
-var nominationIndex = 0;
-var newsIndex = 0;
+﻿
 function addRules() {
     const existingTextarea = $('.rulesContent textarea[name="Rules"]');
     if (existingTextarea.length === 0) {
