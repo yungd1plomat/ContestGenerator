@@ -24,10 +24,6 @@
                     @Html.ValidationSummary(false)
                 </div>
                 <h2 class="mb-4 text-2xl font-semibold">Создание конкурса</h2>
-                <input name="Id"
-                       class="hidden"
-                       value="@Model.Contest.Id"
-                       required />
 
                 <div class="flex flex-wrap -mx-3 mb-6">
                     <div class="w-full md:w-1/3 px-3 mb-6 md:mb-0">
@@ -180,10 +176,6 @@
                         {
                             <div class="reviewItem flex flex-wrap -mx-3 mb-6">
                                 <div class="w-full md:w-1/2 px-3 mb-6 md:mb-0">
-                                    <input name="Reviews[@i].Id"
-                                           class="hidden"
-                                           value="@Model.Contest.Reviews.ElementAt(i).Id"
-                                           required />
                                     <div class="mb-1">
                                         <label class="block text-gray-700 text-sm font-bold mb-2">
                                             Имя
@@ -241,10 +233,6 @@
                         for (int i = 0; i < Model.Contest.PhotoUrls.Count(); i++)
                         {
                             <div class="photoItem flex flex-wrap px-3 -mx-3 mb-6">
-                                <input name="PhotoUrls[@i].Id"
-                                       class="hidden"
-                                       value="@Model.Contest.PhotoUrls.ElementAt(i).Id"
-                                       required />
                                 <input name="PhotoUrls[@i].Url"
                                        class="shadow-sm appearance-none border rounded w-full py-3 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
                                        type="text" placeholder="https://i.imgur.com/wNZKQLY.jpeg"
@@ -285,10 +273,6 @@
                                     <label class="block text-gray-700 text-sm font-bold mb-2">
                                         Название шага
                                     </label>
-                                    <input name="Steps[@i].Id"
-                                           class="hidden"
-                                           value="@Model.Contest.Steps.ElementAt(i).Id"
-                                           required />
                                     <input name="Steps[@i].Name"
                                            class="shadow-sm appearance-none border rounded w-full py-3 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline mb-2"
                                            type="text" placeholder="Выбери тему"
@@ -340,10 +324,6 @@
                         for (int i = 0; i < Model.Contest.Nominations.Count(); i++)
                         {
                             <div class="nominationItem flex flex-wrap -mx-3 mb-6">
-                                <input name="Nominations[@i].Id"
-                                       class="hidden"
-                                       value="@Model.Contest.Nominations.ElementAt(i).Id"
-                                       required />
                                 <div class="w-full md:w-1/2 px-3 mb-6 md:mb-0">
                                     <label class="block text-gray-700 text-sm font-bold mb-2">
                                         Название номинации
@@ -392,10 +372,6 @@
                         for (int i = 0; i < Model.Contest.FormFields.Count(); i++)
                         {
                             <div class="formField flex flex-wrap -mx-3 mb-6">
-                                <input name="FormFields[@i].Id"
-                                       class="hidden"
-                                       value="@Model.Contest.FormFields.ElementAt(i).Id"
-                                       required />
                                 <div class="w-full md:w-1/2 px-3 mb-6 md:mb-0">
                                     <label class="block text-gray-700 text-sm font-bold mb-2">
                                         Название поля
@@ -436,10 +412,6 @@
                                         {
                                             for (int p = 0; p < Model.Contest.FormFields.ElementAt(i).Predefined.Count(); p++)
                                             {
-                                                <input name="FormFields[@i].Predefined[@p].Id"
-                                                       class="hidden"
-                                                       value="@Model.Contest.FormFields.ElementAt(i).Predefined.ElementAt(p).Id"
-                                                       required />
                                                 <input name="FormFields[@i].Predefined[@p].Value"
                                                        class="mb-2 shadow-sm appearance-none border rounded w-full py-3 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
                                                        type="text"
@@ -481,10 +453,6 @@
                         for (int i = 0; i < Model.Contest.Helps.Count(); i++)
                         {
                             <div class="helpItem flex flex-wrap -mx-3 mb-6">
-                                <input name="Helps[@i].Id"
-                                       class="hidden"
-                                       value="@Model.Contest.Helps.ElementAt(i).Id"
-                                       required />
                                 <div class="w-full md:w-1/2 px-3 mb-6 md:mb-0">
                                     <label class="block text-gray-700 text-sm font-bold mb-2">
                                         Название
@@ -532,10 +500,6 @@
                         for (int i = 0; i < Model.Contest.News.Count(); i++)
                         {
                             <div class="newsItem flex flex-wrap -mx-3 mb-6">
-                                <input name="News[@i].Id"
-                                       class="hidden"
-                                       value="@Model.Contest.News.ElementAt(i).Id"
-                                       required />
                                 <div class="w-full md:w-1/2 px-3 mb-6 md:mb-0">
                                     <div class="mb-1">
                                         <label class="block text-gray-700 text-sm font-bold mb-2">
@@ -586,16 +550,17 @@
                 <div class="flex flex-wrap px-3 -mx-3 mb-6 items-center">
                     <h1 class="text-lg font-semibold flex">Прикрепленные файлы</h1>
                 </div>
-                <div class="mb-6 h-20 w-full mb-6 p-2 block rounded-lg bg-white text-left shadow-[0_2px_15px_-3px_rgba(0,0,0,0.07),0_10px_20px_-2px_rgba(0,0,0,0.04)]">
-                    <div class="mb-[0.125rem] block min-h-[1.5rem] pl-[1.5rem]">
-                        @for (int i = 0; i < Model.Files.Count(); i++)
-                        {
-                            if (Model.Contest.Files != null && Model.Contest.Files.Contains(Model.Files.ElementAt(i)))
+                <div class="mb-6 w-full mb-6 p-2 block rounded-lg bg-white text-left shadow-[0_2px_15px_-3px_rgba(0,0,0,0.07),0_10px_20px_-2px_rgba(0,0,0,0.04)]">
+
+                    @for (int i = 0; i < Model.Files.Count(); i++)
+                    {
+                        <div class="mb-[0.125rem] block min-h-[1.5rem] pl-[1.5rem]">
+                            @if (Model.Contest.Files != null && Model.Contest.Files.Contains(Model.Files.ElementAt(i)))
                             {
                                 <input class="relative float-left -ml-[1.5rem] mr-[6px] mt-[0.15rem] h-[1.125rem] w-[1.125rem] appearance-none rounded-[0.25rem] border-[0.125rem] border-solid border-neutral-300 outline-none before:pointer-events-none before:absolute before:h-[0.875rem] before:w-[0.875rem] before:scale-0 before:rounded-full before:bg-transparent before:opacity-0 before:shadow-[0px_0px_0px_13px_transparent] before:content-[''] checked:border-primary checked:bg-primary checked:before:opacity-[0.16] checked:after:absolute checked:after:-mt-px checked:after:ml-[0.25rem] checked:after:block checked:after:h-[0.8125rem] checked:after:w-[0.375rem] checked:after:rotate-45 checked:after:border-[0.125rem] checked:after:border-l-0 checked:after:border-t-0 checked:after:border-solid checked:after:border-white checked:after:bg-transparent checked:after:content-[''] hover:cursor-pointer hover:before:opacity-[0.04] hover:before:shadow-[0px_0px_0px_13px_rgba(0,0,0,0.6)] focus:shadow-none focus:transition-[border-color_0.2s] focus:before:scale-100 focus:before:opacity-[0.12] focus:before:shadow-[0px_0px_0px_13px_rgba(0,0,0,0.6)] focus:before:transition-[box-shadow_0.2s,transform_0.2s] focus:after:absolute focus:after:z-[1] focus:after:block focus:after:h-[0.875rem] focus:after:w-[0.875rem] focus:after:rounded-[0.125rem] focus:after:content-[''] checked:focus:before:scale-100 checked:focus:before:shadow-[0px_0px_0px_13px_#3b71ca] checked:focus:before:transition-[box-shadow_0.2s,transform_0.2s] checked:focus:after:-mt-px checked:focus:after:ml-[0.25rem] checked:focus:after:h-[0.8125rem] checked:focus:after:w-[0.375rem] checked:focus:after:rotate-45 checked:focus:after:rounded-none checked:focus:after:border-[0.125rem] checked:focus:after:border-l-0 checked:focus:after:border-t-0 checked:focus:after:border-solid checked:focus:after:border-white checked:focus:after:bg-transparent dark:border-neutral-600 dark:checked:border-primary dark:checked:bg-primary dark:focus:before:shadow-[0px_0px_0px_13px_rgba(255,255,255,0.4)] dark:checked:focus:before:shadow-[0px_0px_0px_13px_#3b71ca]"
                                        type="checkbox"
-                                       name="Files[@i].Id"
-                                       value="@Model.Files.ElementAt(i).Id"
+                                       name="Files[@i].Name"
+                                       value="@Model.Files.ElementAt(i).Name"
                                        id="checkboxDefault"
                                        checked />
                                 <label class="inline-block pl-[0.15rem] hover:cursor-pointer"
@@ -607,16 +572,16 @@
                             {
                                 <input class="relative float-left -ml-[1.5rem] mr-[6px] mt-[0.15rem] h-[1.125rem] w-[1.125rem] appearance-none rounded-[0.25rem] border-[0.125rem] border-solid border-neutral-300 outline-none before:pointer-events-none before:absolute before:h-[0.875rem] before:w-[0.875rem] before:scale-0 before:rounded-full before:bg-transparent before:opacity-0 before:shadow-[0px_0px_0px_13px_transparent] before:content-[''] checked:border-primary checked:bg-primary checked:before:opacity-[0.16] checked:after:absolute checked:after:-mt-px checked:after:ml-[0.25rem] checked:after:block checked:after:h-[0.8125rem] checked:after:w-[0.375rem] checked:after:rotate-45 checked:after:border-[0.125rem] checked:after:border-l-0 checked:after:border-t-0 checked:after:border-solid checked:after:border-white checked:after:bg-transparent checked:after:content-[''] hover:cursor-pointer hover:before:opacity-[0.04] hover:before:shadow-[0px_0px_0px_13px_rgba(0,0,0,0.6)] focus:shadow-none focus:transition-[border-color_0.2s] focus:before:scale-100 focus:before:opacity-[0.12] focus:before:shadow-[0px_0px_0px_13px_rgba(0,0,0,0.6)] focus:before:transition-[box-shadow_0.2s,transform_0.2s] focus:after:absolute focus:after:z-[1] focus:after:block focus:after:h-[0.875rem] focus:after:w-[0.875rem] focus:after:rounded-[0.125rem] focus:after:content-[''] checked:focus:before:scale-100 checked:focus:before:shadow-[0px_0px_0px_13px_#3b71ca] checked:focus:before:transition-[box-shadow_0.2s,transform_0.2s] checked:focus:after:-mt-px checked:focus:after:ml-[0.25rem] checked:focus:after:h-[0.8125rem] checked:focus:after:w-[0.375rem] checked:focus:after:rotate-45 checked:focus:after:rounded-none checked:focus:after:border-[0.125rem] checked:focus:after:border-l-0 checked:focus:after:border-t-0 checked:focus:after:border-solid checked:focus:after:border-white checked:focus:after:bg-transparent dark:border-neutral-600 dark:checked:border-primary dark:checked:bg-primary dark:focus:before:shadow-[0px_0px_0px_13px_rgba(255,255,255,0.4)] dark:checked:focus:before:shadow-[0px_0px_0px_13px_#3b71ca]"
                                        type="checkbox"
-                                       name="Files[@i].Id"
-                                       value="@Model.Files.ElementAt(i).Id"
+                                       name="Files[@i].Name"
+                                       value="@Model.Files.ElementAt(i).Name"
                                        id="checkboxDefault" />
                                 <label class="inline-block pl-[0.15rem] hover:cursor-pointer"
                                        for="checkboxDefault">
                                     @Model.Files.ElementAt(i).Name
                                 </label>
                             }
-                        }
-                    </div>
+                        </div>
+                    }
                 </div>
 
                 <div class="flex flex-wrap px-3 -mx-3 mb-6 items-center">
@@ -645,10 +610,6 @@
                         for (int i = 0; i < Model.Contest.Partners.Count(); i++)
                         {
                             <div class="flex flex-wrap -mx-3 mb-6 partnerItem">
-                                <input name="Partners[@i].Id"
-                                       class="hidden"
-                                       value="@Model.Contest.Partners.ElementAt(i).Id"
-                                       required />
                                 <div class="w-full md:w-1/3 px-3 mb-6 md:mb-0">
                                     <label class="block text-gray-700 text-sm font-bold mb-2">
                                         Организация
