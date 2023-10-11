@@ -21,8 +21,41 @@ namespace ContestGenerator.Controllers
         }
 
         [HttpPost("edit/{id}")]
-        public async Task<IActionResult> Edit(int id, [FromForm] Contest contest)
+        public async Task<IActionResult> Edit(int id, [FromForm] Contest modifiedContest)
         {
+            var contest = await _context.Contests.Include(x => x.Partners)
+                                                 .Include(x => x.Steps)
+                                                 .Include(x => x.FormFields)
+                                                 .ThenInclude(x => x.Predefined)
+                                                 .Include(x => x.Helps)
+                                                 .Include(x => x.Nominations)
+                                                 .Include(x => x.PhotoUrls)
+                                                 .Include(x => x.News)
+                                                 .Include(x => x.Files)
+                                                 .Include(x => x.Reviews).FirstOrDefaultAsync(x => x.Id == id);
+            var files = await _context.Files.ToListAsync();
+            if (contest is null)
+                return NotFound(id);
+            contest.Name = modifiedContest.Name;
+            contest.LogoUrl = modifiedContest.LogoUrl;
+            contest.MainPhotoUrl = modifiedContest.MainPhotoUrl;
+            contest.ShortName = modifiedContest.ShortName;
+            contest.FullName = modifiedContest.FullName;
+            contest.Description = modifiedContest.Description;
+            contest.Rules = modifiedContest.Rules;
+            contest.History = modifiedContest.History;
+            contest.Reviews = modifiedContest.Reviews;
+            contest.PhotoUrls = modifiedContest.PhotoUrls;
+            contest.Nominations = modifiedContest.Nominations;
+            contest.Steps = modifiedContest.Steps;
+            contest.FormFields = modifiedContest.FormFields;
+            contest.Helps = modifiedContest.Helps;
+            contest.News = modifiedContest.News;
+            contest.Partners = modifiedContest.Partners;
+
+            var contestFiles = modifiedContest.Files is null ? null : files.Where(x => modifiedContest.Files.Any(f => f.Name == x.Name)).ToList();
+            contest.Files = contestFiles;
+
             _context.Contests.Update(contest);
             await _context.SaveChangesAsync();
             return RedirectToAction("Edit");
