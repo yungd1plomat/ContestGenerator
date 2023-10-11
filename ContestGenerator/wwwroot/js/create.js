@@ -180,7 +180,7 @@ function addStep() {
           <label class="block text-gray-700 text-sm font-bold mb-2">
             * Описание
           </label>
-          <textarea class="h-32 shadow-sm appearance-none border rounded w-full py-3 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" placeholder="Соберись с мыслями" name="Steps[${stepIndex}].Description" required></textarea>
+          <textarea class="h-32 shadow-sm appearance-none border rounded w-full py-3 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" placeholder="Соберись с мыслями" name="Steps[${stepIndex}].Description"></textarea>
         </div>
       </div>
     `;
