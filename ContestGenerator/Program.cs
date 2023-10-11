@@ -1,9 +1,6 @@
 using ContestGenerator.Data;
 using ContestGenerator.Helpers;
-using ContestGenerator.Impls;
 using Microsoft.AspNetCore.Identity;
-using Microsoft.EntityFrameworkCore;
-using System.Text;
 
 namespace ContestGenerator
 {
@@ -18,13 +15,14 @@ namespace ContestGenerator
                 var services = scope.ServiceProvider;
                 try
                 {
+                    var configuration = services.GetRequiredService<IConfiguration>();
                     var db = services.GetRequiredService<ApplicationDbContext>();
                     // Не забыть убрать на
                     //await db.Database.EnsureDeletedAsync();
-                    await db.Database.EnsureCreatedAsync();
+                    await db.Database.EnsureCreatedAsync().ConfigureAwait(true);
 
                     var userManager = services.GetRequiredService<UserManager<IdentityUser>>();
-                    await DataInitializer.SeedData(db, userManager);
+                    await DataInitializer.SeedData(db, userManager, configuration).ConfigureAwait(true);
                 }
                 catch (Exception ex)
                 {
@@ -32,7 +30,7 @@ namespace ContestGenerator
                     logger.LogError(ex, "An error occurred while seeding the database.");
                 }
             }
-            await host.RunAsync();
+            await host.RunAsync().ConfigureAwait(true);
         }
 
         public static IHostBuilder CreateHostBuilder(string[] args) =>
