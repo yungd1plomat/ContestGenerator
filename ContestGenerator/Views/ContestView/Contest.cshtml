@@ -109,7 +109,7 @@
                         </div>
                     </div>
 
-                    <button data-te-toggle="modal" 
+                    <button data-te-toggle="modal"
                             data-te-target="#historyModal"
                             data-te-ripple-init
                             data-te-ripple-color="light"
@@ -176,10 +176,10 @@
             </div>
         </div>
     </section>
-   
+
 
     @if (Model.Reviews is not null &&
-         Model.Reviews.Any())
+    Model.Reviews.Any())
     {
         <!-- Отзывы -->
         <section class="text-gray-700 body-font border-t border-gray-200" id="about">
@@ -210,7 +210,7 @@
     }
 
     @if (Model.PhotoUrls is not null && Model.Nominations is not null &&
-         Model.PhotoUrls.Any() && Model.Nominations.Any())
+    Model.PhotoUrls.Any() && Model.Nominations.Any())
     {
         <!-- Номинации и фото --->
         <section class="text-gray-700 body-font border-t border-gray-200">
@@ -220,15 +220,15 @@
                 </div>
                 <!-- Фото -->
                 <div class="lg:w-1/2 self-center w-full mb-10 lg:mb-0 rounded-lg overflow-hidden">
-                    <div id="carouselExampleControls" 
-                         class="relative h-full" 
-                         data-te-carousel-init 
+                    <div id="carouselExampleControls"
+                         class="relative h-full"
+                         data-te-carousel-init
                          data-te-carousel-slide
                          data-te-ride="carousel">
                         <!--Carousel indicators-->
                         <div class="absolute bottom-0 left-0 right-0 z-[2] mx-[15%] mb-14 flex list-none justify-center p-0"
                              data-te-carousel-indicators>
-                            @for (int slide = 0; slide < Model.PhotoUrls.Count();slide++)
+                            @for (int slide = 0; slide < Model.PhotoUrls.Count(); slide++)
                             {
                                 <button type="button"
                                         data-te-target="#carouselExampleControls"
@@ -310,7 +310,7 @@
     }
 
     @if (Model.Steps is not null &&
-         Model.Steps.Any())
+    Model.Steps.Any())
     {
         <!-- Как подготовить работу -->
         <section class="text-gray-700 body-font border-t border-gray-200" id="howto">
@@ -340,12 +340,12 @@
                                 }
                                 @if (!string.IsNullOrEmpty(step.VideoUrl))
                                 {
-                                    <iframe frameborder="0" 
-                                            allow="clipboard-write; autoplay" 
-                                            webkitallowfullscreen 
-                                            mozallowfullscreen 
-                                            allowfullscreen 
-                                            src="@step.VideoUrl" 
+                                    <iframe frameborder="0"
+                                            allow="clipboard-write; autoplay"
+                                            webkitallowfullscreen
+                                            mozallowfullscreen
+                                            allowfullscreen
+                                            src="@step.VideoUrl"
                                             class="w-full h-[250px] mt-7"></iframe>
                                 }
                             </div>
@@ -374,7 +374,7 @@
                             </div>
                             <div class="w-full">
                                 @if (formField.Predefined is null ||
-                                     !formField.Predefined.Any())
+                               !formField.Predefined.Any())
                                 {
                                     <input class="bg-gray-200 appearance-none border-2 border-gray-200 rounded w-full py-2 px-4 text-gray-700 leading-tight focus:outline-none focus:bg-white focus:border-indigo-500"
                                            type="text"
@@ -396,7 +396,7 @@
                     <div class="relative block min-h-[1.5rem] pl-[1.5rem] mb-6">
                         <input class="relative float-left -ml-[1.5rem] mr-[6px] mt-[0.3rem] h-[1.125rem] w-[1.125rem] appearance-none rounded-[0.25rem] border-[0.125rem] border-solid border-neutral-300 outline-none before:pointer-events-none before:absolute before:h-[0.875rem] before:w-[0.875rem] before:scale-0 before:rounded-full before:bg-transparent before:opacity-0 before:shadow-[0px_0px_0px_13px_transparent] before:content-[''] checked:border-primary checked:bg-primary checked:before:opacity-[0.16] checked:after:absolute checked:after:-mt-px checked:after:ml-[0.25rem] checked:after:block checked:after:h-[0.8125rem] checked:after:w-[0.375rem] checked:after:rotate-45 checked:after:border-[0.125rem] checked:after:border-l-0 checked:after:border-t-0 checked:after:border-solid checked:after:border-white checked:after:bg-transparent checked:after:content-[''] hover:cursor-pointer hover:before:opacity-[0.04] hover:before:shadow-[0px_0px_0px_13px_rgba(0,0,0,0.6)] focus:shadow-none focus:transition-[border-color_0.2s] focus:before:scale-100 focus:before:opacity-[0.12] focus:before:shadow-[0px_0px_0px_13px_rgba(0,0,0,0.6)] focus:before:transition-[box-shadow_0.2s,transform_0.2s] focus:after:absolute focus:after:z-[1] focus:after:block focus:after:h-[0.875rem] focus:after:w-[0.875rem] focus:after:rounded-[0.125rem] focus:after:content-[''] checked:focus:before:scale-100 checked:focus:before:shadow-[0px_0px_0px_13px_#3b71ca] checked:focus:before:transition-[box-shadow_0.2s,transform_0.2s] checked:focus:after:-mt-px checked:focus:after:ml-[0.25rem] checked:focus:after:h-[0.8125rem] checked:focus:after:w-[0.375rem] checked:focus:after:rotate-45 checked:focus:after:rounded-none checked:focus:after:border-[0.125rem] checked:focus:after:border-l-0 checked:focus:after:border-t-0 checked:focus:after:border-solid checked:focus:after:border-white checked:focus:after:bg-transparent dark:border-neutral-600 dark:checked:border-primary dark:checked:bg-primary dark:focus:before:shadow-[0px_0px_0px_13px_rgba(255,255,255,0.4)] dark:checked:focus:before:shadow-[0px_0px_0px_13px_#3b71ca]"
                                type="checkbox"
-                               required/>
+                               required />
                         <label class="inline-block pl-[0.15rem] hover:cursor-pointer"
                                for="checkboxChecked">
                             Я согласен на обработку персональных данных и соглашаюсь с условиями <a class="text-blue-700" target="_blank" href="/files/privacy.pdf">политики конфиденциальности</a>
@@ -414,7 +414,7 @@
     </section>
 
     @if (Model.Helps is not null &&
-         Model.Helps.Any())
+    Model.Helps.Any())
     {
         <!-- В помощь участнику -->
         <section class="text-gray-700 body-font border-t border-gray-200" id="info">
@@ -445,7 +445,7 @@
     }
 
     @if (Model.News is not null &&
-         Model.News.Any())
+    Model.News.Any())
     {
         <!-- Новости -->
         <section class="text-gray-700 body-font border-t border-gray-200">
@@ -455,7 +455,7 @@
                 </div>
                 @foreach (var news in Model.News)
                 {
-                    <div class="block mb-6 md:mx-5 md:w-1/5 rounded-lg bg-white shadow-[0_2px_15px_-3px_rgba(0,0,0,0.07),0_10px_20px_-2px_rgba(0,0,0,0.04)]">
+                    <div class="block justify-between mb-6 md:mx-5 md:w-1/5 rounded-lg bg-white shadow-[0_2px_15px_-3px_rgba(0,0,0,0.07),0_10px_20px_-2px_rgba(0,0,0,0.04)]">
                         <div class="relative w-full overflow-hidden bg-cover bg-no-repeat"
                              data-te-ripple-init
                              data-te-ripple-color="light">
@@ -468,18 +468,13 @@
                             </a>
                         </div>
                         <div class="p-6">
-                            <h5 class="mb-2 text-xl font-medium leading-tight text-neutral-800 break-all">
-                                @news.Name
+                            <h5 class="mb-2 text-xl font-medium leading-tight text-primary transition duration-150 ease-in-out hover:text-primary-600 focus:text-primary-600 active:text-primary-700 break-normal">
+                                <a href="@news.Link"
+                                   target="_blank">
+                                    @news.Name
+                               </a>
                             </h5>
                             <p class="mb-4 text-base text-neutral-600 break-all">@news.Description</p>
-                            <a type="button"
-                               href="@news.Link"
-                               target="_blank"
-                               class="inline-block cursor-pointer rounded bg-blue-600 px-6 pb-2 pt-2.5 text-xs font-medium uppercase leading-normal text-white shadow-[0_4px_9px_-4px_#3b71ca] transition duration-150 ease-in-out hover:bg-primary-600 hover:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.3),0_4px_18px_0_rgba(59,113,202,0.2)] focus:bg-primary-600 focus:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.3),0_4px_18px_0_rgba(59,113,202,0.2)] focus:outline-none focus:ring-0 active:bg-primary-700 active:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.3),0_4px_18px_0_rgba(59,113,202,0.2)]"
-                               data-te-ripple-init
-                               data-te-ripple-color="light">
-                                Читать
-                            </a>
                         </div>
                     </div>
                 }
@@ -488,7 +483,7 @@
     }
 
     @if (Model.Files is not null &&
-         Model.Files.Any())
+    Model.Files.Any())
     {
         <!-- Прикрепленные файлы -->
         <section class="text-gray-700 body-font border-t border-gray-200">
@@ -516,7 +511,7 @@
     }
 
     @if (Model.Partners is not null &&
-         Model.Partners.Any())
+    Model.Partners.Any())
     {
         <!-- Партнеры -->
         <section class="text-gray-700 body-font border-t border-gray-200">
@@ -591,6 +586,6 @@
 
     <script src="https://cdn.jsdelivr.net/npm/tw-elements/dist/js/tw-elements.umd.min.js"></script>
     <script src="https://code.jquery.com/jquery-3.7.0.min.js"
-    integrity="sha256-2Pmvv0kuTBOenSvLm6bvfBSSHrUJ+3A7x6P5Ebd07/g=" crossorigin="anonymous"></script>
+            integrity="sha256-2Pmvv0kuTBOenSvLm6bvfBSSHrUJ+3A7x6P5Ebd07/g=" crossorigin="anonymous"></script>
     <script src="~/js/contest.js"></script>
 </body>
