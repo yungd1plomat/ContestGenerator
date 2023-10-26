@@ -291,7 +291,7 @@
                                     <label class="block text-gray-700 text-sm font-bold mb-2">
                                         * Описание
                                     </label>
-                                    <textarea class="h-32 shadow-sm appearance-none border rounded w-full py-3 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" placeholder="Соберись с мыслями" name="Steps[@i].Description" required>@Model.Contest.Steps.ElementAt(i).Description</textarea>
+                                    <textarea class="h-32 shadow-sm appearance-none border rounded w-full py-3 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" placeholder="Соберись с мыслями" name="Steps[@i].Description">@Model.Contest.Steps.ElementAt(i).Description</textarea>
                                 </div>
                             </div>
                         }
@@ -646,6 +646,119 @@
                         }
                     }
                 </div>
+
+                <div class="flex flex-wrap px-3 -mx-3 mb-6 items-center">
+                    <h1 class="text-lg font-semibold flex">Социальные сети</h1>
+                    <button class="flex items-center justify-center" onclick="addSocials()" type="button">
+                        <span class="mx-1 [&amp;>svg]:h-5 [&amp;>svg]:w-5 [&amp;>svg]:text-gray-400 dark:[&amp;>svg]:text-gray-900">
+                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
+                                 stroke="currentColor" class="h-5 w-5">
+                                <path stroke-linecap="round" stroke-linejoin="round" d="M12 4.5v15m7.5-7.5h-15"></path>
+                            </svg>
+                        </span>
+                    </button>
+                    <button class="flex items-center justify-center" onclick="removeSocials()" type="button">
+                        <span class="mx-1 [&amp;>svg]:h-5 [&amp;>svg]:w-5 [&amp;>svg]:text-gray-400 dark:[&amp;>svg]:text-gray-900">
+                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
+                                 stroke="currentColor" class="h-5 w-5">
+                                <line fill="none" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" x1="4" x2="20" y1="12"
+                                      y2="12"></line>
+                            </svg>
+                        </span>
+                    </button>
+                </div>
+                <div class="socialsContent">
+                    @if (!string.IsNullOrEmpty(Model.Contest.Tg) ||
+                    !string.IsNullOrEmpty(Model.Contest.Vk) ||
+                    !string.IsNullOrEmpty(Model.Contest.Youtube) ||
+                    !string.IsNullOrEmpty(Model.Contest.Rutube))
+                    {
+                        <div class="flex flex-wrap px-3 -mx-3 mb-2">
+                            <label class="block text-gray-700 text-sm font-bold mb-2">*Вконтакте</label>
+                            <input name="Vk"
+                                   class="shadow-sm appearance-none border rounded w-full py-3 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                                   type="text"
+                                   placeholder="https://vk.com/mzvcp" value="@Model.Contest.Vk">
+                        </div>
+                        <div class="flex flex-wrap px-3 -mx-3 mb-2">
+                            <label class="block text-gray-700 text-sm font-bold mb-2">*Телеграм</label>
+                            <input name="Tg"
+                                   class="shadow-sm appearance-none border rounded w-full py-3 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                                   type="text"
+                                   placeholder="https://t.me/mzvcp"
+                                   value="@Model.Contest.Tg">
+                        </div>
+                        <div class="flex flex-wrap px-3 -mx-3 mb-2">
+                            <label class="block text-gray-700 text-sm font-bold mb-2">*Youtube</label>
+                            <input name="Youtube"
+                                   class="shadow-sm appearance-none border rounded w-full py-3 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                                   type="text"
+                                   placeholder="https://www.youtube.com/channel/mzvcp"
+                                   value="@Model.Contest.Youtube">
+                        </div>
+                        <div class="flex flex-wrap px-3 -mx-3 mb-2">
+                            <label class="block text-gray-700 text-sm font-bold mb-2">*Rutube</label>
+                            <input name="Rutube"
+                                   class="shadow-sm appearance-none border rounded w-full py-3 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                                   type="text"
+                                   placeholder="https://rutube.ru/channel/mzvcp"
+                                   value="@Model.Contest.Rutube">
+                        </div>
+                    }
+                </div>
+
+                <div class="flex flex-wrap px-3 -mx-3 mb-6 items-center">
+                    <h1 class="text-lg font-semibold flex">Контакты и адреса</h1>
+                    <button class="flex items-center justify-center" onclick="addContacts()" type="button">
+                        <span class="mx-1 [&amp;>svg]:h-5 [&amp;>svg]:w-5 [&amp;>svg]:text-gray-400 dark:[&amp;>svg]:text-gray-900">
+                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
+                                 stroke="currentColor" class="h-5 w-5">
+                                <path stroke-linecap="round" stroke-linejoin="round" d="M12 4.5v15m7.5-7.5h-15"></path>
+                            </svg>
+                        </span>
+                    </button>
+                    <button class="flex items-center justify-center" onclick="removeContacts()" type="button">
+                        <span class="mx-1 [&amp;>svg]:h-5 [&amp;>svg]:w-5 [&amp;>svg]:text-gray-400 dark:[&amp;>svg]:text-gray-900">
+                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
+                                 stroke="currentColor" class="h-5 w-5">
+                                <line fill="none" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" x1="4" x2="20" y1="12"
+                                      y2="12"></line>
+                            </svg>
+                        </span>
+                    </button>
+                </div>
+                <div class="contactsContent">
+                    @if (!string.IsNullOrEmpty(Model.Contest.Email) ||
+                    !string.IsNullOrEmpty(Model.Contest.Address) ||
+                    !string.IsNullOrEmpty(Model.Contest.Phone))
+                    {
+                        <div class="flex flex-wrap px-3 -mx-3 mb-2">
+                            <label class="block text-gray-700 text-sm font-bold mb-2">*Почта</label>
+                            <input name="Email"
+                                   class="shadow-sm appearance-none border rounded w-full py-3 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                                   type="email"
+                                   placeholder="mzvcp@contestplatform.ru"
+                                   value="@Model.Contest.Email">
+                        </div>
+                        <div class="flex flex-wrap px-3 -mx-3 mb-2">
+                            <label class="block text-gray-700 text-sm font-bold mb-2">*Телефон</label>
+                            <input name="Phone"
+                                   class="shadow-sm appearance-none border rounded w-full py-3 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                                   type="tel"
+                                   placeholder="79912961712"
+                                   value="@Model.Contest.Phone">
+                        </div>
+                        <div class="flex flex-wrap px-3 -mx-3 mb-2">
+                            <label class="block text-gray-700 text-sm font-bold mb-2">*Адрес</label>
+                            <input name="Address"
+                                   class="shadow-sm appearance-none border rounded w-full py-3 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                                   type="text"
+                                   placeholder="Уфа, ул. Пушкина, дом Колотушкина, 25"
+                                   value="@Model.Contest.Address">
+                        </div>
+                    }
+                </div>
+
                 <div class="flex flex-wrap px-3 -mx-3 mb-6 items-center">
                     <p class="text-sm flex underline">Поля отмеченные * не обязательны для заполнения</p>
                 </div>

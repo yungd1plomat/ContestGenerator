@@ -453,33 +453,46 @@
                 <div class="flex flex-wrap w-full mb-10 flex-col items-center text-center">
                     <h1 class="sm:text-3xl text-2xl font-medium title-font mb-2 text-gray-900">Новости</h1>
                 </div>
-                @foreach (var news in Model.News)
-                {
-                    <div class="block justify-between mb-6 md:mx-5 md:w-1/5 rounded-lg bg-white shadow-[0_2px_15px_-3px_rgba(0,0,0,0.07),0_10px_20px_-2px_rgba(0,0,0,0.04)]">
-                        <div class="relative w-full overflow-hidden bg-cover bg-no-repeat"
-                             data-te-ripple-init
-                             data-te-ripple-color="light">
-                            <img class="rounded-t-lg w-full h-36"
-                                 src="@news.PhotoLink"
-                                 alt="" />
-                            <a href="@news.Link"
-                               target="_blank">
-                                <div class="absolute bottom-0 left-0 right-0 top-0 h-full w-full overflow-hidden bg-[hsla(0,0%,98%,0.15)] bg-fixed opacity-0 transition duration-300 ease-in-out hover:opacity-100"></div>
-                            </a>
-                        </div>
-                        <div class="p-6">
-                            <h5 class="mb-2 text-xl font-medium leading-tight text-primary transition duration-150 ease-in-out hover:text-primary-600 focus:text-primary-600 active:text-primary-700 break-normal">
-                                <a href="@news.Link"
-                                   target="_blank">
-                                    @news.Name
-                                </a>
-                            </h5>
-                            <p class="mb-4 text-base text-neutral-600 break-all">@news.Description</p>
+                <div class="flex">
+                    <div class="w-full">
+                        <div class="carousel-container relative flex items-center">
+                            <button class="z-20 prev-button absolute left-0 md:left-[-70px] top-1/2 transform -translate-y-1/2 p-3 rounded-full bg-white border border-gray-100">
+                                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
+                                    <path stroke-linecap="round" stroke-linejoin="round" d="M10.5 19.5L3 12m0 0l7.5-7.5M3 12h18" />
+                                </svg>
+                            </button>
+                            <div class="carousel-wrapper overflow-hidden">
+                                <div class="carousel flex space-x-4 transition-transform duration-300 ease-in-out">
+                                    @foreach (var news in Model.News.Reverse())
+                                    {
+                                        <div class="carousel-item text-left w-full my-3 rounded-lg bg-white transition-transform duration-300 ease-in-out transform shadow-[0_2px_15px_-3px_rgba(0,0,0,0.07),0_10px_20px_-2px_rgba(0,0,0,0.04)]">
+                                            <div class="w-full h-48">
+                                                <img src="@news.PhotoLink" class="rounded-lg w-full h-full">
+                                                <a href="@news.Link"
+                                                   target="_blank">
+                                                    <div class="absolute bottom-0 left-0 right-0 top-0 h-full w-full overflow-hidden bg-[hsla(0,0%,98%,0.15)] bg-fixed opacity-0 transition duration-300 ease-in-out hover:opacity-100"></div>
+                                                </a>
+                                            </div>
+                                            <h5 class="px-5 mt-4 mb-2 text-xl font-medium leading-tight text-primary transition duration-150 ease-in-out hover:text-primary-600 focus:text-primary-600 active:text-primary-700 break-all">
+                                                <a href="@news.Link" target="_blank">@news.Name</a>
+                                            </h5>
+                                            <p class="px-5 mb-4 text-base text-neutral-600 break-all">@news.Description</p>
+                                        </div>
+                                    }
+                                </div>
+                            </div>
+                            <button class="z-20 next-button absolute right-0 md:right-[-70px] top-1/2 transform -translate-y-1/2 p-3 rounded-full bg-white border border-gray-100">
+                                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
+                                    <path stroke-linecap="round" stroke-linejoin="round" d="M13.5 4.5L21 12m0 0l-7.5 7.5M21 12H3" />
+                                </svg>
+                            </button>
                         </div>
                     </div>
-                }
+                </div>
             </div>
         </section>
+
+
     }
 
     @if (Model.Files is not null &&
@@ -578,16 +591,79 @@
     </section>
 
     <footer class="text-gray-700 body-font">
+
         <div class="bg-gray-200">
             <div class="container mx-auto py-4 px-5 flex flex-wrap flex-col sm:flex-row">
-                <p class="mx-2 text-gray-500 text-sm text-center sm:text-left">
+                <div class="md:mx-4 grid grid-cols-4 my-2 gap-x-0 md:gap-x-4 justify-items-center">
+                    @if (!string.IsNullOrEmpty(Model.Vk))
+                    {
+                        <a href="@Model.Vk" class="text-blue-700 text-sm text-center" target="_blank">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="pointer-events-none h-5 w-5" fill="currentColor" viewBox="0 0 24 24">
+                                <title>Вконтакте</title>
+                                <path class="st0" d="M13.162 18.994c.609 0 .858-.406.851-.915-.031-1.917.714-2.949 2.059-1.604 1.488 1.488 1.796 2.519 3.603 2.519h3.2c.808 0 1.126-.26 1.126-.668 0-.863-1.421-2.386-2.625-3.504-1.686-1.565-1.765-1.602-.313-3.486 1.801-2.339 4.157-5.336 2.073-5.336h-3.981c-.772 0-.828.435-1.103 1.083-.995 2.347-2.886 5.387-3.604 4.922-.751-.485-.407-2.406-.35-5.261.015-.754.011-1.271-1.141-1.539-.629-.145-1.241-.205-1.809-.205-2.273 0-3.841.953-2.95 1.119 1.571.293 1.42 3.692 1.054 5.16-.638 2.556-3.036-2.024-4.035-4.305-.241-.548-.315-.974-1.175-.974h-3.255c-.492 0-.787.16-.787.516 0 .602 2.96 6.72 5.786 9.77 2.756 2.975 5.48 2.708 7.376 2.708z"></path>
+                            </svg>
+                        </a>
+                    }
+                    @if (!string.IsNullOrEmpty(Model.Tg))
+                    {
+                        <a href="@Model.Tg" class="text-blue-700 text-sm text-center" target="_blank">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="pointer-events-none h-5 w-5" fill="currentColor" viewBox="0 0 16 16">
+                                <title>Телеграм</title>
+                                <path d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zM8.287 5.906c-.778.324-2.334.994-4.666 2.01-.378.15-.577.298-.595.442-.03.243.275.339.69.47l.175.055c.408.133.958.288 1.243.294.26.006.549-.1.868-.32 2.179-1.471 3.304-2.214 3.374-2.23.05-.012.12-.026.166.016.047.041.042.12.037.141-.03.129-1.227 1.241-1.846 1.817-.193.18-.33.307-.358.336a8.154 8.154 0 0 1-.188.186c-.38.366-.664.64.015 1.088.327.216.589.393.85.571.284.194.568.387.936.629.093.06.183.125.27.187.331.236.63.448.997.414.214-.02.435-.22.547-.82.265-1.417.786-4.486.906-5.751a1.426 1.426 0 0 0-.013-.315.337.337 0 0 0-.114-.217.526.526 0 0 0-.31-.093c-.3.005-.763.166-2.984 1.09z" />
+                            </svg>
+                        </a>
+                    }
+                    @if (!string.IsNullOrEmpty(Model.Rutube))
+                    {
+                        <a href="@Model.Rutube" class="text-blue-700 text-sm text-center" target="_blank">
+                            <svg class="pointer-events-none h-5 w-5" viewBox="0 0 25 25" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                <title>Рутуб</title>
+                                <g clip-path="url(#clip0_12_17186)"><rect x="0.248047" y="0.396973" width="24.5234" height="24.5234" fill="#100943" style="--darkreader-inline-fill: #0d0736;" data-darkreader-inline-fill=""></rect><path d="M24.7099 12.6281C31.4651 12.6281 36.9413 7.15191 36.9413 0.396693C36.9413 -6.35853 31.4651 -11.8347 24.7099 -11.8347C17.9547 -11.8347 12.4785 -6.35853 12.4785 0.396693C12.4785 7.15191 17.9547 12.6281 24.7099 12.6281Z" fill="#ED143B" style="--darkreader-inline-fill: #bc0e2e;" data-darkreader-inline-fill=""></path><path d="M15.3586 12.0697H8.13142V9.2098H15.3586C15.7808 9.2098 16.0743 9.28338 16.2216 9.41188C16.3689 9.54037 16.4602 9.7787 16.4602 10.1268V11.1537C16.4602 11.5206 16.3689 11.7589 16.2216 11.8874C16.0743 12.0159 15.7808 12.0708 15.3586 12.0708V12.0697ZM15.8544 6.51355H5.06641V18.7439H8.13142V14.7648H13.7799L16.4602 18.7439H19.8924L16.9373 14.7462C18.0267 14.5847 18.516 14.2508 18.9194 13.7006C19.3229 13.1504 19.5252 12.2707 19.5252 11.0966V10.1796C19.5252 9.48326 19.4515 8.93303 19.3229 8.5113C19.1943 8.08956 18.9744 7.72274 18.6622 7.39326C18.3324 7.08135 17.9652 6.8617 17.5243 6.71453C17.0835 6.58604 16.5327 6.51245 15.8544 6.51245V6.51355Z" fill="white" style="--darkreader-inline-fill: #181a1b;" data-darkreader-inline-fill=""></path></g>
+                                <defs>
+                                    <clipPath id="clip0_12_17186">
+                                        <rect x="0.248047" y="0.396729" width="24.4628" height="24.4628" rx="5.95041" fill="white" style="--darkreader-inline-fill: #e8e6e3;" data-darkreader-inline-fill="">
+
+                                        </rect>
+                                    </clipPath>
+                                </defs>
+                            </svg>
+                        </a>
+                    }
+                    @if (!string.IsNullOrEmpty(Model.Youtube))
+                    {
+                        <a href="@Model.Youtube" class="text-blue-700 text-sm text-center" target="_blank">
+                            <svg style="color: red" xmlns="http://www.w3.org/2000/svg" class="pointer-events-none h-5 w-5" fill="currentColor" viewBox="0 0 16 16">
+                                <path d="M8.051 1.999h.089c.822.003 4.987.033 6.11.335a2.01 2.01 0 0 1 1.415 1.42c.101.38.172.883.22 1.402l.01.104.022.26.008.104c.065.914.073 1.77.074 1.957v.075c-.001.194-.01 1.108-.082 2.06l-.008.105-.009.104c-.05.572-.124 1.14-.235 1.558a2.007 2.007 0 0 1-1.415 1.42c-1.16.312-5.569.334-6.18.335h-.142c-.309 0-1.587-.006-2.927-.052l-.17-.006-.087-.004-.171-.007-.171-.007c-1.11-.049-2.167-.128-2.654-.26a2.007 2.007 0 0 1-1.415-1.419c-.111-.417-.185-.986-.235-1.558L.09 9.82l-.008-.104A31.4 31.4 0 0 1 0 7.68v-.123c.002-.215.01-.958.064-1.778l.007-.103.003-.052.008-.104.022-.26.01-.104c.048-.519.119-1.023.22-1.402a2.007 2.007 0 0 1 1.415-1.42c.487-.13 1.544-.21 2.654-.26l.17-.007.172-.006.086-.003.171-.007A99.788 99.788 0 0 1 7.858 2h.193zM6.4 5.209v4.818l4.157-2.408L6.4 5.209z" />
+                            </svg>
+                        </a>
+                    }
+                </div>
+                @if (!string.IsNullOrEmpty(Model.Address))
+                {
+                    <p class="mx-2 my-2 text-gray-500 text-sm text-center sm:text-left">
+                        Адрес: @Model.Address
+                    </p>
+                }
+                @if (!string.IsNullOrEmpty(Model.Phone))
+                {
+                    <p class="mx-2 my-2 text-gray-500 text-sm text-center sm:text-left">
+                        Телефон: @Model.Phone
+                    </p>
+                }
+                @if (!string.IsNullOrEmpty(Model.Email))
+                {
+                    <p class="mx-2 my-2 text-gray-500 text-sm text-center sm:text-left">
+                        Почта: @Model.Email
+                    </p>
+                }
+                <p class="mx-2 my-2 text-gray-500 text-sm text-center sm:text-left">
+                    <a href="/files/privacy.pdf" class="text-gray-600 ml-1" target="_blank"
+                       rel="noopener noreferrer">Политика конфиденциальности</a>
+                </p>
+                <p class="mx-2 my-2 text-gray-500 text-sm text-center sm:text-left">
                     © 2023 Contest Generator —
                     <a href="https://github.com/yungd1plomat" class="text-gray-600 ml-1" target="_blank"
                        rel="noopener noreferrer">@@yungd1plomat</a>
-                </p>
-                <p class="mx-2 text-gray-500 text-sm text-center sm:text-left">
-                    <a href="/files/privacy.pdf" class="text-gray-600 ml-1" target="_blank"
-                       rel="noopener noreferrer">Политика конфиденциальности</a>
                 </p>
             </div>
         </div>
