@@ -52,6 +52,13 @@ namespace ContestGenerator.Controllers
             contest.Helps = modifiedContest.Helps;
             contest.News = modifiedContest.News;
             contest.Partners = modifiedContest.Partners;
+            contest.Vk = modifiedContest.Vk;
+            contest.Tg = modifiedContest.Tg;
+            contest.Rutube = modifiedContest.Rutube;
+            contest.Youtube = modifiedContest.Youtube;
+            contest.Email = modifiedContest.Email;
+            contest.Address = modifiedContest.Address;
+            contest.Phone = modifiedContest.Phone;
 
             var contestFiles = modifiedContest.Files is null ? null : files.Where(x => modifiedContest.Files.Any(f => f.Name == x.Name)).ToList();
             contest.Files = contestFiles;

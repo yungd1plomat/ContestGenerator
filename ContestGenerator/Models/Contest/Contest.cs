@@ -95,5 +95,40 @@ namespace ContestGenerator.Models.Contest
         /// Прикрепленные файлы
         /// </summary>
         public IEnumerable<FileModel>? Files { get; set; }
+
+        /// <summary>
+        /// Почта для связи
+        /// </summary>
+        public string? Email { get; set; }
+
+        /// <summary>
+        /// Телефон для связи
+        /// </summary>
+        public string? Phone { get; set; }
+
+        /// <summary>
+        /// Адрес (хз какой, макдака наверное чтоб похавать сходить можно было)
+        /// </summary>
+        public string? Address { get; set; }
+
+        /// <summary>
+        /// Ссылка на ВК
+        /// </summary>
+        public string? Vk { get; set; }
+
+        /// <summary>
+        /// Ссылка на ТГ
+        /// </summary>
+        public string? Tg { get; set; } 
+
+        /// <summary>
+        /// Ссылка на ютуб
+        /// </summary>
+        public string? Youtube { get; set; }
+
+        /// <summary>
+        /// Ссылка на рутуб
+        /// </summary>
+        public string? Rutube { get; set; }
     }
 }

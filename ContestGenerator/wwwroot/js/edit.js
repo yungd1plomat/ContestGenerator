@@ -267,6 +267,67 @@ function removeField() {
     }
 }
 
+function addSocials() {
+    const html = `<div class="flex flex-wrap px-3 -mx-3 mb-2">
+                      <label class="block text-gray-700 text-sm font-bold mb-2">*Вконтакте</label>
+                      <input name="Vk"
+                             class="shadow-sm appearance-none border rounded w-full py-3 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                             type="text" placeholder="https://vk.com/mzvcp">
+                  </div>
+                  <div class="flex flex-wrap px-3 -mx-3 mb-2">
+                      <label class="block text-gray-700 text-sm font-bold mb-2">*Телеграм</label>
+                      <input name="Tg"
+                             class="shadow-sm appearance-none border rounded w-full py-3 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                             type="text" placeholder="https://t.me/mzvcp">
+                  </div>
+                  <div class="flex flex-wrap px-3 -mx-3 mb-2">
+                      <label class="block text-gray-700 text-sm font-bold mb-2">*Youtube</label>
+                      <input name="Youtube"
+                             class="shadow-sm appearance-none border rounded w-full py-3 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                             type="text" placeholder="https://www.youtube.com/channel/mzvcp">
+                  </div>
+                  <div class="flex flex-wrap px-3 -mx-3 mb-2">
+                      <label class="block text-gray-700 text-sm font-bold mb-2">*Rutube</label>
+                      <input name="Rutube"
+                             class="shadow-sm appearance-none border rounded w-full py-3 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                             type="text" placeholder="https://rutube.ru/channel/mzvcp">
+                  </div>`;
+    $('.socialsContent').append(html);
+}
+
+function removeSocials() {
+    $('.socialsContent').empty();
+}
+
+function addContacts() {
+    const html = `<div class="flex flex-wrap px-3 -mx-3 mb-2">
+                      <label class="block text-gray-700 text-sm font-bold mb-2">*Почта</label>
+                      <input name="Email"
+                             class="shadow-sm appearance-none border rounded w-full py-3 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                             type="email" 
+                             placeholder="mzvcp@contestplatform.ru">
+                  </div>
+                  <div class="flex flex-wrap px-3 -mx-3 mb-2">
+                      <label class="block text-gray-700 text-sm font-bold mb-2">*Телефон</label>
+                      <input name="Phone"
+                             class="shadow-sm appearance-none border rounded w-full py-3 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                             type="tel" 
+                             placeholder="79912961712">
+                  </div>
+                  <div class="flex flex-wrap px-3 -mx-3 mb-2">
+                      <label class="block text-gray-700 text-sm font-bold mb-2">*Адрес</label>
+                      <input name="Address"
+                             class="shadow-sm appearance-none border rounded w-full py-3 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                             type="text" 
+                             placeholder="Уфа, ул. Пушкина, дом Колотушкина, 25">
+                  </div>`;
+    $('.contactsContent').append(html);
+}
+
+function removeContacts() {
+    $('.contactsContent').empty();
+}
+
 $(document).ready(function () {
     $('.formFields').on('click', '.addPredefined', function () {
         let fieldIndex = +$(this).attr('fieldIndex');
