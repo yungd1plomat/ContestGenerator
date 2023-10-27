@@ -21,6 +21,7 @@ namespace ContestGenerator.Controllers
         }
 
         [HttpGet("/")]
+        [ResponseCache(Duration = 900)]
         public async Task<IActionResult> Contest([FromHeader(Name = "X-Forwarded-Host")] string domainName)
         {
             var domain = await _context.Domains.Include(x => x.Contest.Partners)
