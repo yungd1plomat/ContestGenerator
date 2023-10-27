@@ -1,18 +1,16 @@
 version: '3.4'
 services:
-  mysql:
-    image: mysql:latest
-    container_name: mysql
+  pg:
+    image: postgres
+    container_name: postgres
     volumes:
-      - mysqldb:/var/lib/mysql
+      - db:/var/lib/postgresql/data
     networks:
       - localnetwork
     environment:
-      MYSQL_RANDOM_ROOT_PASSWORD: 1
-      MYSQL_DATABASE: contestgenerator
-      MYSQL_USER: dbuser
-      MYSQL_PASSWORD: dbuserpassword
-      MYSQL_TCP_PORT: 3308
+      - POSTGRES_USER=dbuser
+      - POSTGRES_PASSWORD=dbuserpassword
+      - POSTGRES_DB=contestgenerator
     restart: always
   
   caddy:
@@ -34,7 +32,7 @@ services:
     image: yungd1plomat/contestgenerator
     container_name: contestgenerator
     environment:
-      - CONNECTION_STRING=Server=mysql;Port=3308;Database=contestgenerator;Uid=dbuser;Pwd=dbuserpassword;
+      - CONNECTION_STRING=Host=pg;Port=5432;Database=contestgenerator;Username=dbuser;Password=dbuserpassword;
       - ASPNETCORE_ENVIRONMENT=Development
       - ASPNETCORE_URLS=http://+:5000;
       - ADMIN_PASS=Admin_12345
@@ -44,7 +42,7 @@ services:
     networks:
       - localnetwork
     depends_on:
-      - mysql
+      - pg
       - caddy
     restart: always
 
@@ -55,6 +53,6 @@ networks:
     external: false
     
 volumes:
-  mysqldb:
+  db:
   caddy_data:
   caddy_config:
