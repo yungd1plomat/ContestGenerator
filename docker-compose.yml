@@ -32,7 +32,7 @@ services:
     image: yungd1plomat/contestgenerator
     container_name: contestgenerator
     environment:
-      - CONNECTION_STRING=Host=pg;Port=5432;Database=contestgenerator;Username=dbuser;Password=dbuserpassword;
+      - CONNECTION_STRING=Host=pg;Port=5432;Database=contestgenerator;Username=dbuser;Password=dbuserpassword;Timeout=180;CommandTimeout=180;
       - ASPNETCORE_ENVIRONMENT=Development
       - ASPNETCORE_URLS=http://+:5000;
       - ADMIN_PASS=Admin_12345
