@@ -20,7 +20,8 @@ namespace ContestGenerator
         {
             var connectionString = Configuration["CONNECTION_STRING"] ?? throw new InvalidOperationException("connection string not found");
 
-            services.AddDbContext<ApplicationDbContext>(options => options.UseNpgsql(connectionString));
+            services.AddDbContext<ApplicationDbContext>(options => options.UseNpgsql(connectionString, o => 
+                o.UseQuerySplittingBehavior(QuerySplittingBehavior.SplitQuery)));
             services.AddDatabaseDeveloperPageExceptionFilter();
             services.AddScoped<ICaddyApi, CaddyApi>();
             services.AddScoped<IExcelRepo, ExcelRepo>();
