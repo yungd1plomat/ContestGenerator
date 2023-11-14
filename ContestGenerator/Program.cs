@@ -1,3 +1,4 @@
+using ContestGenerator.Abstractions;
 using ContestGenerator.Data;
 using ContestGenerator.Helpers;
 using Microsoft.AspNetCore.Identity;
@@ -17,12 +18,13 @@ namespace ContestGenerator
                 {
                     var configuration = services.GetRequiredService<IConfiguration>();
                     var db = services.GetRequiredService<ApplicationDbContext>();
-                    // Не забыть убрать на
-                    //await db.Database.EnsureDeletedAsync();
+                    var caddyApi = services.GetRequiredService<ICaddyApi>();
+
                     await db.Database.EnsureCreatedAsync().ConfigureAwait(true);
 
                     var userManager = services.GetRequiredService<UserManager<IdentityUser>>();
                     await DataInitializer.SeedData(db, userManager, configuration).ConfigureAwait(true);
+                    await CaddyInitializer.Initialize(db, caddyApi).ConfigureAwait(true);
                 }
                 catch (Exception ex)
                 {
