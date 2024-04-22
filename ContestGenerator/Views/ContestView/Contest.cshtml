@@ -200,7 +200,7 @@
                                     <h2 class="text-gray-900 text-lg title-font font-medium">@review.Name</h2>
                                 </div>
                                 <div class="flex-grow">
-                                    <p class="leading-relaxed text-base break-all">@review.Description</p>
+                                    <p class="leading-relaxed text-base break-normal">@review.Description</p>
                                 </div>
                             </div>
                         </div>
@@ -370,7 +370,7 @@
                     {
                         <div class="mb-6">
                             <div>
-                                <label class="block text-gray-500 font-bold text-left mb-1 pr-4 break-all">@formField.Name</label>
+                                <label class="block text-gray-500 font-bold text-left mb-1 pr-4 break-normal">@formField.Name</label>
                             </div>
                             <div class="w-full">
                                 @if (formField.Predefined is null ||
@@ -435,7 +435,7 @@
                                     </svg>
                                 </div>
                                 <h2 class="text-2xl text-gray-900 font-medium title-font mb-2">@help.Name</h2>
-                                <p class="leading-relaxed text-base whitespace-pre-line text-lg break-all">@help.Description</p>
+                                <p class="leading-relaxed text-base whitespace-pre-line text-lg break-normal">@help.Description</p>
                             </div>
                         </div>
                     }
@@ -473,10 +473,10 @@
                                                     <div class="absolute bottom-0 left-0 right-0 top-0 h-full w-full overflow-hidden bg-[hsla(0,0%,98%,0.15)] bg-fixed opacity-0 transition duration-300 ease-in-out hover:opacity-100"></div>
                                                 </a>
                                             </div>
-                                            <h5 class="px-5 mt-4 mb-2 text-xl font-medium leading-tight text-primary transition duration-150 ease-in-out hover:text-primary-600 focus:text-primary-600 active:text-primary-700 break-all">
+                                            <h5 class="px-5 mt-4 mb-2 text-xl font-medium leading-tight text-primary transition duration-150 ease-in-out hover:text-primary-600 focus:text-primary-600 active:text-primary-700 break-normal">
                                                 <a href="@news.Link" target="_blank">@news.Name</a>
                                             </h5>
-                                            <p class="px-5 mb-4 text-base text-neutral-600 break-all">@news.Description</p>
+                                            <p class="px-5 mb-4 text-base text-neutral-600 break-normal">@news.Description</p>
                                         </div>
                                     }
                                 </div>
