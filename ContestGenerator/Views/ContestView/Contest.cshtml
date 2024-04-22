@@ -26,9 +26,9 @@
                 }
                 @if (Model.Steps is not null && Model.Steps.Any())
                 {
-                    <a href="#howto" class="mx-5 mb-2 md:mb-0 hover:text-gray-900 headerItem">Как подготовить работу</a>
+                    <a href="#howto" class="mx-5 mb-2 md:mb-0 hover:text-gray-900 headerItem">Рекомендации по подготовке и сдаче</a>
                 }
-                <a href="#send" class="mx-5 mb-2 md:mb-0 hover:text-gray-900 headerItem">Подать работу</a>
+                <a href="#send" class="mx-5 mb-2 md:mb-0 hover:text-gray-900 headerItem">Подать заявку</a>
                 @if (Model.Helps is not null && Model.Helps.Any())
                 {
                     <a href="#info" class="mx-5 mb-2 md:mb-0 hover:text-gray-900 headerItem">В помощь участнику</a>
@@ -216,7 +216,7 @@
         <section class="text-gray-700 body-font border-t border-gray-200">
             <div class="container md:px-5 py-10 mx-auto flex flex-wrap">
                 <div class="flex flex-col text-center w-full mb-4">
-                    <h1 class="sm:text-3xl text-2xl font-medium title-font text-gray-900">Номинации</h1>
+                    <h1 class="sm:text-3xl text-2xl font-medium title-font text-gray-900">Номинации и секции</h1>
                 </div>
                 <!-- Фото -->
                 <div class="lg:w-1/2 self-center w-full mb-10 lg:mb-0 rounded-lg overflow-hidden">
@@ -316,10 +316,9 @@
         <section class="text-gray-700 body-font border-t border-gray-200" id="howto">
             <div class="container px-5 py-24 mx-auto">
                 <div class="flex flex-wrap w-full mb-20 flex-col items-center text-center">
-                    <h1 class="sm:text-3xl text-2xl font-medium title-font mb-2 text-gray-900">Как подготовить работу</h1>
+                    <h1 class="sm:text-3xl text-2xl font-medium title-font mb-2 text-gray-900">Рекомендации по подготовке и сдаче</h1>
                     <p class="lg:w-1/2 w-full leading-relaxed text-base">
-                        Как правильно подготовить и подать работу для
-                        гарантированного участия в конкурсе
+                        Общие рекомендации по подготовке и сдаче проектов/работ 
                     </p>
                 </div>
                 <div class="flex flex-wrap -m-4">
@@ -356,11 +355,11 @@
         </section>
     }
 
-    <!-- Подать работу -->
+    <!-- Подать заявку -->
     <section class="text-gray-700 body-font border-t border-gray-200" id="send">
         <div class="container px-5 py-24 mx-auto">
             <div class="flex flex-wrap w-full mb-20 flex-col items-center text-center">
-                <h1 class="sm:text-3xl text-2xl font-medium title-font mb-2 text-gray-900">Подать работу</h1>
+                <h1 class="sm:text-3xl text-2xl font-medium title-font mb-2 text-gray-900">Подать заявку</h1>
             </div>
             <div class="flex flex-wrap -m-4 justify-center">
                 <form class="border border-gray-300 p-10 rounded-lg md:w-1/2"
