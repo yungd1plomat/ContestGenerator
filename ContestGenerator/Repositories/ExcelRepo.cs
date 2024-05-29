@@ -3,7 +3,7 @@ using ContestGenerator.Models.Contest;
 using OfficeOpenXml;
 using OfficeOpenXml.Style;
 
-namespace ContestGenerator.Impls
+namespace ContestGenerator.Repositories
 {
     public class ExcelRepo : IExcelRepo
     {

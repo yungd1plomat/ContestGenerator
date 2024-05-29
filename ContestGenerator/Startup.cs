@@ -1,6 +1,7 @@
 ﻿using ContestGenerator.Abstractions;
 using ContestGenerator.Data;
 using ContestGenerator.Impls;
+using ContestGenerator.Repositories;
 using Microsoft.AspNetCore.HttpOverrides;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
