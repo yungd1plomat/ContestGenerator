@@ -19,10 +19,9 @@ namespace ContestGenerator
 
         public void ConfigureServices(IServiceCollection services)
         {
-            var connectionString = Configuration["CONNECTION_STRING"] ?? throw new InvalidOperationException("connection string not found");
+            var connectionString = Configuration["CONTEST_CONNECTION"] ?? throw new InvalidOperationException("connection string not found");
 
-            services.AddDbContext<ApplicationDbContext>(options => options.UseNpgsql(connectionString, o => 
-                o.UseQuerySplittingBehavior(QuerySplittingBehavior.SplitQuery)));
+            services.AddDbContext<ApplicationDbContext>(options => options.UseMySql(connectionString, ServerVersion.AutoDetect(connectionString), o => o.UseQuerySplittingBehavior(QuerySplittingBehavior.SplitQuery)));
             services.AddDatabaseDeveloperPageExceptionFilter();
             services.AddScoped<ICaddyApi, CaddyApi>();
             services.AddScoped<IExcelRepo, ExcelRepo>();
@@ -31,7 +30,16 @@ namespace ContestGenerator
                 // Enables immediate logout, after updating the user's security stamp.
                 options.ValidationInterval = TimeSpan.Zero;
             });
-            services.AddDefaultIdentity<IdentityUser>(options => options.SignIn.RequireConfirmedAccount = false)
+            services.AddDefaultIdentity<AppUser>(options =>
+            {
+                options.SignIn.RequireConfirmedAccount = false;
+                options.Password.RequireNonAlphanumeric = false;
+                options.Password.RequireDigit = false;
+                options.Password.RequireLowercase = false;
+                options.Password.RequireUppercase = false;
+                options.Password.RequiredLength = 3;
+            })
+                .AddRoles<IdentityRole>()
                 .AddEntityFrameworkStores<ApplicationDbContext>();
             services.ConfigureApplicationCookie(options =>
             {

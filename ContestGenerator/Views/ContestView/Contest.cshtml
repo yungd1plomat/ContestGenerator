@@ -1,15 +1,33 @@
 ﻿@using ContestGenerator.Models.Contest
+@using Microsoft.AspNetCore.Identity
 @model Contest
 
 
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="shortcut icon" href="@Model.LogoUrl">
-    <link href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700,900&display=swap" rel="stylesheet" />
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/tw-elements/dist/css/tw-elements.min.css" />
     <title>@Model.FullName</title>
-    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="shortcut icon" href="@Model.LogoUrl">
+    <link href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700,900&display=swap"
+          rel="stylesheet" />
+    <link rel="stylesheet"
+          href="https://cdn.jsdelivr.net/npm/tw-elements/css/tw-elements.min.css" />
+    <script src="https://cdn.tailwindcss.com/3.3.0"></script>
+    <script>
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                fontFamily: {
+                    sans: ["Roboto", "sans-serif"],
+                    body: ["Roboto", "sans-serif"],
+                    mono: ["ui-monospace", "monospace"],
+                },
+            },
+            corePlugins: {
+                preflight: false,
+            },
+        };
+    </script>
 </head>
 
 <body>
@@ -35,6 +53,13 @@
                     <a href="#info" class="mx-5 mb-2 md:mb-0 hover:text-gray-900 headerItem">В помощь участнику</a>
                 }
                 <a href="#help" class="mx-5 mb-2 md:mb-0 hover:text-gray-900 headerItem">Обратная связь</a>
+                <a href="contestview/register"
+                   type="button"
+                   class="mx-5 mb-2 md:mb-0 headerItem rounded-full border-2 border-primary px-6 pb-[6px] pt-2 text-xs font-medium uppercase leading-normal text-primary transition duration-150 ease-in-out hover:border-primary-accent-300 hover:bg-primary-50/50 hover:text-primary-accent-300 focus:border-primary-600 focus:bg-primary-50/50 focus:text-primary-600 focus:outline-none focus:ring-0 active:border-primary-700 active:text-primary-700 motion-reduce:transition-none dark:text-primary-500 dark:hover:bg-blue-950 dark:focus:bg-blue-950"
+                   data-twe-ripple-init>
+                    Зарегистрироваться
+                </a>
+                <a href="contestview/login" class="mx-5 mb-2 md:mb-0 hover:text-gray-900 headerItem">Войти</a>
             </nav>
         </div>
     </header>
@@ -669,7 +694,6 @@
         </div>
     </footer>
 
-    <script src="https://cdn.jsdelivr.net/npm/tw-elements/dist/js/tw-elements.umd.min.js"></script>
     <script src="https://code.jquery.com/jquery-3.7.0.min.js"
             integrity="sha256-2Pmvv0kuTBOenSvLm6bvfBSSHrUJ+3A7x6P5Ebd07/g=" crossorigin="anonymous"></script>
     <script src="~/js/contest.js"></script>

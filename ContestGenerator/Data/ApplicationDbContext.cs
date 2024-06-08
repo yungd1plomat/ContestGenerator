@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace ContestGenerator.Data
 {
-    public class ApplicationDbContext : IdentityDbContext
+    public class ApplicationDbContext : IdentityDbContext<AppUser>
     {
         public DbSet<Contest> Contests { get; set; }
 

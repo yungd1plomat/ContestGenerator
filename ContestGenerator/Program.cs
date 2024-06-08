@@ -19,10 +19,11 @@ namespace ContestGenerator
                     var db = services.GetRequiredService<ApplicationDbContext>();
                     // Не забыть убрать на
                     //await db.Database.EnsureDeletedAsync();
-                    await db.Database.EnsureCreatedAsync().ConfigureAwait(true);
+                    await db.Database.EnsureCreatedAsync();
 
-                    var userManager = services.GetRequiredService<UserManager<IdentityUser>>();
-                    await DataInitializer.SeedData(db, userManager, configuration).ConfigureAwait(true);
+                    var userManager = services.GetRequiredService<UserManager<AppUser>>();
+                    var roleManager = services.GetRequiredService<RoleManager<IdentityRole>>();
+                    await DataInitializer.SeedData(db, userManager, roleManager, configuration);
                 }
                 catch (Exception ex)
                 {

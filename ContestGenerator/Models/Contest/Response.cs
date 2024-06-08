@@ -1,4 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using ContestGenerator.Data;
+using System.ComponentModel.DataAnnotations;
 
 namespace ContestGenerator.Models.Contest
 {
@@ -20,5 +21,10 @@ namespace ContestGenerator.Models.Contest
         /// Конкурс на котором он отвечал
         /// </summary>
         public Contest Contest { get; set; }
+
+        /// <summary>
+        /// Пользователь оставивший ответ
+        /// </summary>
+        public AppUser User { get; set; }
     }
 }

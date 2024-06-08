@@ -33,7 +33,26 @@ namespace ContestGenerator.Controllers
                                                .Include(x => x.Contest.PhotoUrls)
                                                .Include(x => x.Contest.News)
                                                .Include(x => x.Contest.Files)
-                                               .Include(x => x.Contest.Reviews).FirstOrDefaultAsync(x => x.DomainName == domainName);
+                                               .Include(x => x.Contest.Reviews).FirstOrDefaultAsync(/*x => x.DomainName == domainName*/);
+            if (domain is null)
+                return NotFound(domainName);
+            return View(domain.Contest);
+        }
+
+        [HttpGet("register")]
+        [ResponseCache(Duration = 3600)]
+        public async Task<IActionResult> Register([FromHeader(Name = "X-Forwarded-Host")] string domainName)
+        {
+            var domain = await _context.Domains.Include(x => x.Contest.Partners)
+                                               .Include(x => x.Contest.Steps)
+                                               .Include(x => x.Contest.FormFields)
+                                               .ThenInclude(x => x.Predefined)
+                                               .Include(x => x.Contest.Helps)
+                                               .Include(x => x.Contest.Nominations)
+                                               .Include(x => x.Contest.PhotoUrls)
+                                               .Include(x => x.Contest.News)
+                                               .Include(x => x.Contest.Files)
+                                               .Include(x => x.Contest.Reviews).FirstOrDefaultAsync(/*x => x.DomainName == domainName*/);
             if (domain is null)
                 return NotFound(domainName);
             return View(domain.Contest);

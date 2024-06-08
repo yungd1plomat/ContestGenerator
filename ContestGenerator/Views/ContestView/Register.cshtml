@@ -1,0 +1,91 @@
+﻿@using ContestGenerator.Models.Contest
+@model Contest
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Регистрация</title>
+    <link rel="shortcut icon" href="@Model.LogoUrl">
+    <link href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700,900&display=swap"
+          rel="stylesheet" />
+    <link rel="stylesheet"
+          href="https://cdn.jsdelivr.net/npm/tw-elements/css/tw-elements.min.css" />
+    <script src="https://cdn.tailwindcss.com/3.3.0"></script>
+    <script>
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                fontFamily: {
+                    sans: ["Roboto", "sans-serif"],
+                    body: ["Roboto", "sans-serif"],
+                    mono: ["ui-monospace", "monospace"],
+                },
+            },
+            corePlugins: {
+                preflight: false,
+            },
+        };
+    </script>
+
+
+</head>
+
+<body class="h-screen">
+    <header class="text-gray-700 body-font border-b border-gray-200">
+        <div class="container mx-auto flex flex-wrap p-5 flex-col md:flex-row items-center">
+            <p class="flex flex-col flex-wrap md:flex-row title-font font-medium items-center text-gray-900 mb-4 md:mb-0">
+                <img class="w-20" src="@Model.LogoUrl">
+                <span class="ml-3 text-xl">@Model.ShortName</span>
+            </p>
+            <nav class="md:ml-auto flex flex-col flex-wrap md:flex-row items-center text-base justify-center">
+                <a href="contestview/register"
+                   type="button"
+                   class="mx-5 mb-2 md:mb-0 headerItem rounded-full border-2 border-primary px-6 pb-[6px] pt-2 text-xs font-medium uppercase leading-normal text-primary transition duration-150 ease-in-out hover:border-primary-accent-300 hover:bg-primary-50/50 hover:text-primary-accent-300 focus:border-primary-600 focus:bg-primary-50/50 focus:text-primary-600 focus:outline-none focus:ring-0 active:border-primary-700 active:text-primary-700 motion-reduce:transition-none dark:text-primary-500 dark:hover:bg-blue-950 dark:focus:bg-blue-950"
+                   data-twe-ripple-init>
+                    Зарегистрироваться
+                </a>
+                <a href="contestview/login" class="mx-5 mb-2 md:mb-0 hover:text-gray-900 headerItem">Войти</a>
+            </nav>
+        </div>
+    </header>
+    
+    <section class="mx-auto my-40">
+        <form class="container w-full max-w-sm mx-auto p-8 rounded-md shadow-2xl">
+            <h1 class="text-2xl font-bold mb-6 text-center">Регистрация</h1>
+            <div class="mb-4">
+                <label class="block text-gray-700 text-sm font-bold mb-2" for="Username">Логин</label>
+                <input class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:border-indigo-500"
+                       type="text" id="username" name="Username" placeholder="Alex">
+            </div>
+            <div class="mb-4">
+                <label class="block text-gray-700 text-sm font-bold mb-2" for="password">Пароль</label>
+                <input class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:border-indigo-500"
+                       type="password" id="password" name="password" placeholder="********">
+            </div>
+            <div class="mb-4">
+                <label class="block text-gray-700 text-sm font-bold mb-2" for="confirm-password">Повторите пароль</label>
+                <input class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:border-indigo-500"
+                       type="password" id="confirm-password" name="confirm-password" placeholder="********">
+            </div>
+            <button class="w-full bg-indigo-500 text-white text-sm font-bold py-2 px-4 rounded-md hover:bg-indigo-600 transition duration-300"
+                    type="submit">
+                Зарегистрироваться
+            </button>
+        </form>
+    </section>
+    <footer class="text-gray-700 body-font">
+        <div class="bg-gray-200">
+            <div class="container mx-auto py-4 px-5 flex flex-wrap flex-col sm:flex-row">
+                <p class="mx-2 my-2 text-gray-500 text-sm text-center sm:text-left">
+                    <a href="/files/privacy.pdf" class="text-gray-600 ml-1" target="_blank"
+                       rel="noopener noreferrer">Политика конфиденциальности</a>
+                </p>
+                <p class="mx-2 my-2 text-gray-500 text-sm text-center sm:text-left">
+                    © 2023 Contest Generator —
+                    <a href="https://github.com/yungd1plomat" class="text-gray-600 ml-1" target="_blank"
+                       rel="noopener noreferrer">@@yungd1plomat</a>
+                </p>
+            </div>
+        </div>
+    </footer>
+</body>
