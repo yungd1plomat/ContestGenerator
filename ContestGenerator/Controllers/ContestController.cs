@@ -1,6 +1,7 @@
 ﻿using ContestGenerator.Data;
 using ContestGenerator.Models;
 using ContestGenerator.Models.Contest;
+using ContestGenerator.Models.Viewmodels;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -32,8 +33,8 @@ namespace ContestGenerator.Controllers
                                                  .Include(x => x.PhotoUrls)
                                                  .Include(x => x.News)
                                                  .Include(x => x.Files)
+                                                 .Include(x => x.Criterias)
                                                  .Include(x => x.Reviews).FirstOrDefaultAsync(x => x.Id == id);
-            var files = await _context.Files.ToListAsync();
             if (contest is null)
                 return NotFound(id);
             contest.Name = modifiedContest.Name;
@@ -60,9 +61,13 @@ namespace ContestGenerator.Controllers
             contest.Address = modifiedContest.Address;
             contest.Phone = modifiedContest.Phone;
 
+            var files = await _context.Files.ToListAsync();
             var contestFiles = modifiedContest.Files is null ? null : files.Where(x => modifiedContest.Files.Any(f => f.Name == x.Name)).ToList();
             contest.Files = contestFiles;
 
+            var criterias = await _context.Criterias.ToListAsync();
+            var contestCriterias = modifiedContest.Criterias is null ? null : criterias.Where(x => modifiedContest.Criterias.Any(c => c.Name == x.Name)).ToList();
+            contest.Criterias = contestCriterias;
             _context.Contests.Update(contest);
             await _context.SaveChangesAsync();
             return RedirectToAction("Edit");
@@ -80,14 +85,17 @@ namespace ContestGenerator.Controllers
                                                  .Include(x => x.PhotoUrls)
                                                  .Include(x => x.News)
                                                  .Include(x => x.Files)
+                                                 .Include(x => x.Criterias)
                                                  .Include(x => x.Reviews).FirstOrDefaultAsync(x => x.Id == id);
             if (contest is null)
                 return RedirectToAction("List");
             var files = await _context.Files.ToListAsync();
+            var criterias = await _context.Criterias.ToListAsync();
             var editVm = new EditViewmodel()
             {
                 Contest = contest,
                 Files = files,
+                Criterias = criterias
             };
             return View(editVm);
         }
@@ -95,28 +103,55 @@ namespace ContestGenerator.Controllers
         [HttpGet("create")]
         public async Task<IActionResult> Create()
         {
+            var errors = TempData["errors"] as IEnumerable<string>;
+            if (errors != null && errors.Any())
+            {
+                foreach (var error in errors)
+                {
+                    ModelState.AddModelError(string.Empty, error);
+                }
+            }
             var files = await _context.Files.ToListAsync();
-            return View(files);
+            var criterias = await _context.Criterias.ToListAsync();
+            var createVm = new CreateContestViewmodel()
+            {
+                Files = files,
+                Criterias = criterias,
+            };
+            return View(createVm);
         }
 
         [HttpPost("create")]
         public async Task<IActionResult> Create([FromForm] Contest contest)
         {
             if (!ModelState.IsValid)
-                return View(await _context.Files.ToListAsync());
+            {
+                TempData["errors"] = ModelState.Values.SelectMany(x => x.Errors)
+                    .Select(x => x.ErrorMessage)
+                    .ToList();
+                return RedirectToAction("Create");
+            }
             if (_context.Contests.Any(x => x.Name == contest.Name))
             {
                 ModelState.AddModelError(string.Empty, $"Конкурс с названием {contest.Name} уже существует");
-                return View(await _context.Files.ToListAsync());
+                TempData["errors"] = ModelState.Values.SelectMany(x => x.Errors)
+                    .Select(x => x.ErrorMessage)
+                    .ToList();
+                return RedirectToAction("Create");
             }
             if (contest.Files != null)
             {
                 var fileIds = contest.Files.Select(x => x.Id).ToList();
                 contest.Files = _context.Files.Where(x => fileIds.Contains(x.Id)).ToList();
             }
+            if (contest.Criterias != null)
+            {
+                var criteriaIds = contest.Criterias.Select(x => x.Id).ToList();
+                contest.Criterias = _context.Criterias.Where(x => criteriaIds.Contains(x.Id)).ToList();
+            }
             await _context.AddAsync(contest);
             await _context.SaveChangesAsync();
-            return View(await _context.Files.ToListAsync());
+            return RedirectToAction("Create");
         }
 
         [HttpGet("list")]

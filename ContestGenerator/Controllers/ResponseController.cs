@@ -1,5 +1,6 @@
 ﻿using ContestGenerator.Abstractions;
 using ContestGenerator.Data;
+using ContestGenerator.Models.Viewmodels;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -25,7 +26,13 @@ namespace ContestGenerator.Controllers
         [HttpGet("{id}")]
         public async Task<IActionResult> Response(int id)
         {
-            var response = await _context.Responses.Include(x => x.Responses).FirstOrDefaultAsync(x => x.Id == id);
+            var response = await _context.Responses.Include(x => x.Responses)
+                .Include(x => x.Contest.Criterias)
+                .Include(x => x.Contest.ResponseEvaluation)
+                .ThenInclude(x => x.Results)
+                .ThenInclude(x => x.Criteria)
+                .Include(x => x.User)
+                .FirstOrDefaultAsync(x => x.Id == id);
             if (response is null)
                 return NotFound();
             return View(response);

@@ -130,5 +130,15 @@ namespace ContestGenerator.Models.Contest
         /// Ссылка на рутуб
         /// </summary>
         public string? Rutube { get; set; }
+
+        /// <summary>
+        /// Критерии оценки
+        /// </summary>
+        public IEnumerable<Criteria>? Criterias { get; set; }
+
+        /// <summary>
+        /// Результаты оценок заявок
+        /// </summary>
+        public IList<ResponseEvaluation>? ResponseEvaluation { get; set; }
     }
 }

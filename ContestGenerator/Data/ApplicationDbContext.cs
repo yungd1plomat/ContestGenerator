@@ -18,6 +18,7 @@ namespace ContestGenerator.Data
 
         public DbSet<FileModel> Files { get; set; }
 
+        public DbSet<Criteria> Criterias { get; set; }
 
         public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options)
             : base(options)

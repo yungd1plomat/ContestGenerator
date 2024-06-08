@@ -1,0 +1,76 @@
+﻿@using ContestGenerator.Models.Contest
+@model IEnumerable<Criteria>
+
+<html class="dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700,900&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/tw-elements/dist/css/tw-elements.min.css" />
+    <link rel="stylesheet" href="https://cdn.datatables.net/2.0.8/css/dataTables.dataTables.css" />
+    <title>Contest Generator - Критерии оценки</title>
+    <script src="//code.jquery.com/jquery-3.7.1.min.js"></script>
+    <script src="https://cdn.datatables.net/2.0.8/js/dataTables.js"></script>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/tw-elements/dist/js/tw-elements.umd.min.js"></script>
+</head>
+
+<body class="bg-[#18153A]">
+    <!--Main Navigation-->
+    @await Html.PartialAsync("_Sidebar")
+    <!--Main Navigation-->
+    <!--Main layout-->
+    <main class="flex justify-start h-full pt-[60px] flex-col gap-1 md:flex-row md:ml-60"
+          style="background: no-repeat top center, linear-gradient(#070A0C, #18153A);">
+        <div class="md:w-1/3 px-4 mb-3">
+            <form class="bg-neutral-800 text-white shadow-md rounded px-8 pt-6 pb-8 mb-4"
+                  method="post"
+                  action="/criteria/add">
+                <div class="text-red-700 px-4 py-3 rounded relative" role="alert">
+                    @Html.ValidationSummary(false)
+                </div>
+                <h2 class="mb-4 text-2xl font-semibold">Добавить критерий оценки</h2>
+                <div class="flex flex-wrap px-3 -mx-3 mb-6">
+                    <label class="block text-sm font-bold mb-2">
+                        Название критерия
+                    </label>
+                    <input name="Name"
+                           class="shadow-sm appearance-none border rounded w-full py-3 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                           type="text" 
+                           placeholder="Полнота решения" 
+                           required />
+                </div>
+                <button class="bg-blue-500 w-full hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
+                        type="submit">
+                    Добавить
+                </button>
+            </form>
+        </div>
+        <div class="md:w-2/3 bg-neutral-800 shadow-md rounded mx-3 mb-3 p-10" data-te-datatable-init>
+            <table class="min-w-full px-3 text-center text-sm font-normal" id="criteriaTable">
+                <thead class="border-b font-medium dark:border-neutral-500">
+                    <tr class="text-center">
+                        <th scope="col" style="text-align: center;" class="px-6 py-4 text-white font-semibold">Id</th>
+                        <th scope="col" style="text-align: center;" class="text-center px-6 py-4 text-white font-semibold">Критерий</th>
+                        <th scope="col" style="text-align: center;" class="px-6 py-4 text-white font-semibold">Действие</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @if (Model != null)
+                    {
+                        @foreach (var criteria in Model)
+                        {
+                            <tr class="border-b text-white">
+                                <td style="text-align: center;" class="whitespace-nowrap px-6 py-4">@criteria.Id</td>
+                                <td style="text-align: center;" class="whitespace-nowrap px-6 py-4">@criteria.Name</td>
+                                <td style="text-align: center;" class="whitespace-nowrap px-6 py-4 text-blue-700"><a href="/criteria/delete/@criteria.Id">Delete</a></td>
+                            </tr>
+                        }
+                    }
+                </tbody>
+            </table>
+        </div>
+    </main>
+    <script src="~/js/criteria.js"></script>
+</body>
+</html>
