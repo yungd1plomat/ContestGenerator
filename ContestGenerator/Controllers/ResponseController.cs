@@ -54,6 +54,7 @@ namespace ContestGenerator.Controllers
                 return NotFound();
             var user = await _userManager.FindByNameAsync(User.Identity.Name);
             var evaluations = _context.ResponseEvaluations.Include(x => x.Results)
+                .Where(x => x.ResponseId == id)
                 .Where(x => x.User == user)
                 .ToList();
             _context.ResponseEvaluations.RemoveRange(evaluations);
