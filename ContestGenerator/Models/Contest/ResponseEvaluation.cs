@@ -11,7 +11,7 @@ namespace ContestGenerator.Models.Contest
         /// <summary>
         /// Id
         /// </summary>
-        public int Id { get; set; }
+        public int? Id { get; set; }
 
         /// <summary>
         /// Результаты оценок
@@ -22,5 +22,15 @@ namespace ContestGenerator.Models.Contest
         /// Пользователь оценивший заявку
         /// </summary>
         public AppUser User { get; set; }
+
+        /// <summary>
+        /// Заявка которая оценивалась
+        /// </summary>
+        public Response Response { get; set; }
+
+        /// <summary>
+        /// Внешний ключ указывающий на Id заявки
+        /// </summary>
+        public int ResponseId { get; set; }
     }
 }

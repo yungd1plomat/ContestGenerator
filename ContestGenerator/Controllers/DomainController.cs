@@ -11,7 +11,7 @@ using System.Text.Json.Nodes;
 namespace ContestGenerator.Controllers
 {
     [Route("[controller]")]
-    [Authorize]
+    [Authorize(Roles = "admin")]
     public class DomainController : Controller
     {
         const int chunkSize = 14;

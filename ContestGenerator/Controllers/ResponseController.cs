@@ -1,14 +1,16 @@
 ﻿using ContestGenerator.Abstractions;
 using ContestGenerator.Data;
+using ContestGenerator.Models.Contest;
 using ContestGenerator.Models.Viewmodels;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
 namespace ContestGenerator.Controllers
 {
     [Route("[controller]")]
-    [Authorize]
+    [Authorize(Roles = "admin, jury")]
     public class ResponseController : Controller
     {
         const int localTimeOffset = 7;
@@ -17,10 +19,15 @@ namespace ContestGenerator.Controllers
 
         private readonly IExcelRepo _excelRepo;
 
-        public ResponseController(ApplicationDbContext dbContext, IExcelRepo excelRepo)
+        private readonly UserManager<AppUser> _userManager;
+
+        public ResponseController(ApplicationDbContext dbContext, 
+            IExcelRepo excelRepo,
+            UserManager<AppUser> userManager)
         {
             _context = dbContext;
             _excelRepo = excelRepo;
+            _userManager = userManager;
         }
 
         [HttpGet("{id}")]
@@ -36,6 +43,50 @@ namespace ContestGenerator.Controllers
             if (response is null)
                 return NotFound();
             return View(response);
+        }
+
+        [HttpPost("{id}/evaluate")]
+        public async Task<IActionResult> Evaluate(int id, ResponseEvaluation evaluation)
+        {
+            evaluation.Id = null;
+            var response = await _context.Responses.FirstOrDefaultAsync(x => x.Id == id);
+            if (response is null)
+                return NotFound();
+            var user = await _userManager.FindByNameAsync(User.Identity.Name);
+            var evaluations = _context.ResponseEvaluations.Include(x => x.Results)
+                .Where(x => x.User == user)
+                .ToList();
+            _context.ResponseEvaluations.RemoveRange(evaluations);
+            evaluation.User = user;
+            await _context.ResponseEvaluations.AddAsync(evaluation);
+            await _context.SaveChangesAsync();
+            return RedirectToAction("Response", new { id });
+        }
+
+        [HttpGet("{id}/evaluations")]
+        public async Task<IActionResult> Evaluatitions(int id)
+        {
+            var results = _context.ResponseEvaluations.Include(x => x.Results)
+                                                      .Include(x => x.User)
+                                                      .Where(x => x.ResponseId == id)
+                                                      .ToList()
+                                                      .GroupBy(x => x.User);
+            var averageEvaluations = new List<AverageUserEvaluation>();
+            foreach (var userEvaluations in results)
+            {
+                foreach (var evaluation in userEvaluations)
+                {
+                    var averageUserEvaluation = new AverageUserEvaluation
+                    {
+                        Username = evaluation.User.UserName,
+                    };
+                    var avgEvaluation = evaluation.Results.Select(x => x.Evaluation)
+                                                          .Average();
+                    averageUserEvaluation.Evaluation = Math.Round(avgEvaluation, 1);
+                    averageEvaluations.Add(averageUserEvaluation);
+                }
+            }
+            return Ok(averageEvaluations);
         }
 
         [HttpGet("delete/{id}")]

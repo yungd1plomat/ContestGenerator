@@ -10,7 +10,7 @@ using System.Text.Json.Nodes;
 namespace ContestGenerator.Controllers
 {
     [Route("[controller]")]
-    [Authorize]
+    [Authorize(Roles = "admin")]
     public class FileController : Controller
     {
         const int chunkSize = 14;

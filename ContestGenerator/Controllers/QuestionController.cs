@@ -8,7 +8,7 @@ using Microsoft.EntityFrameworkCore;
 namespace ContestGenerator.Controllers
 {
     [Route("[controller]")]
-    [Authorize]
+    [Authorize(Roles = "admin, jury")]
     public class QuestionController : Controller
     {
         const int localTimeOffset = 7;

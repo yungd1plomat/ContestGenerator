@@ -8,6 +8,7 @@ namespace ContestGenerator.Helpers
 
         public bool Accept(ActionConstraintContext context)
         {
+            //return true;
             return context.RouteContext.HttpContext.Request.Headers.ContainsKey("X-Forwarded-Host");
         }
     }

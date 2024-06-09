@@ -1,0 +1,9 @@
+﻿.no-scrollbar::-webkit-scrollbar {
+    display: none;
+}
+
+/* Скрыть полосу прокрутки для IE и Edge */
+.no-scrollbar {
+    -ms-overflow-style: none; /* IE и Edge */
+    scrollbar-width: none; /* Firefox */
+}

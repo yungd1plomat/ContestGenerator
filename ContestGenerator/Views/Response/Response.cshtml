@@ -7,28 +7,60 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700,900&display=swap" rel="stylesheet" />
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/tw-elements/dist/css/tw-elements.min.css" />
-    <title>Заявка @Model.Id</title>
+    <link rel="stylesheet" href="~/css/responseview.css" />
     <script src="https://cdn.tailwindcss.com"></script>
+    <script src="//code.jquery.com/jquery-3.7.1.min.js"></script>
+    <title>Заявка @Model.Id</title>
 </head>
 
-
 <body>
-    <main class="flex justify-center overflow-auto h-full"
+    <main class="flex justify-center h-full"
           style="background: no-repeat top center, linear-gradient(#070A0C, #18153A);">
         @if (Model.Contest.Criterias != null && Model.Contest.Criterias.Any())
         {
-            <div class="w-1/4 container flex flex-col h-full mx-3">
+            <div class="w-2/5 container flex flex-col h-full mx-3 overflow-y-auto no-scrollbar">
                 <div class="bg-white shadow-md rounded px-8 pt-6 pb-8 my-4 flex-1">
                     <h2 class="mb-4 text-2xl font-semibold text-center">Оценить заявку</h2>
+                    <form class="border border-gray-300 p-10 rounded-lg w-full relative mb-4"
+                          action="/response/@Model.Id/evaluate"
+                          method="post">
+                        @for (int i = 0; i < Model.Contest.Criterias.Count();i++)
+                        {
+                            <div class="mb-6">
+                                <div>
+                                    <label class="block text-gray-500 font-bold text-left mb-1 pr-4 break-normal">@(i + 1). @Model.Contest.Criterias.ElementAt(i).Name</label>
+                                </div>
+                                <div class="w-full">
+                                    <input class="bg-gray-200 appearance-none border-2 border-gray-200 rounded w-full py-2 px-4 text-gray-700 leading-tight focus:outline-none focus:bg-white focus:border-indigo-500"
+                                           type="number"
+                                           min="0"
+                                           max="10"
+                                           step="0.1"
+                                           name="Results[@i].Evaluation"
+                                           value="0">
+                                    <input type="hidden"
+                                           name="Results[@i].CriteriaId"
+                                           value="@Model.Contest.Criterias.ElementAt(i).Id" />
+                                </div>
+                            </div>
+                        }
+                        <input type="hidden"
+                               name="ResponseId"
+                               value="@Model.Id" />
+                        <button class="text-white bg-indigo-500 border-0 py-2 px-6 focus:outline-none hover:bg-indigo-600 rounded text-lg"
+                                type="submit">
+                            Оценить
+                        </button>
+                    </form>
                 </div>
             </div>
         }
-        <div class="container flex flex-col h-full mx-3">
-            <div class="bg-white shadow-md rounded px-8 pt-6 pb-8 my-4 flex-1">
+        <div class="container flex flex-col h-full mx-3 overflow-y-auto no-scrollbar">
+            <div class="bg-white h-full shadow-md rounded px-8 pt-6 pb-8 my-4 flex-1">
                 <h2 class="mb-4 text-2xl font-semibold">Заявка @Model.Id</h2>
                 @foreach (var field in Model.Responses)
                 {
-                    <div class="flex flex-wrap px-3 -mx-3 mb-2 text-left break-all">
+                    <div class="flex flex-wrap px-3 -mx-3 mb-2 text-left break-normal">
                         <label class="block text-gray-700 text-lg font-bold mr-2">
                             @field.Name:
                         </label>
@@ -41,13 +73,17 @@
         </div>
         @if (Model.Contest.Criterias != null && Model.Contest.Criterias.Any())
         {
-            <div class="w-1/4 container flex flex-col h-full mx-3">
-                <div class="bg-white shadow-md rounded px-8 pt-6 pb-8 my-4 flex-1">
-                    <h2 class="mb-4 text-2xl font-semibold text-center">Оценки других жюри</h2>
+            <div class="w-1/3 container h-full flex flex-col mx-3 overflow-y-auto no-scrollbar">
+                <div class="bg-white h-full shadow-md rounded px-8 pt-6 pb-8 my-4 flex-1">
+                    <h2 class="mb-4 text-2xl font-semibold text-center">Средние оценки других жюри</h2>
+                    <div class="evaluations">
+
+                    </div>
                 </div>
             </div>
         }
     </main>
     <!--Main layout-->
     <script src="https://cdn.jsdelivr.net/npm/tw-elements/dist/js/tw-elements.umd.min.js"></script>
+    <script src="~/js/responseview.js"></script>
 </body>

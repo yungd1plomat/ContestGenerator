@@ -9,7 +9,6 @@ using Microsoft.EntityFrameworkCore;
 namespace ContestGenerator.Controllers
 {
     [Route("[controller]")]
-    [Authorize]
     public class ContestController : Controller
     {
         const int chunkSize = 14;
@@ -21,6 +20,7 @@ namespace ContestGenerator.Controllers
             _context = dbContext;
         }
 
+        [Authorize(Roles = "admin")]
         [HttpPost("edit/{id}")]
         public async Task<IActionResult> Edit(int id, [FromForm] Contest modifiedContest)
         {
@@ -73,6 +73,7 @@ namespace ContestGenerator.Controllers
             return RedirectToAction("Edit");
         }
 
+        [Authorize(Roles = "admin")]
         [HttpGet("edit/{id}")]
         public async Task<IActionResult> Edit(int id)
         {
@@ -100,6 +101,7 @@ namespace ContestGenerator.Controllers
             return View(editVm);
         }
 
+        [Authorize(Roles = "admin")]
         [HttpGet("create")]
         public async Task<IActionResult> Create()
         {
@@ -121,6 +123,7 @@ namespace ContestGenerator.Controllers
             return View(createVm);
         }
 
+        [Authorize(Roles = "admin")]
         [HttpPost("create")]
         public async Task<IActionResult> Create([FromForm] Contest contest)
         {
@@ -154,6 +157,7 @@ namespace ContestGenerator.Controllers
             return RedirectToAction("Create");
         }
 
+        [Authorize(Roles = "admin, jury")]
         [HttpGet("list")]
         public async Task<IActionResult> List(int page = 0)
         {
@@ -181,6 +185,7 @@ namespace ContestGenerator.Controllers
             });
         }
 
+        [Authorize(Roles = "admin")]
         [HttpGet("delete/{contestName}")]
         public async Task<IActionResult> Delete(string contestName)
         {
@@ -206,19 +211,35 @@ namespace ContestGenerator.Controllers
             return RedirectToAction("List");
         }
 
+        [Authorize(Roles = "admin, jury")]
         [HttpGet("{contestName}/responses")]
-        public async Task<IActionResult> Responses(string contestName, int page = 0)
+        public async Task<IActionResult> Responses(string contestName)
         {
-            var chunked = _context.Responses.Include(x => x.Contest).Where(x => x.Contest.Name == contestName).ToList().Chunk(14).ToList();
-            if (page > chunked.Count - 1 && chunked.Any())
-                return RedirectToAction("Responses", "Contest");
-            return View("Responses", new ResponsesViewmodel()
+            var responses = _context.Responses.Include(x => x.Contest)
+                .Where(x => x.Contest.Name == contestName)
+                .ToList();
+            var responsesVm = new List<ResponseViewmodel>();
+            foreach (var response in responses)
             {
-                Page = page,
-                Responses = chunked.Any() ? chunked[page] : Array.Empty<Response>(),
-            });
+                var responseViewmodel = new ResponseViewmodel()
+                {
+                    Response = response,
+                };
+                var evaluations = await _context.ResponseEvaluations.Where(x => x.ResponseId == response.Id)
+                                                                    .SelectMany(x => x.Results)
+                                                                    .Select(x => x.Evaluation)
+                                                                    .ToListAsync();
+                if (evaluations != null && evaluations.Any())
+                {
+                    var averageEvaluation = Math.Round(evaluations.Average(), 1);
+                    responseViewmodel.AverageEvaluation = averageEvaluation;
+                }
+                responsesVm.Add(responseViewmodel);
+            }
+            return View("Responses", responsesVm);
         }
 
+        [Authorize(Roles = "admin, jury")]
         [HttpGet("{contestName}/questions")]
         public async Task<IActionResult> Questions(string contestName, int page = 0)
         {

@@ -20,6 +20,8 @@ namespace ContestGenerator.Data
 
         public DbSet<Criteria> Criterias { get; set; }
 
+        public DbSet<ResponseEvaluation> ResponseEvaluations { get; set; }
+
         public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options)
             : base(options)
         {

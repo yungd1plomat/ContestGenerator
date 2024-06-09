@@ -47,7 +47,18 @@ namespace ContestGenerator.Controllers
         {
             var result = await _signInManager.PasswordSignInAsync(model.Username, model.Password, false, false);
             if (result.Succeeded)
-                return RedirectToAction("Index", "Home");
+            {
+                var user = await _userManager.FindByNameAsync(model.Username);
+                var isAdmin = await _userManager.IsInRoleAsync(user, "admin");
+                var isJury = await _userManager.IsInRoleAsync(user, "jury");
+                if (isAdmin || isJury)
+                {
+                    return RedirectToAction("Index", "Home");
+                }
+                await _signInManager.SignOutAsync();
+                ModelState.AddModelError(string.Empty, "Доступ к ресурсу запрещен");
+                return View(model);
+            }
             ModelState.AddModelError(string.Empty, "Неверный логин или пароль.");
             return View(model);
         }

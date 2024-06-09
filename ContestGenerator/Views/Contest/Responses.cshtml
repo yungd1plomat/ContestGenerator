@@ -1,65 +1,53 @@
-﻿@using ContestGenerator.Models
-@model ResponsesViewmodel
+﻿@using ContestGenerator.Models.Viewmodels
+@model IEnumerable<ResponseViewmodel>
 
-
-
+<html class="dark">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700,900&display=swap" rel="stylesheet" />
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/tw-elements/dist/css/tw-elements.min.css" />
-    <title>Contest Generator - Responses</title>
+    <link rel="stylesheet" href="https://cdn.datatables.net/2.0.8/css/dataTables.dataTables.css" />
+    <title>Contest Generator - Заявки</title>
+    <script src="//code.jquery.com/jquery-3.7.1.min.js"></script>
+    <script src="https://cdn.datatables.net/2.0.8/js/dataTables.js"></script>
     <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/tw-elements/dist/js/tw-elements.umd.min.js"></script>
 </head>
 
 
-<body>
+<body class="bg-[#18153A]">
     <!--Main Navigation-->
     @await Html.PartialAsync("_Sidebar")
     <!--Main Navigation-->
     <!--Main layout-->
-    <main class="h-full flex justify-center"
+    <main class="flex justify-center h-full pt-[60px] flex-col gap-1 md:flex-row md:ml-60"
           style="background: no-repeat top center, linear-gradient(#070A0C, #18153A);">
-        <div class="container md:px-6 flex h-full pt-[58px] md:ml-60 w-screen overflow-auto">
-            <div class="flex flex-col w-screen bg-neutral-800 shadow-md rounded mb-3 text-center">
-                <h2 class="text-white font-bold text-2xl my-2">Заявки</h2>
-                <table class="min-w-full text-center text-sm font-normal">
-                    <thead class="border-b font-medium dark:border-neutral-500">
-                        <tr>
-                            <th scope="col" class="px-6 py-4 text-white font-semibold">Id</th>
-                            <th scope="col" class="px-6 py-4 text-white font-semibold">Конкурс</th>
-                            <th scope="col" class="px-6 py-4 text-white font-semibold">Ссылка</th>
-                            <th scope="col" class="px-6 py-4 text-white font-semibold">Действие</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        @foreach (var response in Model.Responses)
-                        {
-                            <tr class="border-b dark:border-neutral-500 text-white">
-                                <td class="whitespace-nowrap px-6 py-4">@response.Id</td>
-                                <td class="whitespace-nowrap px-6 py-4">@response.Contest.Name</td>
-                                <td class="whitespace-nowrap px-6 py-4 text-blue-700"><a target="_blank" href="/response/@response.Id">Открыть</a></td>
-                                <td class="whitespace-nowrap px-6 py-4 text-blue-700"><a href="/response/delete/@response.Id">Delete</a></td>
-                            </tr>
-                        }
-                    </tbody>
-                </table>
-                <div class="flex fixed bottom-0 right-0 mr-28 mb-5">
-                    @if (Model.Page != 0)
+        <div class="w-11/12 bg-neutral-800 shadow-md rounded mx-3 mb-3 p-10" data-te-datatable-init>
+            <h2 class="text-white text-2xl font-bold text-center">Заявки на конкурс @Model.FirstOrDefault()?.Response?.Contest?.Name</h2>
+            <table class="min-w-full px-3 text-center font-normal" id="responsesTable">
+                <thead class="border-b font-medium dark:border-neutral-500">
+                    <tr>
+                        <th scope="col" class="text-white font-semibold" style="text-align: center;">Id</th>
+                        <th scope="col" class="text-white font-semibold" style="text-align: center;">Ссылка</th>
+                        <th scope="col" class="text-white font-semibold" style="text-align: center;">Средняя оценка</th>
+                        <th scope="col" class="text-white font-semibold" style="text-align: center;">Действие</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var responseVm in Model)
                     {
-                        <a href="?page=@(Model.Page - 1)"
-                           class="inline-flex items-center px-4 py-2 text-sm font-medium text-gray-500 bg-white border border-gray-300 rounded-lg hover:bg-gray-100 hover:text-gray-700 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white">
-                            Previous
-                        </a>
+                        <tr class="border-b dark:border-neutral-500 text-white">
+                            <td style="text-align: center;" class="whitespace-nowrap px-6 py-4">@responseVm.Response.Id</td>
+                            <td style="text-align: center;" class="whitespace-nowrap px-6 py-4 text-blue-700"><a target="_blank" href="/response/@responseVm.Response.Id">Открыть</a></td>
+                            <td style="text-align: center;" class="whitespace-nowrap px-6 py-4">@(responseVm.AverageEvaluation == null ? "Не оценено" : responseVm.AverageEvaluation)</td>
+                            <td style="text-align: center;" class="whitespace-nowrap px-6 py-4 text-blue-700"><a href="/response/delete/@responseVm.Response.Id">Delete</a></td>
+                        </tr>
                     }
-                    <a href="?page=@(Model.Page + 1)"
-                       class="inline-flex items-center px-4 py-2 ml-3 text-sm font-medium text-gray-500 bg-white border border-gray-300 rounded-lg hover:bg-gray-100 hover:text-gray-700 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white">
-                        Next
-                    </a>
-                </div>
-            </div>
+                </tbody>
+            </table>
         </div>
     </main>
     <!--Main layout-->
-    <script src="https://cdn.jsdelivr.net/npm/tw-elements/dist/js/tw-elements.umd.min.js"></script>
+    <script src="~/js/responses.js"></script>
 </body>

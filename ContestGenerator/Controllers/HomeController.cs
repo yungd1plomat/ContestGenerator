@@ -4,7 +4,7 @@ using Microsoft.AspNetCore.Mvc;
 namespace ContestGenerator.Controllers
 {
     [Route("[controller]")]
-    [Authorize]
+    [Authorize(Roles = "admin, jury")]
     public class HomeController : Controller
     {
         [HttpGet("/")]
