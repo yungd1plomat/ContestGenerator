@@ -1,4 +1,5 @@
 ﻿using ContestGenerator.Models.Contest;
+using ContestGenerator.Models.Viewmodels;
 
 namespace ContestGenerator.Abstractions
 {
@@ -19,6 +20,6 @@ namespace ContestGenerator.Abstractions
         /// </summary>
         /// <param name="responses">Ответы</param>
         /// <returns>Файл таблицы</returns>
-        Task<byte[]> Generate(IEnumerable<Response> responses);
+        Task<byte[]> Generate(IEnumerable<ResponseViewmodel> responses);
     }
 }

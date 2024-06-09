@@ -1,5 +1,6 @@
 ﻿using ContestGenerator.Abstractions;
 using ContestGenerator.Models.Contest;
+using ContestGenerator.Models.Viewmodels;
 using OfficeOpenXml;
 using OfficeOpenXml.Style;
 
@@ -64,10 +65,10 @@ namespace ContestGenerator.Repositories
             }
         }
 
-        public async Task<byte[]> Generate(IEnumerable<Response> responses)
+        public async Task<byte[]> Generate(IEnumerable<ResponseViewmodel> responses)
         {
             var firstResponse = responses.FirstOrDefault();
-            var contest = firstResponse.Contest;
+            var contest = firstResponse.Response.Contest;
             using (var package = new ExcelPackage())
             {
                 var sheet = package.Workbook.Worksheets.Add(contest.Name);
@@ -75,8 +76,8 @@ namespace ContestGenerator.Repositories
                 {
                     "Id"
                 };
-                headers.AddRange(firstResponse.Responses.Select(x => x.Name));
-
+                headers.AddRange(firstResponse.Response.Responses.Select(x => x.Name));
+                headers.Add("Средняя оценка");
                 // Добавляем заголовки
                 AddHeaders(sheet, headers);
 
@@ -87,9 +88,11 @@ namespace ContestGenerator.Repositories
                     var sheetRow = row + 2;
                     var fields = new List<string>()
                     {
-                        response.Id.ToString(),
+                        response.Response.Id.ToString(),
                     };
-                    fields.AddRange(response.Responses.Select(x => x.Value));
+                    fields.AddRange(response.Response.Responses.Select(x => x.Value));
+                    var avgEvaluation = string.IsNullOrEmpty(response.AverageEvaluation.ToString()) ? "Не оценено" : response.AverageEvaluation.ToString();
+                    fields.Add(avgEvaluation);
                     AddRow(sheet, fields, sheetRow);
                 }
                 return await package.GetAsByteArrayAsync();

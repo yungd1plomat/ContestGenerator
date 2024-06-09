@@ -26,5 +26,10 @@ namespace ContestGenerator.Models.Contest
         /// Пользователь оставивший ответ
         /// </summary>
         public AppUser User { get; set; }
+
+        /// <summary>
+        /// Содержит оценки заявки
+        /// </summary>
+        public List<ResponseEvaluation> ResponseEvaluations { get; set; }
     }
 }

@@ -107,10 +107,30 @@ namespace ContestGenerator.Controllers
             var filename = $"[{date.ToString("dd.MM.yy_HH-mm")}]{contestName}_responses.xlsx";
             var responses = _context.Responses.Include(x => x.Responses)
                 .Include(x => x.Contest)
-                .Where(x => x.Contest.Name == contestName).ToList();
+                .Include(x => x.ResponseEvaluations)
+                .ThenInclude(x => x.Results)
+                .Where(x => x.Contest.Name == contestName)
+                .ToList();
             if (!responses.Any())
                 return RedirectToAction("List", "Contest");
-            var sheet = await _excelRepo.Generate(responses);
+            var responsesVm = new List<ResponseViewmodel>();
+            foreach (var response in responses)
+            {
+                var responseViewmodel = new ResponseViewmodel()
+                {
+                    Response = response,
+                };
+                if (response.ResponseEvaluations != null && response.ResponseEvaluations.Any())
+                {
+                    var evaluations = response.ResponseEvaluations.SelectMany(x => x.Results)
+                                                                  .Select(x => x.Evaluation)
+                                                                  .ToList();
+                    var averageEvaluation = Math.Round(evaluations.Average(), 1);
+                    responseViewmodel.AverageEvaluation = averageEvaluation;
+                }
+                responsesVm.Add(responseViewmodel);
+            }
+            var sheet = await _excelRepo.Generate(responsesVm);
             return File(sheet, "application/vnd.ms-excel", filename);
         }
     }
